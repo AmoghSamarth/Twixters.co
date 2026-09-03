@@ -98,11 +98,11 @@ export function Hero() {
     <section id="top" className="relative overflow-hidden px-5 pt-[325px] pb-24 sm:px-8 sm:pt-[465px] sm:pb-32">
       {/* Subtle animated diagonal light sweep traveling smoothly from top-left toward bottom-right */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
-        <div className="tw-light-sweep-beam absolute -top-48 -left-48 h-[850px] w-[1200px] bg-gradient-to-r from-white/35 via-white/12 to-transparent blur-3xl" />
+        <div className="tw-light-sweep-beam absolute -top-48 -left-48 h-[935px] w-[1320px] bg-gradient-to-r from-white/45 via-white/18 via-white/8 to-transparent blur-3xl" />
       </div>
 
-      {/* Script wordmark watermark — decorative layer z-[2] above light sweep, below foreground */}
-      <TwixtersWatermark className="pointer-events-none absolute z-[2] top-[170px] left-1/2 w-[clamp(380px,54vw,760px)] -translate-x-1/2 text-ink/[0.06] select-none sm:top-[200px]" />
+      {/* Script wordmark watermark — 10% smaller, decorative layer z-[2] */}
+      <TwixtersWatermark className="pointer-events-none absolute z-[2] top-[170px] left-1/2 w-[clamp(340px,48vw,684px)] -translate-x-1/2 text-ink/[0.06] select-none sm:top-[200px]" />
 
       <div className="relative z-10 mx-auto max-w-[1280px]">
         {/* H1 Headline with integrated animated slideshow chips */}
