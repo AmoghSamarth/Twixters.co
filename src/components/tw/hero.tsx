@@ -95,15 +95,15 @@ export function Hero() {
   ];
 
   return (
-    <section id="top" className="relative overflow-hidden px-5 pt-[180px] pb-24 sm:px-8 sm:pt-[340px] sm:pb-36">
+    <section id="top" className="relative overflow-hidden px-5 pt-[160px] pb-24 sm:px-8 sm:pt-[300px] sm:pb-32">
       {/* Subtle ambient light beam streak matching live reference */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -top-32 -left-32 h-[650px] w-[950px] rotate-[-22deg] bg-gradient-to-r from-white/40 via-white/15 to-transparent blur-3xl"
       />
 
-      {/* Script wordmark watermark — high in the background near the top of the hero with large clean space below */}
-      <TwixtersWatermark className="pointer-events-none absolute -top-2 left-1/2 w-[clamp(280px,36vw,520px)] -translate-x-1/2 text-ink/[0.04] select-none sm:top-2" />
+      {/* Script wordmark watermark — exactly matching reference size, top offset, and relationship to H1 */}
+      <TwixtersWatermark className="pointer-events-none absolute top-[60px] left-1/2 w-[clamp(380px,54vw,760px)] -translate-x-1/2 text-ink/[0.06] select-none sm:top-[90px]" />
 
       <div className="relative z-10 mx-auto max-w-[1280px]">
         {/* H1 Headline with integrated animated slideshow chips */}
