@@ -175,8 +175,28 @@
     }
   }
 
+  @keyframes tw-light-sweep-tr {
+    0% {
+      transform: translate3d(8%, -8%, 0) rotate(24deg);
+      opacity: 0.68;
+    }
+    50% {
+      transform: translate3d(-6%, 8%, 0) rotate(24deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translate3d(-16%, 18%, 0) rotate(24deg);
+      opacity: 0.72;
+    }
+  }
+
   .tw-light-sweep-beam {
     animation: tw-light-sweep 14s ease-in-out infinite alternate;
+    will-change: transform, opacity;
+  }
+
+  .tw-light-sweep-beam-tr {
+    animation: tw-light-sweep-tr 14s ease-in-out infinite alternate;
     will-change: transform, opacity;
   }
 }
@@ -200,9 +220,10 @@
     transition: none !important;
   }
 
-  .tw-light-sweep-beam {
+  .tw-light-sweep-beam,
+  .tw-light-sweep-beam-tr {
     animation: none !important;
-    transform: rotate(-24deg) !important;
+    transform: rotate(24deg) !important;
     opacity: 0.65 !important;
   }
 
