@@ -89,17 +89,17 @@ export function Hero() {
   ];
 
   return (
-    <section id="top" className="relative overflow-hidden px-5 pt-[160px] pb-24 sm:px-8 sm:pt-[190px] sm:pb-32">
+    <section id="top" className="relative overflow-hidden px-5 pt-[180px] pb-24 sm:px-8 sm:pt-[340px] sm:pb-36">
       {/* Subtle ambient light beam streak matching live reference */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -top-32 -left-32 h-[650px] w-[950px] rotate-[-22deg] bg-gradient-to-r from-white/40 via-white/15 to-transparent blur-3xl"
       />
 
-      {/* Script wordmark watermark — exact vector SVG signature from Framer */}
-      <TwixtersWatermark className="pointer-events-none absolute top-[70px] left-1/2 w-[clamp(440px,65vw,940px)] -translate-x-1/2 text-ink/[0.065] select-none sm:top-[85px]" />
+      {/* Script wordmark watermark — high in the background with a wide empty quiet zone before H1 */}
+      <TwixtersWatermark className="pointer-events-none absolute top-[20px] left-1/2 w-[clamp(260px,38vw,560px)] -translate-x-1/2 text-ink/[0.04] select-none sm:top-[30px]" />
 
-      <div className="relative mx-auto max-w-[1280px]">
+      <div className="relative z-10 mx-auto max-w-[1280px]">
         {/* H1 Headline with integrated animated slideshow chips */}
         <h1 className="tw-display mx-auto max-w-[1040px] text-center text-[clamp(2.35rem,6.4vw,6rem)] leading-[1.12] tracking-[-0.04em]">
           <Reveal as="span" className="block" delay={0}>
