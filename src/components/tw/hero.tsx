@@ -96,15 +96,9 @@ export function Hero() {
 
   return (
     <section id="top" className="relative overflow-hidden px-5 pt-[325px] pb-24 sm:px-8 sm:pt-[465px] sm:pb-32">
-      {/* Subtle animated diagonal light sweep traveling smoothly from top-right diagonally */}
+      {/* Photorealistic white diagonal sunbeams matching reference and green arrow directions */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
-        <div
-          style={{
-            background:
-              "linear-gradient(220deg, rgba(255,255,255,0.48) 0%, rgba(255,255,255,0.12) 16%, rgba(255,255,255,0.38) 32%, rgba(255,255,255,0.10) 46%, rgba(255,255,255,0.28) 60%, rgba(255,255,255,0.06) 74%, transparent 88%)",
-          }}
-          className="tw-light-sweep-beam-tr absolute -top-48 -right-48 h-[950px] w-[1400px] blur-3xl"
-        />
+        <div className="tw-sunbeams" />
       </div>
 
       {/* Script wordmark watermark — 10% smaller, decorative layer z-[2] */}

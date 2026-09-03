@@ -160,44 +160,46 @@
    * Subtle ambient diagonal light sweep for hero background.
    * Soft matte sunlight passing from top-left toward bottom-right.
    * ------------------------------------------------------------------------- */
-  @keyframes tw-light-sweep {
+  /* ---------------------------------------------------------------------------
+   * Photorealistic white diagonal sunbeams / window light shafts.
+   * Direction matches user green arrows: top-left pointing down-right (120deg).
+   * ------------------------------------------------------------------------- */
+  @keyframes tw-sunbeams-flow {
     0% {
-      transform: translate3d(-10%, -10%, 0) rotate(-24deg);
-      opacity: 0.68;
+      transform: translate3d(-3%, -3%, 0);
+      opacity: 0.88;
     }
     50% {
-      transform: translate3d(6%, 8%, 0) rotate(-24deg);
+      transform: translate3d(3%, 3%, 0);
       opacity: 1;
     }
     100% {
-      transform: translate3d(16%, 18%, 0) rotate(-24deg);
-      opacity: 0.72;
+      transform: translate3d(-3%, -3%, 0);
+      opacity: 0.88;
     }
   }
 
-  @keyframes tw-light-sweep-tr {
-    0% {
-      transform: translate3d(8%, -8%, 0) rotate(24deg);
-      opacity: 0.68;
-    }
-    50% {
-      transform: translate3d(-6%, 8%, 0) rotate(24deg);
-      opacity: 1;
-    }
-    100% {
-      transform: translate3d(-16%, 18%, 0) rotate(24deg);
-      opacity: 0.72;
-    }
-  }
-
-  .tw-light-sweep-beam {
-    animation: tw-light-sweep 14s ease-in-out infinite alternate;
+  .tw-sunbeams {
+    position: absolute;
+    top: -25%;
+    left: -20%;
+    width: 150%;
+    height: 140%;
+    background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0.72) 0%,
+      rgba(255, 255, 255, 0.22) 12%,
+      rgba(255, 255, 255, 0.76) 24%,
+      rgba(255, 255, 255, 0.18) 36%,
+      rgba(255, 255, 255, 0.65) 48%,
+      rgba(255, 255, 255, 0.14) 60%,
+      rgba(255, 255, 255, 0.4) 72%,
+      transparent 88%
+    );
+    filter: blur(46px);
+    pointer-events: none;
     will-change: transform, opacity;
-  }
-
-  .tw-light-sweep-beam-tr {
-    animation: tw-light-sweep-tr 14s ease-in-out infinite alternate;
-    will-change: transform, opacity;
+    animation: tw-sunbeams-flow 14s ease-in-out infinite;
   }
 }
 
@@ -220,11 +222,10 @@
     transition: none !important;
   }
 
-  .tw-light-sweep-beam,
-  .tw-light-sweep-beam-tr {
+  .tw-sunbeams {
     animation: none !important;
-    transform: rotate(24deg) !important;
-    opacity: 0.65 !important;
+    transform: none !important;
+    opacity: 0.9 !important;
   }
 
   *,
