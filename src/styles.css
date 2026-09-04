@@ -29,7 +29,11 @@
   --color-hair-soft: #dcdcdc;
 
   --font-sans:
-    "Inter Tight", "Helvetica Neue", Helvetica, Arial, ui-sans-serif, system-ui, sans-serif;
+    "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display:
+    "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading:
+    "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-script: "Kaushan Script", "Segoe Script", cursive;
 
   --radius-pill: 999px;
@@ -87,14 +91,16 @@
 }
 
 @layer utilities {
-  /* Display headline character: tight geometric grotesque, negative tracking. */
+  /* Display headline character: Poppins, tight geometric grotesque, negative tracking. */
   .tw-display {
+    font-family: var(--font-display);
     font-weight: 600;
     letter-spacing: -0.03em;
     line-height: 1.02;
   }
 
   .tw-h2 {
+    font-family: var(--font-heading);
     font-weight: 600;
     letter-spacing: -0.022em;
     line-height: 1.08;
