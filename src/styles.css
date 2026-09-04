@@ -207,6 +207,25 @@
     will-change: transform, opacity;
     animation: tw-sunbeams-flow 14s ease-in-out infinite;
   }
+
+  /* ---------------------------------------------------------------------------
+   * Floating "See Recent Work" CTA gentle drifting animation.
+   * Locked unified composition: subtle vertical (6-10px) and horizontal (2-4px)
+   * ease-in-out float over the collage.
+   * ------------------------------------------------------------------------- */
+  @keyframes tw-cta-float {
+    0%, 100% {
+      transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+    50% {
+      transform: translate3d(2.5px, -8px, 0) rotate(0.6deg);
+    }
+  }
+
+  .tw-cta-float {
+    animation: tw-cta-float 4.8s ease-in-out infinite;
+    will-change: transform;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -232,6 +251,11 @@
     animation: none !important;
     transform: none !important;
     opacity: 0.9 !important;
+  }
+
+  .tw-cta-float {
+    animation: none !important;
+    transform: none !important;
   }
 
   *,
