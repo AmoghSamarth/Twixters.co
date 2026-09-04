@@ -3,7 +3,7 @@ import { collage, collageCta } from "../../content/site";
 import { Reveal } from "./reveal";
 
 export function Collage() {
-  const containerRef = useRef(null);
+  const sectionRef = useRef(null);
   const floatRef = useRef(null);
   const [hasEntered, setHasEntered] = useState(false);
   const hasEnteredRef = useRef(false);
@@ -21,77 +21,67 @@ export function Collage() {
     }
 
     let rafId;
-    let currentScrollOffset = 0;
-
-    const onScroll = () => {
-      // Passive scroll tracker
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
+    let smoothY = 0;
 
     const tick = () => {
-      if (containerRef.current && floatRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        const viewportHeight = window.innerHeight;
+      if (sectionRef.current && floatRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        const vh = window.innerHeight;
 
-        // Trigger entrance when collage first approaches / enters viewport
-        if (!hasEnteredRef.current && rect.top < viewportHeight * 0.88) {
+        // Trigger entrance once section enters viewport
+        if (!hasEnteredRef.current && rect.top < vh * 0.92) {
           hasEnteredRef.current = true;
           setHasEntered(true);
         }
 
         if (hasEnteredRef.current) {
-          // Scroll-driven parallax relative to collage center in viewport
-          const containerCenter = rect.top + rect.height / 2;
-          const viewportCenter = viewportHeight / 2;
-          const diff = viewportCenter - containerCenter;
+          // Scroll progress through the section: 0 = section top at bottom of viewport, 1 = section bottom at top of viewport
+          const totalTravel = rect.height + vh;
+          const traveled = vh - rect.top;
+          const progress = Math.max(0, Math.min(1, traveled / totalTravel));
 
-          // Clamp parallax movement strictly between -20px and +20px
-          const targetScroll = Math.max(-20, Math.min(20, diff * 0.06));
+          // Map progress to a vertical offset: rises from +40px to -40px as you scroll through
+          // This gives the "floating through the section" feeling
+          const targetY = (0.5 - progress) * 80;
 
-          // Physical inertia lerp for buttery smooth response
-          currentScrollOffset += (targetScroll - currentScrollOffset) * 0.1;
+          // Smooth lerp
+          smoothY += (targetY - smoothY) * 0.08;
 
-          // Extremely subtle idle floating motion (±3px vertical, ±1.5px horizontal, ±0.4deg)
+          // Subtle idle breathing (gentle float, no rotation to keep units locked)
           const t = performance.now() * 0.001;
-          const idlePeriod = 4.6;
+          const idlePeriod = 4.8;
           const idleY = Math.sin((t * 2 * Math.PI) / idlePeriod) * 3;
-          const idleX = Math.cos((t * 2 * Math.PI) / idlePeriod) * 1.5;
-          const idleRot = Math.sin((t * 2 * Math.PI) / idlePeriod) * 0.4;
+          const idleX = Math.cos((t * 2 * Math.PI) / idlePeriod) * 1.2;
 
-          const totalY = currentScrollOffset + idleY;
-          floatRef.current.style.transform = `translate3d(${idleX.toFixed(2)}px, ${totalY.toFixed(2)}px, 0) rotate(${idleRot.toFixed(2)}deg)`;
+          floatRef.current.style.transform = `translate3d(${idleX.toFixed(2)}px, ${(smoothY + idleY).toFixed(2)}px, 0)`;
         }
       }
       rafId = requestAnimationFrame(tick);
     };
 
     rafId = requestAnimationFrame(tick);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      window.removeEventListener("scroll", onScroll);
-    };
+    return () => cancelAnimationFrame(rafId);
   }, []);
 
   return (
-    <section aria-label="Selected work" className="relative px-4 pb-20 sm:px-8 sm:pb-24">
+    <section
+      ref={sectionRef}
+      aria-label="Selected work"
+      className="relative px-4 pb-20 sm:px-8 sm:pb-24"
+    >
       <Reveal className="relative mx-auto max-w-[1280px]">
-        <div
-          ref={containerRef}
-          className="relative rounded-[28px] bg-[#191919] p-3 sm:rounded-[36px] sm:p-4"
-        >
-          {/* Desktop / tablet mosaic */}
-          <div className="tw-collage hidden gap-3 sm:grid sm:gap-3.5">
-            {collage.map((block, i) => (
-              <Reveal
-                key={block.src + block.area}
-                delay={i * 70}
-                className="overflow-hidden rounded-[18px] sm:rounded-[22px]"
-                style={{ gridArea: block.area }}
-              >
+        {/* Dark showroom container */}
+        <div className="relative overflow-hidden rounded-[28px] bg-[#191919] p-3 sm:rounded-[36px] sm:p-4">
+
+          {/* ── Desktop mosaic: 2-column reference layout ── */}
+          <div className="tw-collage hidden sm:block">
+            {/* Left column */}
+            <div className="tw-col-left flex flex-col gap-3 sm:gap-3.5">
+              {/* Top image — tall */}
+              <Reveal delay={0} className="overflow-hidden rounded-[18px] sm:rounded-[22px] tw-img-tall-a">
                 <img
-                  src={block.src}
-                  alt={block.alt}
+                  src={collage[0]?.src || "/assets/work-1.jpg"}
+                  alt={collage[0]?.alt || "Brand identity work"}
                   width={1024}
                   height={720}
                   loading="lazy"
@@ -99,10 +89,74 @@ export function Collage() {
                   className="size-full object-cover"
                 />
               </Reveal>
-            ))}
+              {/* Bottom image */}
+              <Reveal delay={80} className="overflow-hidden rounded-[18px] sm:rounded-[22px] tw-img-tall-b">
+                <img
+                  src={collage[2]?.src || "/assets/work-3.jpg"}
+                  alt={collage[2]?.alt || "Brand design work"}
+                  width={1024}
+                  height={720}
+                  loading="lazy"
+                  decoding="async"
+                  className="size-full object-cover"
+                />
+              </Reveal>
+            </div>
+
+            {/* Right column */}
+            <div className="tw-col-right flex flex-col gap-3 sm:gap-3.5">
+              {/* Top right image — large single */}
+              <Reveal delay={40} className="overflow-hidden rounded-[18px] sm:rounded-[22px] tw-img-right-a">
+                <img
+                  src={collage[1]?.src || "/assets/work-2.jpg"}
+                  alt={collage[1]?.alt || "Organic brand design"}
+                  width={1024}
+                  height={720}
+                  loading="lazy"
+                  decoding="async"
+                  className="size-full object-cover"
+                />
+              </Reveal>
+              {/* Bottom right: 3-panel row */}
+              <div className="tw-img-right-b grid grid-cols-3 gap-3 sm:gap-3.5">
+                <Reveal delay={100} className="overflow-hidden rounded-[18px] sm:rounded-[22px]">
+                  <img
+                    src={collage[3]?.src || "/assets/work-5.jpg"}
+                    alt={collage[3]?.alt || "Design work"}
+                    width={512}
+                    height={512}
+                    loading="lazy"
+                    decoding="async"
+                    className="size-full object-cover"
+                  />
+                </Reveal>
+                <Reveal delay={130} className="overflow-hidden rounded-[18px] sm:rounded-[22px]">
+                  <img
+                    src={collage[4]?.src || "/assets/work-4.jpg"}
+                    alt={collage[4]?.alt || "Design work"}
+                    width={512}
+                    height={512}
+                    loading="lazy"
+                    decoding="async"
+                    className="size-full object-cover"
+                  />
+                </Reveal>
+                <Reveal delay={160} className="overflow-hidden rounded-[18px] sm:rounded-[22px]">
+                  <img
+                    src={collage[5]?.src || "/assets/work-6.jpg"}
+                    alt={collage[5]?.alt || "Design work"}
+                    width={512}
+                    height={512}
+                    loading="lazy"
+                    decoding="async"
+                    className="size-full object-cover"
+                  />
+                </Reveal>
+              </div>
+            </div>
           </div>
 
-          {/* Mobile: a snap rail, not an endless vertical stack */}
+          {/* ── Mobile: horizontal snap rail ── */}
           <ul className="-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-1 sm:hidden">
             {collage.map((block) => (
               <li
@@ -122,12 +176,13 @@ export function Collage() {
             ))}
           </ul>
 
-          {/* Floating "See Recent Work" CTA - Single unified two-part composition */}
-          <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 sm:top-[53%] z-30">
-            {/* Scroll entrance wrapper: opacity 0 -> 1 and translateY 20px -> 0 */}
+          {/* ── Floating "See Recent Work" CTA ── */}
+          {/* Positioned at horizontal center seam, approximately at the junction between top and bottom rows */}
+          <div className="pointer-events-none absolute left-1/2 top-[50%] z-30 -translate-x-[50%] -translate-y-[50%] hidden sm:block">
+            {/* Entrance fade + rise */}
             <div
               className={`transition-[opacity,transform] duration-700 ease-out ${
-                hasEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
+                hasEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
               }`}
             >
               <a
@@ -137,54 +192,102 @@ export function Collage() {
                   document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
                 }}
                 aria-label={collageCta?.label || "See Recent Work"}
-                className="group pointer-events-auto block cursor-pointer select-none transition-transform duration-300 ease-out hover:scale-[1.03]"
+                className="group pointer-events-auto block cursor-pointer select-none transition-transform duration-300 ease-out hover:scale-[1.04]"
               >
-                <div ref={floatRef} className="recent-work-float relative">
-                  {/* 1. Black Label Pill */}
-                  <div className="recent-work-pill absolute -top-[28px] -left-[20px] sm:-top-[38px] sm:-left-[26px] md:-top-[44px] md:-left-[32px] z-10 w-[136px] h-[40px] sm:w-[165px] sm:h-[48px] md:w-[196px] md:h-[58px] rounded-full bg-[#0a0a0a] shadow-[0_10px_25px_rgba(0,0,0,0.35)] flex items-center justify-center rotate-[16deg]">
-                    <span className="text-white text-[11px] sm:text-[13px] md:text-[15px] font-bold tracking-tight whitespace-nowrap">
+                {/* This div gets the scroll-driven parallax transform */}
+                <div ref={floatRef} className="relative">
+
+                  {/* 1. Black rotated pill — above and slightly left of center */}
+                  <div
+                    className="absolute z-10 flex items-center justify-center rounded-full bg-[#0a0a0a] shadow-[0_10px_28px_rgba(0,0,0,0.4)]"
+                    style={{
+                      width: "clamp(155px, 13vw, 196px)",
+                      height: "clamp(46px, 4vw, 58px)",
+                      top: "clamp(-54px, -4.5vw, -44px)",
+                      left: "clamp(-34px, -2.8vw, -26px)",
+                      transform: "rotate(16deg)",
+                    }}
+                  >
+                    <span className="text-white font-bold tracking-tight whitespace-nowrap" style={{ fontSize: "clamp(12px, 1.1vw, 15px)" }}>
                       {collageCta?.label || "See Recent Work"}
                     </span>
                     {/* Downward triangle pointer tail */}
                     <div
                       aria-hidden="true"
-                      className="absolute -bottom-[6px] md:-bottom-[8px] left-[48%] -translate-x-1/2 w-0 h-0 border-l-[5px] border-r-[5px] border-t-[6px] md:border-l-[7px] md:border-r-[7px] md:border-t-[8px] border-l-transparent border-r-transparent border-t-[#0a0a0a]"
+                      className="absolute left-[48%] -translate-x-1/2"
+                      style={{
+                        bottom: "clamp(-7px, -0.6vw, -8px)",
+                        width: 0,
+                        height: 0,
+                        borderLeft: "6px solid transparent",
+                        borderRight: "6px solid transparent",
+                        borderTop: "7px solid #0a0a0a",
+                      }}
                     />
                   </div>
 
-                  {/* 2. White Circular Button with Phosphor FolderOpen icon */}
-                  <div className="recent-work-circle w-[88px] h-[88px] sm:w-[116px] sm:h-[116px] md:w-[138px] md:h-[138px] rounded-full bg-white/85 backdrop-blur-md border border-white/60 shadow-[0_16px_36px_rgba(0,0,0,0.22)] flex items-center justify-center">
+                  {/* 2. White frosted circular button */}
+                  <div
+                    className="flex items-center justify-center rounded-full bg-white/90 backdrop-blur-md border border-white/50 shadow-[0_16px_40px_rgba(0,0,0,0.25)]"
+                    style={{
+                      width: "clamp(110px, 9.5vw, 138px)",
+                      height: "clamp(110px, 9.5vw, 138px)",
+                    }}
+                  >
                     <svg
                       viewBox="0 0 256 256"
                       fill="currentColor"
                       aria-hidden="true"
-                      className="size-6 sm:size-8 md:size-10 text-black transition-transform duration-300 group-hover:scale-105"
+                      className="text-black transition-transform duration-300 group-hover:scale-105"
+                      style={{ width: "clamp(28px, 2.6vw, 40px)", height: "clamp(28px, 2.6vw, 40px)" }}
                     >
                       <path d="M240 88h-109.33L102.93 60.27A16.1 16.1 0 0 0 91.64 56H40a16 16 0 0 0-16 16v128a16 16 0 0 0 16 16h176a16 16 0 0 0 15.82-13.68l16-104A16 16 0 0 0 240 88Zm-25.76 112H40V72h51.64l27.73 27.73A16.1 16.1 0 0 0 130.67 104h91.94Z" />
                     </svg>
                   </div>
+
                 </div>
               </a>
             </div>
           </div>
+
         </div>
       </Reveal>
 
       <style>{`
+        /* Desktop mosaic — 2-column layout matching reference */
         .tw-collage {
-          grid-template-columns: repeat(6, 1fr);
-          grid-template-rows: 190px 190px 150px 150px;
-          grid-template-areas:
-            "a a a b b b"
-            "a a a b b b"
-            "c c d d f f"
-            "e e d d f f";
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: 1fr;
+          gap: 14px;
         }
+        .tw-col-left,
+        .tw-col-right {
+          display: flex;
+          flex-direction: column;
+        }
+
+        /* Left column heights */
+        .tw-img-tall-a {
+          height: clamp(340px, 36vw, 520px);
+        }
+        .tw-img-tall-b {
+          height: clamp(260px, 28vw, 400px);
+        }
+
+        /* Right column heights */
+        .tw-img-right-a {
+          height: clamp(300px, 32vw, 460px);
+        }
+        .tw-img-right-b {
+          height: clamp(200px, 21vw, 300px);
+        }
+
         @media (min-width: 768px) and (max-width: 1023px) {
-          .tw-collage { grid-template-rows: 210px 210px 170px 170px; }
-        }
-        @media (min-width: 1024px) {
-          .tw-collage { grid-template-rows: 260px 260px 200px 200px; }
+          .tw-img-tall-a { height: clamp(280px, 36vw, 380px); }
+          .tw-img-tall-b { height: clamp(200px, 26vw, 280px); }
+          .tw-img-right-a { height: clamp(250px, 32vw, 340px); }
+          .tw-img-right-b { height: clamp(160px, 20vw, 220px); }
         }
       `}</style>
     </section>
