@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { hero } from "../../content/site";
+import { InkPill, StatusPill } from "./primitives";
 import { Reveal } from "./reveal";
 function TwixtersWatermark({ className = "" }) {
   return <svg
@@ -92,6 +93,46 @@ export function Hero() {
           <p className="text-center text-[15px] leading-[1.5] text-ink-muted sm:text-[16px]">
             {hero.sub}
           </p>
+        </Reveal>
+
+        {/* CTA & Trusted by group */}
+        <Reveal
+          delay={280}
+          className="mt-6 flex flex-col items-center justify-center gap-4 sm:mt-8 sm:flex-row sm:gap-6"
+        >
+          {/* Obsidian CTA pill with white capsule outer frame */}
+          <div className="rounded-full p-1 bg-surface/90 shadow-[0_6px_20px_rgba(0,0,0,0.08)] ring-1 ring-black/5">
+            <InkPill href={hero.cta.href} className="min-h-[46px] px-7 py-3 text-[15px] sm:text-[16px]">
+              {hero.cta.label}
+            </InkPill>
+          </div>
+
+          {/* Real avatar stack + Trusted by Leaders */}
+          <div className="flex flex-col items-center gap-1 sm:items-start">
+            <ul className="flex items-center pl-2.5">
+              {hero.avatars.map((a) => (
+                <li key={a.src} className="-ml-2.5">
+                  <img
+                    src={a.src}
+                    alt={a.alt}
+                    width={72}
+                    height={72}
+                    loading="lazy"
+                    decoding="async"
+                    className="size-9 rounded-full border-2 border-surface object-cover shadow-xs"
+                  />
+                </li>
+              ))}
+            </ul>
+            <p className="text-[12px] font-medium tracking-tight text-ink-muted">{hero.trustLabel}</p>
+          </div>
+        </Reveal>
+
+        {/* Booking Open status pill with pulsing green dot */}
+        <Reveal delay={340} className="mt-6 flex justify-center sm:mt-8">
+          <StatusPill className="px-5 py-2.5 text-[13.5px] shadow-[0_2px_8px_rgba(0,0,0,0.06)] ring-1 ring-black/5">
+            {hero.availability}
+          </StatusPill>
         </Reveal>
       </div>
     </section>
