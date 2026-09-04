@@ -10,10 +10,8 @@ import { Pricing } from "./components/tw/pricing";
 import { Faq } from "./components/tw/faq";
 import { FinalCta } from "./components/tw/final-cta";
 import { StructuredData } from "./components/tw/structured-data";
-
 export default function App() {
-  return (
-    <>
+  return <>
       <StructuredData />
       <Nav />
       <main>
@@ -28,6 +26,5 @@ export default function App() {
         <Faq />
         <FinalCta />
       </main>
-    </>
-  );
+    </>;
 }
