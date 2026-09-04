@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { hero } from "../../content/site";
-import { InkPill, StatusPill } from "./primitives";
 import { Reveal } from "./reveal";
 function TwixtersWatermark({ className = "" }) {
   return <svg
@@ -63,23 +62,18 @@ export function Hero() {
     { src: "/assets/work-3.jpg", alt: "Cognito Bite brand identity" },
     { src: "/assets/work-4.jpg", alt: "The Biryani Story mark" }
   ];
-  return <section id="top" className="relative overflow-hidden px-5 pt-[325px] pb-24 sm:px-8 sm:pt-[465px] sm:pb-32">
-      {
-    /* Photorealistic white diagonal sunbeams matching reference and green arrow directions */
-  }
+  return (
+    <section id="top" className="relative overflow-hidden px-5 pt-[325px] pb-24 sm:px-8 sm:pt-[465px] sm:pb-32">
+      {/* Photorealistic white diagonal sunbeams */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
         <div className="tw-sunbeams" />
       </div>
 
-      {
-    /* Script wordmark watermark — 10% smaller, decorative layer z-[2] */
-  }
+      {/* Script wordmark watermark */}
       <TwixtersWatermark className="pointer-events-none absolute z-[2] top-[170px] left-1/2 w-[clamp(340px,48vw,684px)] -translate-x-1/2 text-ink/[0.06] select-none sm:top-[200px]" />
 
       <div className="relative z-10 mx-auto max-w-[1280px]">
-        {
-    /* H1 Headline with integrated animated slideshow chips */
-  }
+        {/* H1 Headline with integrated animated slideshow chips */}
         <h1 className="tw-display mx-auto max-w-[1040px] text-center text-[clamp(2.35rem,6.4vw,6rem)] leading-[1.12] tracking-[-0.04em]">
           <Reveal as="span" className="block" delay={0}>
             <span className="font-bold text-ink">{hero.lineOneBefore}</span>
@@ -93,60 +87,13 @@ export function Hero() {
           </Reveal>
         </h1>
 
-        {
-    /* Supporting Copy */
-  }
+        {/* Supporting Copy */}
         <Reveal delay={200} className="mx-auto mt-6 max-w-[540px] px-4 sm:mt-7">
           <p className="text-center text-[15px] leading-[1.5] text-ink-muted sm:text-[16px]">
             {hero.sub}
           </p>
         </Reveal>
-
-        {
-    /* CTA & Trusted by group */
-  }
-        <Reveal
-    delay={280}
-    className="mt-6 flex flex-col items-center justify-center gap-4 sm:mt-8 sm:flex-row sm:gap-6"
-  >
-          {
-    /* Obsidian CTA pill with white capsule outer frame */
-  }
-          <div className="rounded-full p-1 bg-surface/90 shadow-[0_6px_20px_rgba(0,0,0,0.08)] ring-1 ring-black/5">
-            <InkPill href={hero.cta.href} className="min-h-[46px] px-7 py-3 text-[15px] sm:text-[16px]">
-              {hero.cta.label}
-            </InkPill>
-          </div>
-
-          {
-    /* Real avatar stack + Trusted by Leaders */
-  }
-          <div className="flex flex-col items-center gap-1 sm:items-start">
-            <ul className="flex items-center pl-2.5">
-              {hero.avatars.map((a) => <li key={a.src} className="-ml-2.5">
-                  <img
-    src={a.src}
-    alt={a.alt}
-    width={72}
-    height={72}
-    loading="lazy"
-    decoding="async"
-    className="size-9 rounded-full border-2 border-surface object-cover shadow-xs"
-  />
-                </li>)}
-            </ul>
-            <p className="text-[12px] font-medium tracking-tight text-ink-muted">{hero.trustLabel}</p>
-          </div>
-        </Reveal>
-
-        {
-    /* Booking Open status pill with pulsing green dot */
-  }
-        <Reveal delay={340} className="mt-6 flex justify-center sm:mt-8">
-          <StatusPill className="px-5 py-2.5 text-[13.5px] shadow-[0_2px_8px_rgba(0,0,0,0.06)] ring-1 ring-black/5">
-            {hero.availability}
-          </StatusPill>
-        </Reveal>
       </div>
-    </section>;
+    </section>
+  );
 }
