@@ -1,11 +1,85 @@
+import { useEffect, useRef, useState } from "react";
 import { collage, collageCta } from "../../content/site";
 import { Reveal } from "./reveal";
 
 export function Collage() {
+  const containerRef = useRef(null);
+  const floatRef = useRef(null);
+  const [hasEntered, setHasEntered] = useState(false);
+  const hasEnteredRef = useRef(false);
+
+  useEffect(() => {
+    // Respect reduced motion preference
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion) {
+      setHasEntered(true);
+      hasEnteredRef.current = true;
+      return;
+    }
+
+    let rafId;
+    let currentScrollOffset = 0;
+
+    const onScroll = () => {
+      // Passive scroll tracker
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    const tick = () => {
+      if (containerRef.current && floatRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+
+        // Trigger entrance when collage first approaches / enters viewport
+        if (!hasEnteredRef.current && rect.top < viewportHeight * 0.88) {
+          hasEnteredRef.current = true;
+          setHasEntered(true);
+        }
+
+        if (hasEnteredRef.current) {
+          // Scroll-driven parallax relative to collage center in viewport
+          const containerCenter = rect.top + rect.height / 2;
+          const viewportCenter = viewportHeight / 2;
+          const diff = viewportCenter - containerCenter;
+
+          // Clamp parallax movement strictly between -20px and +20px
+          const targetScroll = Math.max(-20, Math.min(20, diff * 0.06));
+
+          // Physical inertia lerp for buttery smooth response
+          currentScrollOffset += (targetScroll - currentScrollOffset) * 0.1;
+
+          // Extremely subtle idle floating motion (±3px vertical, ±1.5px horizontal, ±0.4deg)
+          const t = performance.now() * 0.001;
+          const idlePeriod = 4.6;
+          const idleY = Math.sin((t * 2 * Math.PI) / idlePeriod) * 3;
+          const idleX = Math.cos((t * 2 * Math.PI) / idlePeriod) * 1.5;
+          const idleRot = Math.sin((t * 2 * Math.PI) / idlePeriod) * 0.4;
+
+          const totalY = currentScrollOffset + idleY;
+          floatRef.current.style.transform = `translate3d(${idleX.toFixed(2)}px, ${totalY.toFixed(2)}px, 0) rotate(${idleRot.toFixed(2)}deg)`;
+        }
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+
+    rafId = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
   return (
     <section aria-label="Selected work" className="relative px-4 pb-20 sm:px-8 sm:pb-24">
       <Reveal className="relative mx-auto max-w-[1280px]">
-        <div className="relative rounded-[28px] bg-[#191919] p-3 sm:rounded-[36px] sm:p-4">
+        <div
+          ref={containerRef}
+          className="relative rounded-[28px] bg-[#191919] p-3 sm:rounded-[36px] sm:p-4"
+        >
           {/* Desktop / tablet mosaic */}
           <div className="tw-collage hidden gap-3 sm:grid sm:gap-3.5">
             {collage.map((block, i) => (
@@ -50,41 +124,48 @@ export function Collage() {
 
           {/* Floating "See Recent Work" CTA - Single unified two-part composition */}
           <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 sm:top-[53%] z-30">
-            <a
-              href={collageCta?.href || "#work"}
-              onClick={(e) => {
-                e.preventDefault();
-                document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
-              }}
-              aria-label={collageCta?.label || "See Recent Work"}
-              className="group pointer-events-auto block cursor-pointer select-none transition-transform duration-300 ease-out hover:scale-[1.03]"
+            {/* Scroll entrance wrapper: opacity 0 -> 1 and translateY 20px -> 0 */}
+            <div
+              className={`transition-[opacity,transform] duration-700 ease-out ${
+                hasEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
+              }`}
             >
-              <div className="tw-cta-float relative">
-                {/* 1. Black Label Pill */}
-                <div className="absolute -top-[28px] -left-[20px] sm:-top-[38px] sm:-left-[26px] md:-top-[44px] md:-left-[32px] z-10 w-[136px] h-[40px] sm:w-[165px] sm:h-[48px] md:w-[196px] md:h-[58px] rounded-full bg-[#0a0a0a] shadow-[0_10px_25px_rgba(0,0,0,0.35)] flex items-center justify-center rotate-[16deg]">
-                  <span className="text-white text-[11px] sm:text-[13px] md:text-[15px] font-bold tracking-tight whitespace-nowrap">
-                    {collageCta?.label || "See Recent Work"}
-                  </span>
-                  {/* Downward triangle pointer tail */}
-                  <div
-                    aria-hidden="true"
-                    className="absolute -bottom-[6px] md:-bottom-[8px] left-[48%] -translate-x-1/2 w-0 h-0 border-l-[5px] border-r-[5px] border-t-[6px] md:border-l-[7px] md:border-r-[7px] md:border-t-[8px] border-l-transparent border-r-transparent border-t-[#0a0a0a]"
-                  />
-                </div>
+              <a
+                href={collageCta?.href || "#work"}
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                aria-label={collageCta?.label || "See Recent Work"}
+                className="group pointer-events-auto block cursor-pointer select-none transition-transform duration-300 ease-out hover:scale-[1.03]"
+              >
+                <div ref={floatRef} className="recent-work-float relative">
+                  {/* 1. Black Label Pill */}
+                  <div className="recent-work-pill absolute -top-[28px] -left-[20px] sm:-top-[38px] sm:-left-[26px] md:-top-[44px] md:-left-[32px] z-10 w-[136px] h-[40px] sm:w-[165px] sm:h-[48px] md:w-[196px] md:h-[58px] rounded-full bg-[#0a0a0a] shadow-[0_10px_25px_rgba(0,0,0,0.35)] flex items-center justify-center rotate-[16deg]">
+                    <span className="text-white text-[11px] sm:text-[13px] md:text-[15px] font-bold tracking-tight whitespace-nowrap">
+                      {collageCta?.label || "See Recent Work"}
+                    </span>
+                    {/* Downward triangle pointer tail */}
+                    <div
+                      aria-hidden="true"
+                      className="absolute -bottom-[6px] md:-bottom-[8px] left-[48%] -translate-x-1/2 w-0 h-0 border-l-[5px] border-r-[5px] border-t-[6px] md:border-l-[7px] md:border-r-[7px] md:border-t-[8px] border-l-transparent border-r-transparent border-t-[#0a0a0a]"
+                    />
+                  </div>
 
-                {/* 2. White Circular Button with Phosphor FolderOpen icon */}
-                <div className="w-[88px] h-[88px] sm:w-[116px] sm:h-[116px] md:w-[138px] md:h-[138px] rounded-full bg-white/85 backdrop-blur-md border border-white/60 shadow-[0_16px_36px_rgba(0,0,0,0.22)] flex items-center justify-center">
-                  <svg
-                    viewBox="0 0 256 256"
-                    fill="currentColor"
-                    aria-hidden="true"
-                    className="size-6 sm:size-8 md:size-10 text-black transition-transform duration-300 group-hover:scale-105"
-                  >
-                    <path d="M240 88h-109.33L102.93 60.27A16.1 16.1 0 0 0 91.64 56H40a16 16 0 0 0-16 16v128a16 16 0 0 0 16 16h176a16 16 0 0 0 15.82-13.68l16-104A16 16 0 0 0 240 88Zm-25.76 112H40V72h51.64l27.73 27.73A16.1 16.1 0 0 0 130.67 104h91.94Z" />
-                  </svg>
+                  {/* 2. White Circular Button with Phosphor FolderOpen icon */}
+                  <div className="recent-work-circle w-[88px] h-[88px] sm:w-[116px] sm:h-[116px] md:w-[138px] md:h-[138px] rounded-full bg-white/85 backdrop-blur-md border border-white/60 shadow-[0_16px_36px_rgba(0,0,0,0.22)] flex items-center justify-center">
+                    <svg
+                      viewBox="0 0 256 256"
+                      fill="currentColor"
+                      aria-hidden="true"
+                      className="size-6 sm:size-8 md:size-10 text-black transition-transform duration-300 group-hover:scale-105"
+                    >
+                      <path d="M240 88h-109.33L102.93 60.27A16.1 16.1 0 0 0 91.64 56H40a16 16 0 0 0-16 16v128a16 16 0 0 0 16 16h176a16 16 0 0 0 15.82-13.68l16-104A16 16 0 0 0 240 88Zm-25.76 112H40V72h51.64l27.73 27.73A16.1 16.1 0 0 0 130.67 104h91.94Z" />
+                    </svg>
+                  </div>
                 </div>
-              </div>
-            </a>
+              </a>
+            </div>
           </div>
         </div>
       </Reveal>
