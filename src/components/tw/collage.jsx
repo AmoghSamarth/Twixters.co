@@ -106,17 +106,17 @@ export function Collage() {
       aria-label="Selected work"
       className="relative px-2 pb-20 sm:px-3 sm:pb-24"
     >
-      <Reveal className="relative mx-auto max-w-[1792px]">
+      <Reveal className="relative mx-auto max-w-[1434px]">
         {/* Dark showroom container */}
         <div className="relative overflow-hidden rounded-[28px] bg-[#191919] p-3 sm:rounded-[36px] sm:p-4">
 
           {/* ── Desktop: two auto-scrolling marquee columns ── */}
           <div className="tw-collage hidden sm:grid">
             {/* Left column — slower speed */}
-            <MarqueeColumn images={leftImages} duration={26} />
+            <MarqueeColumn images={leftImages} duration={29} />
 
             {/* Right column — slightly faster speed */}
-            <MarqueeColumn images={rightImages} duration={20} />
+            <MarqueeColumn images={rightImages} duration={22} />
           </div>
 
           {/* ── Mobile: horizontal snap rail ── */}
