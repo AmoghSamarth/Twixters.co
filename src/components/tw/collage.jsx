@@ -222,8 +222,8 @@ export function Collage() {
         .tw-collage {
           grid-template-columns: 1fr 1fr;
           gap: 14px;
-          /* Container is now 2.5x taller — images fill it and scroll through */
-          height: clamp(700px, 88vh, 1020px);
+          /* Container is now 1.5x taller — images fill it and scroll through */
+          height: clamp(1050px, 132vh, 1530px);
         }
 
         /* ── Each marquee track clips overflow ── */
@@ -245,7 +245,7 @@ export function Collage() {
         /* ── Individual image cards — 2.5x taller than before ── */
         .tw-marquee-card {
           flex-shrink: 0;
-          height: clamp(480px, 58vw, 780px);
+          height: clamp(432px, 52vw, 702px);
           width: 100%;
         }
 
@@ -293,8 +293,8 @@ export function Collage() {
         }
 
         @media (min-width: 768px) and (max-width: 1023px) {
-          .tw-collage { height: clamp(520px, 75vh, 800px); }
-          .tw-marquee-card { height: clamp(360px, 45vw, 580px); }
+          .tw-collage { height: clamp(780px, 112vh, 1200px); }
+          .tw-marquee-card { height: clamp(324px, 40vw, 522px); }
         }
 
         @media (prefers-reduced-motion: reduce) {
