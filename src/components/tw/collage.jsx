@@ -2,6 +2,50 @@ import { useEffect, useRef, useState } from "react";
 import { collage, collageCta } from "../../content/site";
 import { Reveal } from "./reveal";
 
+/* ─── Image sets for each column (duplicated for seamless loop) ─── */
+const leftImages = [
+  { src: "/assets/work-1.jpg", alt: "The Saath brand identity collateral" },
+  { src: "/assets/work-3.jpg", alt: "Cognito Bite protein bar visual identity" },
+  { src: "/assets/work-5.jpg", alt: "Twixters.Co packaging and print collateral" },
+];
+
+const rightImages = [
+  { src: "/assets/work-2.jpg", alt: "Gamla organic brand design system" },
+  { src: "/assets/work-4.jpg", alt: "The Biryani Story logo and packaging" },
+  { src: "/assets/work-6.jpg", alt: "Twixters.Co campaign and social creative" },
+];
+
+function MarqueeColumn({ images, duration, className = "" }) {
+  // Duplicate the images for seamless infinite loop
+  const doubled = [...images, ...images];
+
+  return (
+    <div className={`tw-marquee-track overflow-hidden ${className}`}>
+      <div
+        className="tw-marquee-inner"
+        style={{ animationDuration: `${duration}s` }}
+      >
+        {doubled.map((img, i) => (
+          <div
+            key={`${img.src}-${i}`}
+            className="tw-marquee-card overflow-hidden rounded-[18px] sm:rounded-[22px]"
+          >
+            <img
+              src={img.src}
+              alt={img.alt}
+              width={1024}
+              height={720}
+              loading={i < 2 ? "eager" : "lazy"}
+              decoding="async"
+              className="size-full object-cover"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function Collage() {
   const sectionRef = useRef(null);
   const floatRef = useRef(null);
@@ -9,7 +53,6 @@ export function Collage() {
   const hasEnteredRef = useRef(false);
 
   useEffect(() => {
-    // Respect reduced motion preference
     const prefersReducedMotion =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -28,26 +71,20 @@ export function Collage() {
         const rect = sectionRef.current.getBoundingClientRect();
         const vh = window.innerHeight;
 
-        // Trigger entrance once section enters viewport
         if (!hasEnteredRef.current && rect.top < vh * 0.92) {
           hasEnteredRef.current = true;
           setHasEntered(true);
         }
 
         if (hasEnteredRef.current) {
-          // Scroll progress through the section: 0 = section top at bottom of viewport, 1 = section bottom at top of viewport
+          // Scroll-driven vertical parallax for the floating CTA
           const totalTravel = rect.height + vh;
           const traveled = vh - rect.top;
           const progress = Math.max(0, Math.min(1, traveled / totalTravel));
-
-          // Map progress to a vertical offset: rises from +40px to -40px as you scroll through
-          // This gives the "floating through the section" feeling
-          const targetY = (0.5 - progress) * 80;
-
-          // Smooth lerp
+          const targetY = (0.5 - progress) * 60;
           smoothY += (targetY - smoothY) * 0.08;
 
-          // Subtle idle breathing (gentle float, no rotation to keep units locked)
+          // Idle float
           const t = performance.now() * 0.001;
           const idlePeriod = 4.8;
           const idleY = Math.sin((t * 2 * Math.PI) / idlePeriod) * 3;
@@ -73,99 +110,25 @@ export function Collage() {
         {/* Dark showroom container */}
         <div className="relative overflow-hidden rounded-[28px] bg-[#191919] p-3 sm:rounded-[36px] sm:p-4">
 
-          {/* ── Desktop mosaic: 2-column reference layout ── */}
-          <div className="tw-collage hidden sm:block">
-            {/* Left column */}
-            <div className="tw-col-left flex flex-col gap-3 sm:gap-3.5">
-              {/* Top image — tall */}
-              <Reveal delay={0} className="overflow-hidden rounded-[18px] sm:rounded-[22px] tw-img-tall-a">
-                <img
-                  src={collage[0]?.src || "/assets/work-1.jpg"}
-                  alt={collage[0]?.alt || "Brand identity work"}
-                  width={1024}
-                  height={720}
-                  loading="lazy"
-                  decoding="async"
-                  className="size-full object-cover"
-                />
-              </Reveal>
-              {/* Bottom image */}
-              <Reveal delay={80} className="overflow-hidden rounded-[18px] sm:rounded-[22px] tw-img-tall-b">
-                <img
-                  src={collage[2]?.src || "/assets/work-3.jpg"}
-                  alt={collage[2]?.alt || "Brand design work"}
-                  width={1024}
-                  height={720}
-                  loading="lazy"
-                  decoding="async"
-                  className="size-full object-cover"
-                />
-              </Reveal>
-            </div>
+          {/* ── Desktop: two auto-scrolling marquee columns ── */}
+          <div className="tw-collage hidden sm:grid">
+            {/* Left column — slower speed */}
+            <MarqueeColumn images={leftImages} duration={26} />
 
-            {/* Right column */}
-            <div className="tw-col-right flex flex-col gap-3 sm:gap-3.5">
-              {/* Top right image — large single */}
-              <Reveal delay={40} className="overflow-hidden rounded-[18px] sm:rounded-[22px] tw-img-right-a">
-                <img
-                  src={collage[1]?.src || "/assets/work-2.jpg"}
-                  alt={collage[1]?.alt || "Organic brand design"}
-                  width={1024}
-                  height={720}
-                  loading="lazy"
-                  decoding="async"
-                  className="size-full object-cover"
-                />
-              </Reveal>
-              {/* Bottom right: 3-panel row */}
-              <div className="tw-img-right-b grid grid-cols-3 gap-3 sm:gap-3.5">
-                <Reveal delay={100} className="overflow-hidden rounded-[18px] sm:rounded-[22px]">
-                  <img
-                    src={collage[3]?.src || "/assets/work-5.jpg"}
-                    alt={collage[3]?.alt || "Design work"}
-                    width={512}
-                    height={512}
-                    loading="lazy"
-                    decoding="async"
-                    className="size-full object-cover"
-                  />
-                </Reveal>
-                <Reveal delay={130} className="overflow-hidden rounded-[18px] sm:rounded-[22px]">
-                  <img
-                    src={collage[4]?.src || "/assets/work-4.jpg"}
-                    alt={collage[4]?.alt || "Design work"}
-                    width={512}
-                    height={512}
-                    loading="lazy"
-                    decoding="async"
-                    className="size-full object-cover"
-                  />
-                </Reveal>
-                <Reveal delay={160} className="overflow-hidden rounded-[18px] sm:rounded-[22px]">
-                  <img
-                    src={collage[5]?.src || "/assets/work-6.jpg"}
-                    alt={collage[5]?.alt || "Design work"}
-                    width={512}
-                    height={512}
-                    loading="lazy"
-                    decoding="async"
-                    className="size-full object-cover"
-                  />
-                </Reveal>
-              </div>
-            </div>
+            {/* Right column — slightly faster speed */}
+            <MarqueeColumn images={rightImages} duration={20} />
           </div>
 
           {/* ── Mobile: horizontal snap rail ── */}
           <ul className="-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-1 sm:hidden">
-            {collage.map((block) => (
+            {[...leftImages, ...rightImages].map((img, i) => (
               <li
-                key={`m-${block.src}`}
+                key={`m-${img.src}-${i}`}
                 className="h-[210px] w-[86%] shrink-0 snap-center overflow-hidden rounded-[18px]"
               >
                 <img
-                  src={block.src}
-                  alt={block.alt}
+                  src={img.src}
+                  alt={img.alt}
                   width={1024}
                   height={720}
                   loading="lazy"
@@ -177,9 +140,7 @@ export function Collage() {
           </ul>
 
           {/* ── Floating "See Recent Work" CTA ── */}
-          {/* Positioned at horizontal center seam, approximately at the junction between top and bottom rows */}
           <div className="pointer-events-none absolute left-1/2 top-[50%] z-30 -translate-x-[50%] -translate-y-[50%] hidden sm:block">
-            {/* Entrance fade + rise */}
             <div
               className={`transition-[opacity,transform] duration-700 ease-out ${
                 hasEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
@@ -194,10 +155,8 @@ export function Collage() {
                 aria-label={collageCta?.label || "See Recent Work"}
                 className="group pointer-events-auto block cursor-pointer select-none transition-transform duration-300 ease-out hover:scale-[1.04]"
               >
-                {/* This div gets the scroll-driven parallax transform */}
                 <div ref={floatRef} className="relative">
-
-                  {/* 1. Black rotated pill — above and slightly left of center */}
+                  {/* 1. Black rotated pill */}
                   <div
                     className="absolute z-10 flex items-center justify-center rounded-full bg-[#0a0a0a] shadow-[0_10px_28px_rgba(0,0,0,0.4)]"
                     style={{
@@ -208,7 +167,10 @@ export function Collage() {
                       transform: "rotate(16deg)",
                     }}
                   >
-                    <span className="text-white font-bold tracking-tight whitespace-nowrap" style={{ fontSize: "clamp(12px, 1.1vw, 15px)" }}>
+                    <span
+                      className="text-white font-bold tracking-tight whitespace-nowrap"
+                      style={{ fontSize: "clamp(12px, 1.1vw, 15px)" }}
+                    >
                       {collageCta?.label || "See Recent Work"}
                     </span>
                     {/* Downward triangle pointer tail */}
@@ -239,12 +201,14 @@ export function Collage() {
                       fill="currentColor"
                       aria-hidden="true"
                       className="text-black transition-transform duration-300 group-hover:scale-105"
-                      style={{ width: "clamp(28px, 2.6vw, 40px)", height: "clamp(28px, 2.6vw, 40px)" }}
+                      style={{
+                        width: "clamp(28px, 2.6vw, 40px)",
+                        height: "clamp(28px, 2.6vw, 40px)",
+                      }}
                     >
                       <path d="M240 88h-109.33L102.93 60.27A16.1 16.1 0 0 0 91.64 56H40a16 16 0 0 0-16 16v128a16 16 0 0 0 16 16h176a16 16 0 0 0 15.82-13.68l16-104A16 16 0 0 0 240 88Zm-25.76 112H40V72h51.64l27.73 27.73A16.1 16.1 0 0 0 130.67 104h91.94Z" />
                     </svg>
                   </div>
-
                 </div>
               </a>
             </div>
@@ -254,40 +218,87 @@ export function Collage() {
       </Reveal>
 
       <style>{`
-        /* Desktop mosaic — 2-column layout matching reference */
+        /* ── Grid shell — 2.5x taller container ── */
         .tw-collage {
-          display: grid;
           grid-template-columns: 1fr 1fr;
-          grid-template-rows: 1fr;
           gap: 14px;
+          /* Container is now 2.5x taller — images fill it and scroll through */
+          height: clamp(700px, 88vh, 1020px);
         }
-        .tw-col-left,
-        .tw-col-right {
+
+        /* ── Each marquee track clips overflow ── */
+        .tw-marquee-track {
+          position: relative;
+          height: 100%;
+          overflow: hidden;
+        }
+
+        /* ── Inner strip that actually moves ── */
+        .tw-marquee-inner {
           display: flex;
           flex-direction: column;
+          gap: 14px;
+          animation: tw-scroll-up linear infinite;
+          will-change: transform;
         }
 
-        /* Left column heights */
-        .tw-img-tall-a {
-          height: clamp(340px, 36vw, 520px);
-        }
-        .tw-img-tall-b {
-          height: clamp(260px, 28vw, 400px);
+        /* ── Individual image cards — 2.5x taller than before ── */
+        .tw-marquee-card {
+          flex-shrink: 0;
+          height: clamp(480px, 58vw, 780px);
+          width: 100%;
         }
 
-        /* Right column heights */
-        .tw-img-right-a {
-          height: clamp(300px, 32vw, 460px);
+        /* ── The keyframe: translate up by exactly 50% of the doubled content height ── */
+        @keyframes tw-scroll-up {
+          0%   { transform: translateY(0); }
+          100% { transform: translateY(-50%); }
         }
-        .tw-img-right-b {
-          height: clamp(200px, 21vw, 300px);
+
+        /* ── NO hover-pause — continuous scroll always on ── */
+
+        /* ── Deep black gradient fade at top and bottom edges ── */
+        .tw-marquee-track::before,
+        .tw-marquee-track::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+          z-index: 2;
+          pointer-events: none;
+        }
+        /* Top fade — images melt into black as they exit upward */
+        .tw-marquee-track::before {
+          top: 0;
+          height: 160px;
+          background: linear-gradient(
+            to bottom,
+            #191919 0%,
+            rgba(25, 25, 25, 0.85) 30%,
+            rgba(25, 25, 25, 0.4) 65%,
+            transparent 100%
+          );
+        }
+        /* Bottom fade — images melt into black as they enter from bottom */
+        .tw-marquee-track::after {
+          bottom: 0;
+          height: 160px;
+          background: linear-gradient(
+            to top,
+            #191919 0%,
+            rgba(25, 25, 25, 0.85) 30%,
+            rgba(25, 25, 25, 0.4) 65%,
+            transparent 100%
+          );
         }
 
         @media (min-width: 768px) and (max-width: 1023px) {
-          .tw-img-tall-a { height: clamp(280px, 36vw, 380px); }
-          .tw-img-tall-b { height: clamp(200px, 26vw, 280px); }
-          .tw-img-right-a { height: clamp(250px, 32vw, 340px); }
-          .tw-img-right-b { height: clamp(160px, 20vw, 220px); }
+          .tw-collage { height: clamp(520px, 75vh, 800px); }
+          .tw-marquee-card { height: clamp(360px, 45vw, 580px); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .tw-marquee-inner { animation: none !important; }
         }
       `}</style>
     </section>
