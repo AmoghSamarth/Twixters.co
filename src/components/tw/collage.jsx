@@ -125,11 +125,11 @@ export function Collage() {
     <section
       ref={sectionRef}
       aria-label="Selected work"
-      className="relative px-2 pb-20 sm:px-[120px] sm:pb-24"
+      className="relative px-2 pb-20 sm:px-[115px] sm:pb-24"
     >
-      <Reveal className="relative mx-auto max-w-[1434px]">
+      <Reveal className="relative mx-auto max-w-[1444px]">
         {/* Dark showroom container */}
-        <div className="relative overflow-hidden rounded-[28px] border-[7px] border-white bg-[#191919] px-[22px] py-3 sm:rounded-[36px] sm:px-[26px] sm:py-4">
+        <div className="relative overflow-hidden rounded-[28px] border-[9px] border-white/40 bg-[#191919] px-[32px] py-3 sm:rounded-[36px] sm:px-[36px] sm:py-4">
 
           {/* ── Desktop: two auto-scrolling marquee columns ── */}
           <div className="tw-collage hidden sm:grid">
