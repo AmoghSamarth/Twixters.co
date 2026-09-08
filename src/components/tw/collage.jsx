@@ -16,8 +16,8 @@ const rightImages = [
 ];
 
 function MarqueeColumn({ images, duration, className = "" }) {
-  // Duplicate the images for seamless infinite loop
-  const doubled = [...images, ...images];
+  // Repeat images so that one group is taller than the showroom container
+  const groupImages = [...images, ...images];
 
   return (
     <div className={`tw-marquee-track overflow-hidden ${className}`}>
@@ -25,22 +25,42 @@ function MarqueeColumn({ images, duration, className = "" }) {
         className="tw-marquee-inner"
         style={{ animationDuration: `${duration}s` }}
       >
-        {doubled.map((img, i) => (
-          <div
-            key={`${img.src}-${i}`}
-            className="tw-marquee-card rounded-[18px] sm:rounded-[22px] bg-[#191919] flex items-center justify-center"
-          >
-            <img
-              src={img.src}
-              alt={img.alt}
-              width={1024}
-              height={720}
-              loading={i < 2 ? "eager" : "lazy"}
-              decoding="async"
-              className="size-full object-contain"
-            />
-          </div>
-        ))}
+        <div className="tw-marquee-group">
+          {groupImages.map((img, i) => (
+            <div
+              key={`${img.src}-g1-${i}`}
+              className="tw-marquee-card overflow-hidden rounded-[16px] sm:rounded-[20px]"
+            >
+              <img
+                src={img.src}
+                alt={img.alt}
+                width={1024}
+                height={720}
+                loading={i < 2 ? "eager" : "lazy"}
+                decoding="async"
+                className="w-full h-auto block rounded-[16px] sm:rounded-[20px]"
+              />
+            </div>
+          ))}
+        </div>
+        <div className="tw-marquee-group" aria-hidden="true">
+          {groupImages.map((img, i) => (
+            <div
+              key={`${img.src}-g2-${i}`}
+              className="tw-marquee-card overflow-hidden rounded-[16px] sm:rounded-[20px]"
+            >
+              <img
+                src={img.src}
+                alt={img.alt}
+                width={1024}
+                height={720}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-auto block rounded-[16px] sm:rounded-[20px]"
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -244,15 +264,22 @@ export function Collage() {
         .tw-marquee-inner {
           display: flex;
           flex-direction: column;
-          gap: 38px;
           animation: tw-scroll-up linear infinite;
           will-change: transform;
         }
 
-        /* ── Individual image cards — 2.5x taller than before ── */
+        /* ── Group of cards with ~15px gap ── */
+        .tw-marquee-group {
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+          padding-bottom: 15px;
+          flex-shrink: 0;
+        }
+
+        /* ── Individual image cards — snug wrap so image gap is exactly 15px ── */
         .tw-marquee-card {
           flex-shrink: 0;
-          height: clamp(432px, 52vw, 702px);
           width: 100%;
         }
 
@@ -303,7 +330,6 @@ export function Collage() {
 
         @media (min-width: 768px) and (max-width: 1023px) {
           .tw-collage { height: clamp(780px, 112vh, 1200px); }
-          .tw-marquee-card { height: clamp(324px, 40vw, 522px); }
         }
 
         @media (prefers-reduced-motion: reduce) {
