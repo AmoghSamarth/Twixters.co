@@ -64,7 +64,7 @@ export function Hero() {
     { src: "/assets/work-4.jpg", alt: "The Biryani Story mark" }
   ];
   return (
-    <section id="top" className="relative overflow-hidden px-5 pt-[325px] pb-24 sm:px-8 sm:pt-[465px] sm:pb-32">
+    <section id="top" className="relative overflow-hidden px-5 pt-[325px] pb-4 sm:px-8 sm:pt-[465px] sm:pb-6">
       {/* Photorealistic white diagonal sunbeams */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
         <div className="tw-sunbeams" />
