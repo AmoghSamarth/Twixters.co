@@ -128,13 +128,20 @@ export function Hero() {
           </div>
         </Reveal>
 
-        {/* Booking Open status pill with pulsing green dot */}
+        {/* Status pill */}
         <Reveal delay={340} className="mt-6 flex justify-center sm:mt-8">
           <StatusPill className="px-5 py-2.5 text-[13.5px] shadow-[0_2px_8px_rgba(0,0,0,0.06)] ring-1 ring-black/5">
             {hero.availability}
           </StatusPill>
         </Reveal>
       </div>
+
+      {/* ── Seamless bottom fade into collage section ── */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-0 left-0 right-0 z-20"
+        style={{ height: "140px", background: "linear-gradient(to bottom, transparent 0%, #d9d9d9 100%)" }}
+      />
     </section>
   );
 }

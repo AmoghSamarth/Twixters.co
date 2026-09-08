@@ -28,7 +28,7 @@ function MarqueeColumn({ images, duration, className = "" }) {
         {doubled.map((img, i) => (
           <div
             key={`${img.src}-${i}`}
-            className="tw-marquee-card overflow-hidden rounded-[18px] sm:rounded-[22px]"
+            className="tw-marquee-card rounded-[18px] sm:rounded-[22px] bg-[#191919] flex items-center justify-center"
           >
             <img
               src={img.src}
@@ -37,7 +37,7 @@ function MarqueeColumn({ images, duration, className = "" }) {
               height={720}
               loading={i < 2 ? "eager" : "lazy"}
               decoding="async"
-              className="size-full object-cover"
+              className="size-full object-contain"
             />
           </div>
         ))}
@@ -244,7 +244,7 @@ export function Collage() {
         .tw-marquee-inner {
           display: flex;
           flex-direction: column;
-          gap: 28px;
+          gap: 38px;
           animation: tw-scroll-up linear infinite;
           will-change: transform;
         }
@@ -274,27 +274,29 @@ export function Collage() {
           z-index: 2;
           pointer-events: none;
         }
-        /* Top fade — images melt into black as they exit upward */
+        /* Top fade — images melt into black as they exit upward — 30% longer, more gradual */
         .tw-marquee-track::before {
           top: 0;
-          height: 160px;
+          height: 208px;
           background: linear-gradient(
             to bottom,
             #191919 0%,
-            rgba(25, 25, 25, 0.85) 30%,
-            rgba(25, 25, 25, 0.4) 65%,
+            rgba(25, 25, 25, 0.88) 20%,
+            rgba(25, 25, 25, 0.6) 50%,
+            rgba(25, 25, 25, 0.2) 80%,
             transparent 100%
           );
         }
-        /* Bottom fade — images melt into black as they enter from bottom */
+        /* Bottom fade — images melt into black as they enter from bottom — 30% longer */
         .tw-marquee-track::after {
           bottom: 0;
-          height: 160px;
+          height: 208px;
           background: linear-gradient(
             to top,
             #191919 0%,
-            rgba(25, 25, 25, 0.85) 30%,
-            rgba(25, 25, 25, 0.4) 65%,
+            rgba(25, 25, 25, 0.88) 20%,
+            rgba(25, 25, 25, 0.6) 50%,
+            rgba(25, 25, 25, 0.2) 80%,
             transparent 100%
           );
         }
