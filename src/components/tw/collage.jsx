@@ -4,15 +4,15 @@ import { Reveal } from "./reveal";
 
 /* ─── Image sets for each column (duplicated for seamless loop) ─── */
 const leftImages = [
-  { src: "/assets/work-1.jpg", alt: "The Saath brand identity collateral" },
-  { src: "/assets/work-3.jpg", alt: "Cognito Bite protein bar visual identity" },
-  { src: "/assets/work-5.jpg", alt: "Twixters.Co packaging and print collateral" },
+  { src: "/assets/portfolio-a1.jpg", alt: "Portfolio work A1" },
+  { src: "/assets/portfolio-a2.png", alt: "Portfolio work A2" },
+  { src: "/assets/portfolio-a3.png", alt: "Portfolio work A3" },
 ];
 
 const rightImages = [
-  { src: "/assets/work-2.jpg", alt: "Gamla organic brand design system" },
-  { src: "/assets/work-4.jpg", alt: "The Biryani Story logo and packaging" },
-  { src: "/assets/work-6.jpg", alt: "Twixters.Co campaign and social creative" },
+  { src: "/assets/portfolio-b1.png", alt: "Portfolio work B1" },
+  { src: "/assets/portfolio-b2.png", alt: "Portfolio work B2" },
+  { src: "/assets/portfolio-b3.jpg", alt: "Portfolio work B3" },
 ];
 
 function MarqueeColumn({ images, duration, className = "" }) {
@@ -113,10 +113,10 @@ export function Collage() {
           {/* ── Desktop: two auto-scrolling marquee columns ── */}
           <div className="tw-collage hidden sm:grid">
             {/* Left column — slower speed */}
-            <MarqueeColumn images={leftImages} duration={29} />
+            <MarqueeColumn images={leftImages} duration={32} />
 
             {/* Right column — slightly faster speed */}
-            <MarqueeColumn images={rightImages} duration={22} />
+            <MarqueeColumn images={rightImages} duration={25} />
           </div>
 
           {/* ── Mobile: horizontal snap rail ── */}
@@ -221,7 +221,7 @@ export function Collage() {
         /* ── Grid shell — 2.5x taller container ── */
         .tw-collage {
           grid-template-columns: 1fr 1fr;
-          gap: 14px;
+          gap: 20px;
           /* Container is now 1.5x taller — images fill it and scroll through */
           height: clamp(1050px, 132vh, 1530px);
         }
@@ -237,7 +237,7 @@ export function Collage() {
         .tw-marquee-inner {
           display: flex;
           flex-direction: column;
-          gap: 14px;
+          gap: 28px;
           animation: tw-scroll-up linear infinite;
           will-change: transform;
         }
