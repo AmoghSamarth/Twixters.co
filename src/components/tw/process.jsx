@@ -1,80 +1,108 @@
 import { processSteps } from "../../content/site";
-import { Eyebrow } from "./primitives";
 import { Reveal } from "./reveal";
-function Doodles() {
-  return <Reveal className="pointer-events-none absolute inset-0 z-0 hidden lg:block" aria-hidden="true">
+
+function ProcessDoodles() {
+  return (
+    <div className="pointer-events-none absolute inset-0 z-20 hidden lg:block" aria-hidden="true">
       <svg
-    viewBox="0 0 1200 420"
-    fill="none"
-    aria-hidden="true"
-    className="size-full"
-    preserveAspectRatio="none"
-  >
-      <path
-    d="M356 268c30-12 38-44 24-62-12-16-34-10-32 8 3 24 40 32 70 12 22-15 36-34 54-46"
-    stroke="var(--color-accent)"
-    strokeWidth="3"
-    strokeLinecap="round"
-    className="tw-draw"
-    style={{ ["--draw-len"]: 340, ["--reveal-delay"]: "180ms" }}
-    data-doodle=""
-  />
-      <path
-    d="M780 178c26-22 60-18 68 8 7 24-18 42-34 30-14-11-4-30 14-28 26 3 48 30 62 60 8 18 14 34 22 46"
-    stroke="var(--color-accent)"
-    strokeWidth="3"
-    strokeLinecap="round"
-    className="tw-draw"
-    style={{ ["--draw-len"]: 420, ["--reveal-delay"]: "420ms" }}
-    data-doodle=""
-  />
+        viewBox="0 0 1220 520"
+        fill="none"
+        aria-hidden="true"
+        className="w-full h-full"
+        preserveAspectRatio="none"
+      >
+        {/* Line 1: Arch connecting Card 1 to Card 2 */}
+        <path
+          d="M 325 205 C 345 105, 415 80, 465 115"
+          stroke="#ff5520"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+        />
+        {/* Dot on Card 1 */}
+        <circle cx="325" cy="205" r="5.5" stroke="#ff5520" strokeWidth="2.5" fill="white" />
+        {/* Dot on Card 2 */}
+        <circle cx="465" cy="115" r="5.5" stroke="#ff5520" strokeWidth="2.5" fill="white" />
+
+        {/* Line 2: Playful loop-de-loop connecting Card 2 to Card 3 */}
+        <path
+          d="M 740 280 C 740 315, 748 348, 762 356 C 782 366, 796 345, 790 320 C 784 294, 754 290, 744 316 C 736 338, 755 365, 786 355 C 815 345, 835 330, 855 315"
+          stroke="#ff5520"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        {/* Dot on Card 2 */}
+        <circle cx="740" cy="280" r="5.5" stroke="#ff5520" strokeWidth="2.5" fill="white" />
+        {/* Dot on Card 3 */}
+        <circle cx="855" cy="315" r="5.5" stroke="#ff5520" strokeWidth="2.5" fill="white" />
       </svg>
-    </Reveal>;
+    </div>
+  );
 }
+
 export function Process() {
-  return <section id="process" aria-labelledby="process-heading" className="px-5 py-24 sm:px-8 sm:py-32">
+  return (
+    <section id="process" aria-labelledby="process-heading" className="px-5 py-24 sm:px-8 sm:py-32 overflow-hidden">
+      {/* Editorial Eyebrow matching reference */}
       <Reveal className="mx-auto max-w-[1200px]">
-        <Eyebrow>Our Process, Explained</Eyebrow>
+        <div className="flex items-center justify-center gap-4 text-ink-muted">
+          <span aria-hidden="true" className="tw-hair w-12 sm:w-16 max-w-[60px]" />
+          <span className="tw-serif-italic shrink-0 text-[18px] sm:text-[21px] text-neutral-600 tracking-[0.02em] select-none">
+            Our Process, Explained
+          </span>
+          <span aria-hidden="true" className="tw-hair w-12 sm:w-16 max-w-[60px]" />
+        </div>
         <h2
-    id="process-heading"
-    className="tw-h2 mt-6 text-center text-[clamp(1.9rem,5.6vw,3.5rem)]"
-  >
+          id="process-heading"
+          className="mt-5 text-center font-heading text-[clamp(1.9rem,4.8vw,3.2rem)] font-medium tracking-tight text-[#111111]"
+        >
           Here&rsquo;s how it works
         </h2>
       </Reveal>
 
-      <div className="relative mx-auto mt-16 max-w-[1200px] md:mt-20">
-        <Doodles />
-        <ol className="relative z-10 grid gap-6 lg:grid-cols-3 lg:gap-16">
-          {processSteps.map((step, i) => <Reveal
-    as="li"
-    key={step.n}
-    delay={i * 110}
-    className="tw-step"
-    style={{
-      ["--r"]: `${step.rotate}deg`,
-      ["--y"]: `${step.offsetY}px`
-    }}
-  >
-              <article className="tw-step-card flex h-full min-h-[248px] flex-col justify-between rounded-[22px] bg-surface p-7 shadow-float sm:min-h-[280px] sm:p-8">
+      <div className="relative mx-auto mt-16 max-w-[1180px] md:mt-24">
+        {/* Playful orange lines & rings connecting the cards */}
+        <ProcessDoodles />
+
+        <ol className="relative z-10 grid gap-8 lg:grid-cols-3 lg:gap-10">
+          {processSteps.map((step, i) => (
+            <Reveal
+              as="li"
+              key={step.n}
+              delay={i * 110}
+              className="tw-step"
+              style={{
+                ["--r"]: `${step.rotate}deg`,
+                ["--y"]: `${step.offsetY}px`
+              }}
+            >
+              <article className="tw-step-card flex h-full min-h-[380px] sm:min-h-[420px] flex-col justify-between rounded-[32px] bg-white p-8 sm:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.03)] border-[6px] border-white/65 transition-transform duration-300 hover:scale-[1.02]">
                 <p
-    aria-hidden="true"
-    className="text-[46px] leading-none font-bold tracking-[-0.045em] text-ink sm:text-[54px]"
-  >
+                  aria-hidden="true"
+                  className="text-[70px] sm:text-[80px] font-normal leading-none tracking-[-0.04em] text-[#111111]"
+                >
                   {step.n}
                 </p>
                 <div className="mt-10">
-                  <h3 className="text-[21px] font-semibold tracking-[-0.02em] text-ink sm:text-[23px]">
+                  <h3 className="text-[22px] sm:text-[24px] font-semibold tracking-[-0.02em] text-[#111111]">
                     {step.title}
                   </h3>
-                  <p className="mt-2.5 text-[14.5px] leading-[1.6] text-ink-muted">{step.body}</p>
+                  <p className="mt-3 text-[14px] sm:text-[15px] leading-[1.6] text-neutral-500 font-normal">
+                    {step.body}
+                  </p>
                 </div>
               </article>
-            </Reveal>)}
+            </Reveal>
+          ))}
         </ol>
       </div>
 
       <style>{`
+        .tw-serif-italic {
+          font-family: var(--font-serif);
+          font-style: italic;
+          font-weight: 400;
+        }
         @media (min-width: 640px) and (max-width: 1023px) {
           .tw-step-card { transform: rotate(calc(var(--r) * 0.5)); }
         }
@@ -83,5 +111,6 @@ export function Process() {
           .tw-step-card { transform: rotate(var(--r)); }
         }
       `}</style>
-    </section>;
+    </section>
+  );
 }

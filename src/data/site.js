@@ -91,25 +91,25 @@ export const services = {
 };
 export const processSteps = [
   {
-    n: "01",
+    n: "1",
     title: "Brief Us",
     body: "Tell us about your business, goals, and what you need.",
-    rotate: -3.2,
-    offsetY: 46
+    rotate: -5.5,
+    offsetY: 36
   },
   {
-    n: "02",
+    n: "2",
     title: "We Create",
     body: "Our team gets to work on your design or campaign strategy.",
-    rotate: 2,
-    offsetY: -14
+    rotate: 5.5,
+    offsetY: -32
   },
   {
-    n: "03",
+    n: "3",
     title: "Launch & Grow",
     body: "You get polished deliverables ready to use and results that follow.",
-    rotate: 3.4,
-    offsetY: 54
+    rotate: -1.5,
+    offsetY: 24
   }
 ];
 export const testimonials = [
