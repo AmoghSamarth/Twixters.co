@@ -124,7 +124,7 @@ export function Collage() {
     <section
       ref={sectionRef}
       aria-label="Selected work"
-      className="relative px-2 pb-20 sm:px-[120px] sm:pb-24"
+      className="relative px-2 pb-20 sm:px-[160px] lg:px-[240px] sm:pb-24"
     >
       <Reveal className="relative mx-auto max-w-[1434px]">
         {/* Dark showroom container */}
@@ -183,9 +183,9 @@ export function Collage() {
                 className="group pointer-events-auto block cursor-pointer select-none transition-transform duration-300 ease-out hover:scale-[1.04]"
               >
                 <div ref={floatRef} className="relative">
-                  {/* 1. Black rotated pill */}
+                  {/* 1. Translucent black rotated pill */}
                   <div
-                    className="absolute z-10 flex items-center justify-center rounded-full bg-[#0a0a0a] shadow-[0_10px_28px_rgba(0,0,0,0.4)]"
+                    className="absolute z-10 flex items-center justify-center rounded-full bg-black/50 backdrop-blur-xl border border-white/20 shadow-[0_10px_28px_rgba(0,0,0,0.3)]"
                     style={{
                       width: "clamp(155px, 13vw, 196px)",
                       height: "clamp(46px, 4vw, 58px)",
@@ -195,7 +195,7 @@ export function Collage() {
                     }}
                   >
                     <span
-                      className="text-white font-bold tracking-tight whitespace-nowrap"
+                      className="text-white font-bold tracking-tight whitespace-nowrap drop-shadow-sm"
                       style={{ fontSize: "clamp(12px, 1.1vw, 15px)" }}
                     >
                       {collageCta?.label || "See Recent Work"}
@@ -210,14 +210,14 @@ export function Collage() {
                         height: 0,
                         borderLeft: "6px solid transparent",
                         borderRight: "6px solid transparent",
-                        borderTop: "7px solid #0a0a0a",
+                        borderTop: "7px solid rgba(0, 0, 0, 0.5)",
                       }}
                     />
                   </div>
 
-                  {/* 2. White frosted circular button */}
+                  {/* 2. Translucent frosted circular button */}
                   <div
-                    className="flex items-center justify-center rounded-full bg-white/90 backdrop-blur-md border border-white/50 shadow-[0_16px_40px_rgba(0,0,0,0.25)]"
+                    className="flex items-center justify-center rounded-full bg-white/30 backdrop-blur-2xl border border-white/40 shadow-[0_16px_40px_rgba(0,0,0,0.25)]"
                     style={{
                       width: "clamp(110px, 9.5vw, 138px)",
                       height: "clamp(110px, 9.5vw, 138px)",
@@ -248,7 +248,7 @@ export function Collage() {
         /* ── Grid shell — 2.5x taller container ── */
         .tw-collage {
           grid-template-columns: 1fr 1fr;
-          gap: 20px;
+          gap: 40px;
           /* Container is now 1.5x taller — images fill it and scroll through */
           height: clamp(1050px, 132vh, 1530px);
         }
@@ -268,12 +268,12 @@ export function Collage() {
           will-change: transform;
         }
 
-        /* ── Group of cards with ~15px gap ── */
+        /* ── Group of cards with 30px gap (doubled) ── */
         .tw-marquee-group {
           display: flex;
           flex-direction: column;
-          gap: 15px;
-          padding-bottom: 15px;
+          gap: 30px;
+          padding-bottom: 30px;
           flex-shrink: 0;
         }
 
