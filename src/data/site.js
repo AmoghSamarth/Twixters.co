@@ -59,15 +59,28 @@ export const collage = [
 export const collageCta = { label: "See Recent Work", href: "#work" };
 export const services = {
   eyebrow: "Hello!",
-  statement: "We help startups and enterprises establish an emotional connection between their products and happy, engaged customers.",
-  /** Deterministic scatter: percentages of the section box + fixed rotation. */
+  statementTop1: "We help startups and enterprise to",
+  statementTop2: "establish an emotional connection",
+  statementBottom1: "between their products and happy",
+  statementBottom2: "engaged customers",
+  statement: "We help startups and enterprise to establish an emotional connection between their products and happy engaged customers",
+  leftChips: [
+    { label: "Design systems", color: "#f95738", icon: "grid", rotate: -2.5, offsetX: 0 },
+    { label: "Advertising", color: "#252830", icon: "ad", rotate: -2.5, offsetX: 20 },
+    { label: "Research", color: "#2f80ed", icon: "search", rotate: -2.5, offsetX: -10 }
+  ],
+  rightChips: [
+    { label: "Branding", color: "#22c55e", icon: "curve", rotate: -2.5, offsetX: 0 },
+    { label: "Ads Planning", color: "#e91e63", icon: "planning", rotate: -2.5, offsetX: -20 },
+    { label: "Strategy", color: "#f59e0b", icon: "strategy", rotate: -2.5, offsetX: 10 }
+  ],
   chips: [
-    { label: "Design systems", dot: "#e5503a", x: 6, y: 8, rotate: -3 },
-    { label: "Advertising", dot: "#333333", x: 2, y: 40, rotate: 2.5 },
-    { label: "Research", dot: "#2f6bd8", x: 9, y: 72, rotate: -2 },
-    { label: "Branding", dot: "#2f9e5f", x: 72, y: 6, rotate: 3 },
-    { label: "Ads Planning", dot: "#d8579c", x: 79, y: 38, rotate: -2.5 },
-    { label: "Strategy", dot: "#e0b02a", x: 74, y: 70, rotate: 2 }
+    { label: "Design systems", dot: "#f95738", color: "#f95738", icon: "grid", rotate: -2.5 },
+    { label: "Advertising", dot: "#252830", color: "#252830", icon: "ad", rotate: -2.5 },
+    { label: "Research", dot: "#2f80ed", color: "#2f80ed", icon: "search", rotate: -2.5 },
+    { label: "Branding", dot: "#22c55e", color: "#22c55e", icon: "curve", rotate: -2.5 },
+    { label: "Ads Planning", dot: "#e91e63", color: "#e91e63", icon: "planning", rotate: -2.5 },
+    { label: "Strategy", dot: "#f59e0b", color: "#f59e0b", icon: "strategy", rotate: -2.5 }
   ]
 };
 export const processSteps = [
