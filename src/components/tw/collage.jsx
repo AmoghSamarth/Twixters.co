@@ -104,7 +104,7 @@ export function Collage() {
     <section
       ref={sectionRef}
       aria-label="Selected work"
-      className="relative px-2 pb-20 sm:px-3 sm:pb-24"
+      className="relative px-2 pb-20 sm:px-[120px] sm:pb-24"
     >
       <Reveal className="relative mx-auto max-w-[1434px]">
         {/* Dark showroom container */}
@@ -140,7 +140,14 @@ export function Collage() {
           </ul>
 
           {/* ── Floating "See Recent Work" CTA ── */}
-          <div className="pointer-events-none absolute left-1/2 top-[50%] z-30 -translate-x-[50%] -translate-y-[50%] hidden sm:block">
+          <div
+            className="pointer-events-none absolute z-30 hidden sm:block"
+            style={{
+              left: "calc(50% + 20px)",
+              top: "50%",
+              transform: "translateX(-50%) translateY(-50%)",
+            }}
+          >
             <div
               className={`transition-[opacity,transform] duration-700 ease-out ${
                 hasEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
