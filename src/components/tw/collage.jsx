@@ -125,11 +125,11 @@ export function Collage() {
     <section
       ref={sectionRef}
       aria-label="Selected work"
-      className="relative px-2 pb-20 sm:px-[115px] sm:pb-24"
+      className="relative px-2 pb-20 sm:px-[112px] sm:pb-24"
     >
       <Reveal className="relative mx-auto max-w-[1444px]">
         {/* Dark showroom container */}
-        <div className="relative overflow-hidden rounded-[28px] border-[9px] border-white/40 bg-[#191919] px-[32px] py-3 sm:rounded-[36px] sm:px-[36px] sm:py-4">
+        <div className="relative overflow-hidden rounded-[28px] border-[5px] border-white/30 bg-[#191919] px-[32px] py-3 sm:rounded-[36px] sm:px-[36px] sm:py-4">
 
           {/* ── Desktop: two auto-scrolling marquee columns ── */}
           <div className="tw-collage hidden sm:grid">
@@ -170,9 +170,8 @@ export function Collage() {
             }}
           >
             <div
-              className={`transition-[opacity,transform] duration-700 ease-out ${
-                hasEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-              }`}
+              className={`transition-[opacity,transform] duration-700 ease-out ${hasEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                }`}
             >
               <a
                 href={collageCta?.href || "#work"}
