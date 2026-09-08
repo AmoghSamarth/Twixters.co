@@ -1,11 +1,13 @@
+import { assetUrl } from "../utils/asset";
+
 export const site = {
   name: "Twixters.Co",
-  title: "Twixters.Co \u2014 Branding & Creative Agency in India",
+  title: "Twixters.Co — Branding & Creative Agency in India",
   description: "Twixters.Co builds brand identities, design systems and advertising campaigns that actually work. Led by Raj Shegaonkar, 10+ years of branding experience.",
   email: "twixters.co@gmail.com",
   /** The only booking destination that exists in the current implementation. */
   bookingUrl: "https://wa.me/message/TIRNTDQIVJ2YF1",
-  copyright: "\xA9 Twixters Studio, 2026",
+  copyright: "© Twixters Studio, 2026",
   nav: [
     { label: "Work", href: "#work" },
     { label: "Process", href: "#process" },
@@ -23,13 +25,13 @@ export const hero = {
   lineTwoBefore: "that",
   lineTwoAfter: "Actually Works",
   chipA: {
-    src: "/assets/chip-collage.jpg",
+    src: assetUrl("/assets/chip-collage.jpg"),
     alt: "Branding collateral moodboard by Twixters.Co",
     width: 640,
     height: 640
   },
   chipB: {
-    src: "/assets/chip-mark.jpg",
+    src: assetUrl("/assets/chip-mark.jpg"),
     alt: "Twixters.Co monogram mark",
     width: 640,
     height: 640
@@ -40,19 +42,19 @@ export const hero = {
   trustLabel: "Trusted by Leaders",
   /** Only real faces present in the current implementation — none invented. */
   avatars: [
-    { src: "/assets/rishi.jpg", alt: "Rishi, Product Lead" },
-    { src: "/assets/ujwal.jpg", alt: "Ujwal, Business Owner" },
-    { src: "/assets/raj.jpg", alt: "Raj Shegaonkar, Founder" }
+    { src: assetUrl("/assets/rishi.jpg"), alt: "Rishi, Product Lead" },
+    { src: assetUrl("/assets/ujwal.jpg"), alt: "Ujwal, Business Owner" },
+    { src: assetUrl("/assets/raj.jpg"), alt: "Raj Shegaonkar, Founder" }
   ],
-  availability: "Booking Open \u2014 2 Spots Left"
+  availability: "Booking Open — 2 Spots Left"
 };
 export const collage = [
-  { area: "a", src: "/assets/work-1.jpg", alt: "The Saath brand identity collateral" },
-  { area: "b", src: "/assets/work-2.jpg", alt: "Gamla organic brand design system" },
-  { area: "c", src: "/assets/work-3.jpg", alt: "Cognito Bite protein bar visual identity" },
-  { area: "d", src: "/assets/work-5.jpg", alt: "Twixters.Co packaging and print collateral" },
-  { area: "e", src: "/assets/work-4.jpg", alt: "The Biryani Story logo and packaging" },
-  { area: "f", src: "/assets/work-6.jpg", alt: "Twixters.Co campaign and social creative" }
+  { area: "a", src: assetUrl("/assets/work-1.jpg"), alt: "The Saath brand identity collateral" },
+  { area: "b", src: assetUrl("/assets/work-2.jpg"), alt: "Gamla organic brand design system" },
+  { area: "c", src: assetUrl("/assets/work-3.jpg"), alt: "Cognito Bite protein bar visual identity" },
+  { area: "d", src: assetUrl("/assets/work-5.jpg"), alt: "Twixters.Co packaging and print collateral" },
+  { area: "e", src: assetUrl("/assets/work-4.jpg"), alt: "The Biryani Story logo and packaging" },
+  { area: "f", src: assetUrl("/assets/work-6.jpg"), alt: "Twixters.Co campaign and social creative" }
 ];
 export const collageCta = { label: "See Recent Work", href: "#work" };
 export const services = {
@@ -96,15 +98,15 @@ export const testimonials = [
     quote: "Twixters transformed our brand into something clear, consistent, and impactful. We've seen better engagement and stronger recall since the rebrand.",
     name: "Rishi",
     role: "Product Lead",
-    avatar: "/assets/rishi.jpg",
+    avatar: assetUrl("/assets/rishi.jpg"),
     /** Diagonally opposed placement, per the reference. */
     align: "left"
   },
   {
-    quote: "Raj delivers more than design \u2014 he builds systems that work. Professional, detail-focused, and easy to collaborate with.",
+    quote: "Raj delivers more than design — he builds systems that work. Professional, detail-focused, and easy to collaborate with.",
     name: "Ujwal",
     role: "Business Owner",
-    avatar: "/assets/ujwal.jpg",
+    avatar: assetUrl("/assets/ujwal.jpg"),
     align: "right"
   }
 ];
@@ -113,29 +115,29 @@ export const caseStudies = [
   {
     title: "The Saath",
     tags: ["Branding", "Brew Bar"],
-    src: "/assets/work-1.jpg",
-    alt: "The Saath \u2014 Branding",
+    src: assetUrl("/assets/work-1.jpg"),
+    alt: "The Saath — Branding",
     href: BEHANCE
   },
   {
     title: "Gamla",
     tags: ["Design System", "Organic Brand"],
-    src: "/assets/work-2.jpg",
-    alt: "Gamla \u2014 Design System",
+    src: assetUrl("/assets/work-2.jpg"),
+    alt: "Gamla — Design System",
     href: BEHANCE
   },
   {
     title: "Cognito Bite",
     tags: ["Visual Identity", "Protein Bar"],
-    src: "/assets/work-3.jpg",
-    alt: "Cognito Bite \u2014 Visual Identity",
+    src: assetUrl("/assets/work-3.jpg"),
+    alt: "Cognito Bite — Visual Identity",
     href: BEHANCE
   },
   {
     title: "The Biryani Story",
     tags: ["Logo Design", "Food"],
-    src: "/assets/work-4.jpg",
-    alt: "The Biryani Story \u2014 Logo Design",
+    src: assetUrl("/assets/work-4.jpg"),
+    alt: "The Biryani Story — Logo Design",
     href: BEHANCE
   }
 ];
@@ -143,7 +145,7 @@ export const founder = {
   eyebrow: "Our Studio",
   heading: { plain: "Pushing boundaries ", muted: "since 2021" },
   portrait: {
-    src: "/assets/raj.jpg",
+    src: assetUrl("/assets/raj.jpg"),
     alt: "Raj Shegaonkar, founder of Twixters.Co",
     width: 900,
     height: 1e3
@@ -155,11 +157,11 @@ export const founder = {
     {
       role: "Internship",
       org: "Samsung, Panasonic, Asian Paints & Ultratech",
-      period: "Feb 2017 \u2192 Jan 2019"
+      period: "Feb 2017 → Jan 2019"
     },
-    { role: "Graphic Designer", org: "Dreams Experential", period: "Mar 2019 \u2192 Feb 2020" },
-    { role: "Senior Designer", org: "Center Point Hotel", period: "Jun 2022 \u2192 Nov 2023" },
-    { role: "Founder / CEO", org: "Twixters.Co", period: "Nov 2023 \u2192 Till Now" }
+    { role: "Graphic Designer", org: "Dreams Experential", period: "Mar 2019 → Feb 2020" },
+    { role: "Senior Designer", org: "Center Point Hotel", period: "Jun 2022 → Nov 2023" },
+    { role: "Founder / CEO", org: "Twixters.Co", period: "Nov 2023 → Till Now" }
   ]
 };
 export const pricing = {
@@ -167,9 +169,9 @@ export const pricing = {
   heading: "Pick a Plan. Start Growing.",
   planLabel: "One Time",
   planNote: "Custom scope",
-  price: "\u20B95,000",
+  price: "₹5,000",
   priceSuffix: "/ per project",
-  availability: "Booking Open \u2014 only 2 Spots Left",
+  availability: "Booking Open — only 2 Spots Left",
   cta: { label: "Book Free Discovery Call", href: site.bookingUrl, external: true },
   includedTitle: "What's included",
   included: [
@@ -184,7 +186,7 @@ export const pricing = {
     text: "I'm Raj Shegaonkar, a graphic and brand designer specializing in creating distinctive brand identities. I focus on delivering high-quality, impactful designs with a strong eye for detail and a practical, results-driven approach.",
     name: "Raj Shegaonkar",
     role: "Creative Director at Twixters.Co",
-    avatar: "/assets/raj.jpg"
+    avatar: assetUrl("/assets/raj.jpg")
   }
 };
 export const capabilities = [
@@ -201,19 +203,19 @@ export const capabilities = [
 export const faqs = [
   {
     q: "What's the difference between a subscription and a custom project?",
-    a: "The subscription is ongoing and flexible \u2014 ideal for continuous design needs. Custom projects are one-time, fixed-scope engagements for larger goals like a rebrand or product launch."
+    a: "The subscription is ongoing and flexible — ideal for continuous design needs. Custom projects are one-time, fixed-scope engagements for larger goals like a rebrand or product launch."
   },
   {
     q: "How fast is the turnaround?",
-    a: "Most requests are delivered within 1\u20132 business days. Larger tasks may take longer, but you'll always be kept in the loop."
+    a: "Most requests are delivered within 1–2 business days. Larger tasks may take longer, but you'll always be kept in the loop."
   },
   {
     q: "How many requests can I make?",
-    a: "As many as you like \u2014 with a subscription, you can queue unlimited requests, and they'll be handled one at a time in priority order."
+    a: "As many as you like — with a subscription, you can queue unlimited requests, and they'll be handled one at a time in priority order."
   },
   {
     q: "What types of design do you handle?",
-    a: "Branding, packaging, campaigns, product UI, landing pages, decks and social media visuals \u2014 anything that needs to look and feel sharp."
+    a: "Branding, packaging, campaigns, product UI, landing pages, decks and social media visuals — anything that needs to look and feel sharp."
   },
   {
     q: "What tools do you use?",
@@ -221,7 +223,7 @@ export const faqs = [
   },
   {
     q: "Can I pause the subscription?",
-    a: "Yes \u2014 you can pause anytime and resume when you're ready. Unused days roll over."
+    a: "Yes — you can pause anytime and resume when you're ready. Unused days roll over."
   },
   {
     q: "Do you offer development too?",
@@ -229,7 +231,7 @@ export const faqs = [
   }
 ];
 export const faqContact = {
-  image: { src: "/assets/desk.jpg", alt: "Twixters.Co design studio desk" },
+  image: { src: assetUrl("/assets/desk.jpg"), alt: "Twixters.Co design studio desk" },
   heading: "Have more questions?",
   sub: "Book a free discovery call",
   cta: { label: "Book a Discovery Call", href: site.bookingUrl, external: true },

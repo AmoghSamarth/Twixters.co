@@ -1,18 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { collage, collageCta } from "../../content/site";
 import { Reveal } from "./reveal";
+import { assetUrl } from "../../utils/asset";
 
 /* ─── Image sets for each column (duplicated for seamless loop) ─── */
 const leftImages = [
-  { src: "/assets/portfolio-a1.jpg", alt: "Portfolio work A1" },
-  { src: "/assets/portfolio-a2.png", alt: "Portfolio work A2" },
-  { src: "/assets/portfolio-a3.png", alt: "Portfolio work A3" },
+  { src: assetUrl("/assets/portfolio-a1.jpg"), alt: "Portfolio work A1" },
+  { src: assetUrl("/assets/portfolio-a2.png"), alt: "Portfolio work A2" },
+  { src: assetUrl("/assets/portfolio-a3.png"), alt: "Portfolio work A3" },
 ];
 
 const rightImages = [
-  { src: "/assets/portfolio-b1.png", alt: "Portfolio work B1" },
-  { src: "/assets/portfolio-b2.png", alt: "Portfolio work B2" },
-  { src: "/assets/portfolio-b3.jpg", alt: "Portfolio work B3" },
+  { src: assetUrl("/assets/portfolio-b1.png"), alt: "Portfolio work B1" },
+  { src: assetUrl("/assets/portfolio-b2.png"), alt: "Portfolio work B2" },
+  { src: assetUrl("/assets/portfolio-b3.jpg"), alt: "Portfolio work B3" },
 ];
 
 function MarqueeColumn({ images, duration, className = "" }) {
@@ -124,7 +125,7 @@ export function Collage() {
     <section
       ref={sectionRef}
       aria-label="Selected work"
-      className="relative px-2 pb-20 sm:px-[160px] lg:px-[240px] sm:pb-24"
+      className="relative px-2 pb-20 sm:px-[120px] sm:pb-24"
     >
       <Reveal className="relative mx-auto max-w-[1434px]">
         {/* Dark showroom container */}

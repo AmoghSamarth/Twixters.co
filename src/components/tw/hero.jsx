@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { hero } from "../../content/site";
-import { InkPill, StatusPill } from "./primitives";
+import { InkPill } from "./primitives";
 import { Reveal } from "./reveal";
+import { assetUrl } from "../../utils/asset";
 function TwixtersWatermark({ className = "" }) {
   return <svg
     id="Layer_2"
@@ -53,18 +54,18 @@ function AnimatedHeroChip({
 }
 export function Hero() {
   const chipASlides = [
-    { src: "/assets/work-1.jpg", alt: "The Saath branding collateral" },
-    { src: "/assets/chip-collage.jpg", alt: "Branding collateral moodboard" },
-    { src: "/assets/work-2.jpg", alt: "Gamla organic brand design" },
-    { src: "/assets/work-5.jpg", alt: "Twixters packaging collateral" }
+    { src: assetUrl("/assets/work-1.jpg"), alt: "The Saath branding collateral" },
+    { src: assetUrl("/assets/chip-collage.jpg"), alt: "Branding collateral moodboard" },
+    { src: assetUrl("/assets/work-2.jpg"), alt: "Gamla organic brand design" },
+    { src: assetUrl("/assets/work-5.jpg"), alt: "Twixters packaging collateral" }
   ];
   const chipBSlides = [
-    { src: "/assets/chip-mark.jpg", alt: "Twixters monogram mark" },
-    { src: "/assets/work-3.jpg", alt: "Cognito Bite brand identity" },
-    { src: "/assets/work-4.jpg", alt: "The Biryani Story mark" }
+    { src: assetUrl("/assets/chip-mark.jpg"), alt: "Twixters monogram mark" },
+    { src: assetUrl("/assets/work-3.jpg"), alt: "Cognito Bite brand identity" },
+    { src: assetUrl("/assets/work-4.jpg"), alt: "The Biryani Story mark" }
   ];
   return (
-    <section id="top" className="relative overflow-hidden px-5 pt-[325px] pb-4 sm:px-8 sm:pt-[465px] sm:pb-6">
+    <section id="top" className="relative overflow-hidden px-5 pt-[325px] pb-4 mb-5 sm:px-8 sm:pt-[465px] sm:pb-6">
       {/* Photorealistic white diagonal sunbeams */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
         <div className="tw-sunbeams" />
@@ -93,13 +94,6 @@ export function Hero() {
           <p className="text-center text-[15px] leading-[1.5] text-ink-muted sm:text-[16px]">
             {hero.sub}
           </p>
-        </Reveal>
-
-        {/* Status pill */}
-        <Reveal delay={340} className="mt-6 flex justify-center sm:mt-8">
-          <StatusPill className="px-5 py-2.5 text-[13.5px] shadow-[0_2px_8px_rgba(0,0,0,0.06)] ring-1 ring-black/5">
-            {hero.availability}
-          </StatusPill>
         </Reveal>
       </div>
 
