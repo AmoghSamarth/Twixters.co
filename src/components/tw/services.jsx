@@ -55,17 +55,69 @@ function ChipIcon({ type }) {
 }
 
 function ChipItem({ chip }) {
+  const [isDragging, setIsDragging] = useState(false);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const dragStartRef = useRef({ x: 0, y: 0 });
+
+  const handlePointerDown = (e) => {
+    if (e.button !== 0 && e.pointerType === "mouse") return;
+    e.preventDefault();
+    dragStartRef.current = {
+      x: e.clientX - offset.x,
+      y: e.clientY - offset.y,
+    };
+    setIsDragging(true);
+  };
+
+  // Window listeners guarantee that release ALWAYS snaps back no matter where the pointer is
+  useEffect(() => {
+    if (!isDragging) return;
+
+    const onPointerMove = (e) => {
+      setOffset({
+        x: e.clientX - dragStartRef.current.x,
+        y: e.clientY - dragStartRef.current.y,
+      });
+    };
+
+    const onPointerUp = () => {
+      setIsDragging(false);
+      setOffset({ x: 0, y: 0 });
+    };
+
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", onPointerUp);
+    window.addEventListener("pointercancel", onPointerUp);
+
+    return () => {
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", onPointerUp);
+      window.removeEventListener("pointercancel", onPointerUp);
+    };
+  }, [isDragging]);
+
   return (
     <div
-      className="tw-service-chip relative inline-block select-none cursor-default"
+      onPointerDown={handlePointerDown}
+      className={`tw-service-chip tw-float-${chip.floatDir || "tl"} relative inline-block select-none touch-none ${
+        isDragging ? "cursor-grabbing z-50 scale-105" : "cursor-grab z-10 hover:scale-[1.03]"
+      }`}
       style={{
-        ["--rotate"]: `${chip.rotate || -3.5}deg`,
-        ["--offset-x"]: `${chip.offsetX || 0}px`
+        ["--base-rotate"]: `${chip.rotate || 0}deg`,
+        ["--base-x"]: `${chip.offsetX || 0}px`,
+        transform: `translate(calc(var(--base-x) + ${offset.x}px), ${offset.y}px) rotate(var(--base-rotate))`,
+        transition: isDragging
+          ? "none"
+          : "transform 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease",
       }}
     >
       {/* Frosted translucent outer bubble capsule (the "bg bubble around them") with soft neutral shadow */}
       <div
-        className="absolute -inset-[5px] sm:-inset-[6px] rounded-full bg-white/60 backdrop-blur-[6px] border border-white/80 shadow-[0_16px_32px_rgba(0,0,0,0.1),0_4px_12px_rgba(0,0,0,0.04)] pointer-events-none"
+        className={`absolute -inset-[5px] sm:-inset-[6px] rounded-full bg-white/60 backdrop-blur-[6px] border border-white/80 pointer-events-none transition-shadow duration-300 ${
+          isDragging
+            ? "shadow-[0_24px_48px_rgba(0,0,0,0.18),0_8px_16px_rgba(0,0,0,0.08)]"
+            : "shadow-[0_16px_32px_rgba(0,0,0,0.1),0_4px_12px_rgba(0,0,0,0.04)]"
+        }`}
         aria-hidden="true"
       />
 
@@ -204,7 +256,7 @@ export function Services() {
           <div className="flex lg:hidden flex-wrap items-center justify-center gap-4 max-w-[560px] mt-6">
             {[...leftChips, ...rightChips].map((chip, i) => (
               <Reveal key={chip.label} delay={120 + i * 50}>
-                <ChipItem chip={{ ...chip, offsetX: 0, rotate: -3 }} />
+                <ChipItem chip={{ ...chip, offsetX: 0 }} />
               </Reveal>
             ))}
           </div>
@@ -218,12 +270,50 @@ export function Services() {
           font-style: italic;
           font-weight: 400;
         }
-        .tw-service-chip {
-          transform: rotate(var(--rotate, -4deg)) translateX(var(--offset-x, 0px));
-          transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+
+        /* Directional idle float animations along the reference arrows */
+        @keyframes float-tl {
+          0%, 100% { translate: 0px 0px; }
+          50% { translate: -8px -5px; }
         }
-        .tw-service-chip:hover {
-          transform: rotate(0deg) translateX(var(--offset-x, 0px)) translateY(-3px) scale(1.03);
+        @keyframes float-l {
+          0%, 100% { translate: 0px 0px; }
+          50% { translate: -9px 0px; }
+        }
+        @keyframes float-bl {
+          0%, 100% { translate: 0px 0px; }
+          50% { translate: -8px 5px; }
+        }
+        @keyframes float-tr {
+          0%, 100% { translate: 0px 0px; }
+          50% { translate: 8px -5px; }
+        }
+        @keyframes float-r {
+          0%, 100% { translate: 0px 0px; }
+          50% { translate: 9px 0px; }
+        }
+        @keyframes float-br {
+          0%, 100% { translate: 0px 0px; }
+          50% { translate: 8px 6px; }
+        }
+
+        .tw-float-tl:not(.cursor-grabbing) {
+          animation: float-tl 4.5s ease-in-out infinite alternate;
+        }
+        .tw-float-l:not(.cursor-grabbing) {
+          animation: float-l 4.2s ease-in-out infinite alternate;
+        }
+        .tw-float-bl:not(.cursor-grabbing) {
+          animation: float-bl 4.8s ease-in-out infinite alternate;
+        }
+        .tw-float-tr:not(.cursor-grabbing) {
+          animation: float-tr 4.6s ease-in-out infinite alternate;
+        }
+        .tw-float-r:not(.cursor-grabbing) {
+          animation: float-r 4.3s ease-in-out infinite alternate;
+        }
+        .tw-float-br:not(.cursor-grabbing) {
+          animation: float-br 4.7s ease-in-out infinite alternate;
         }
       `}</style>
     </section>
