@@ -59,32 +59,25 @@ function ChipItem({ chip }) {
     <div
       className="tw-service-chip relative inline-block select-none cursor-default"
       style={{
-        ["--rotate"]: `${chip.rotate || -4}deg`,
+        ["--rotate"]: `${chip.rotate || -3.5}deg`,
         ["--offset-x"]: `${chip.offsetX || 0}px`
       }}
     >
-      {/* 1. Ambient colored outer glow / aura */}
+      {/* Frosted translucent outer bubble capsule (the "bg bubble around them") with soft neutral shadow */}
       <div
-        className="absolute -inset-2.5 sm:-inset-3 rounded-full opacity-35 blur-[10px] sm:blur-[14px] pointer-events-none transition-opacity duration-300"
-        style={{ backgroundColor: chip.color }}
+        className="absolute -inset-[5px] sm:-inset-[6px] rounded-full bg-white/60 backdrop-blur-[6px] border border-white/80 shadow-[0_16px_32px_rgba(0,0,0,0.1),0_4px_12px_rgba(0,0,0,0.04)] pointer-events-none"
         aria-hidden="true"
       />
 
-      {/* 2. Frosted translucent outer bubble capsule (the "bg bubble around them") */}
-      <div
-        className="absolute -inset-[5px] sm:-inset-[6px] rounded-full bg-white/45 backdrop-blur-[6px] border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.05)] pointer-events-none"
-        aria-hidden="true"
-      />
-
-      {/* 3. Solid white inner pill */}
-      <div className="relative z-10 inline-flex items-center gap-3 rounded-full bg-white py-[6px] pl-[7px] pr-[18px] shadow-[0_14px_30px_rgba(0,0,0,0.08),0_2px_6px_rgba(0,0,0,0.03)] border border-black/[0.04]">
+      {/* Solid white inner pill */}
+      <div className="relative z-10 inline-flex items-center gap-2.5 sm:gap-3 rounded-full bg-white py-[6px] pl-[6px] pr-[16px] sm:pr-[18px] shadow-[0_2px_6px_rgba(0,0,0,0.03)] border border-black/[0.04]">
         <span
-          className="size-[30px] rounded-full flex items-center justify-center shrink-0 shadow-sm"
+          className="size-[28px] sm:size-[30px] rounded-full flex items-center justify-center shrink-0 shadow-sm"
           style={{ backgroundColor: chip.color }}
         >
           <ChipIcon type={chip.icon} />
         </span>
-        <span className="text-[14px] sm:text-[14.5px] font-medium tracking-tight text-[#1a1a1a] whitespace-nowrap">
+        <span className="text-[13.5px] sm:text-[14px] font-medium tracking-tight text-[#1a1a1a] whitespace-nowrap">
           {chip.label}
         </span>
       </div>
@@ -160,10 +153,10 @@ export function Services() {
 
       <div className="relative mx-auto mt-12 sm:mt-16 max-w-[1360px] px-4">
         {/* Desktop 3-column composition (matching expected design) */}
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-6 xl:gap-10">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-10 xl:gap-16">
           
           {/* Left Column (Desktop) */}
-          <div className="hidden lg:flex flex-col justify-between h-[210px] xl:h-[225px] items-end shrink-0 w-[190px] xl:w-[210px]">
+          <div className="hidden lg:flex flex-col justify-between h-[205px] xl:h-[220px] items-end shrink-0 w-[190px] xl:w-[210px]">
             {leftChips.map((chip, i) => (
               <Reveal key={chip.label} delay={100 + i * 70}>
                 <ChipItem chip={chip} />
@@ -172,7 +165,7 @@ export function Services() {
           </div>
 
           {/* Central Statement with scroll-driven word-by-word reveal */}
-          <Reveal delay={60} className="relative z-10 shrink-0 max-w-[760px] xl:max-w-[820px]">
+          <Reveal delay={60} className="relative z-10 shrink-0 max-w-[720px] xl:max-w-[780px]">
             <p
               id="services-statement"
               ref={textRef}
@@ -199,7 +192,7 @@ export function Services() {
           </Reveal>
 
           {/* Right Column (Desktop) */}
-          <div className="hidden lg:flex flex-col justify-between h-[210px] xl:h-[225px] items-start shrink-0 w-[190px] xl:w-[210px]">
+          <div className="hidden lg:flex flex-col justify-between h-[205px] xl:h-[220px] items-start shrink-0 w-[190px] xl:w-[210px]">
             {rightChips.map((chip, i) => (
               <Reveal key={chip.label} delay={140 + i * 70}>
                 <ChipItem chip={chip} />
