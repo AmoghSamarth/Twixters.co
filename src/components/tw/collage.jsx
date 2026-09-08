@@ -164,7 +164,7 @@ export function Collage() {
           <div
             className="pointer-events-none absolute z-30 hidden sm:block"
             style={{
-              left: "calc(50% + 50px)",
+              left: "calc(50% + 60px)",
               top: "50%",
               transform: "translateX(-50%) translateY(-50%)",
             }}
