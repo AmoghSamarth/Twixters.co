@@ -129,7 +129,7 @@ export function Collage() {
     >
       <Reveal className="relative mx-auto max-w-[1434px]">
         {/* Dark showroom container */}
-        <div className="relative overflow-hidden rounded-[28px] bg-[#191919] p-3 sm:rounded-[36px] sm:p-4">
+        <div className="relative overflow-hidden rounded-[28px] border-[4px] border-white bg-[#191919] p-3 sm:rounded-[36px] sm:p-4">
 
           {/* ── Desktop: two auto-scrolling marquee columns ── */}
           <div className="tw-collage hidden sm:grid">
@@ -164,7 +164,7 @@ export function Collage() {
           <div
             className="pointer-events-none absolute z-30 hidden sm:block"
             style={{
-              left: "calc(50% + 20px)",
+              left: "calc(50% + 50px)",
               top: "50%",
               transform: "translateX(-50%) translateY(-50%)",
             }}
