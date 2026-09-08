@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from "react";
 import { services } from "../../content/site";
 import { Reveal } from "./reveal";
 
@@ -56,27 +57,89 @@ function ChipIcon({ type }) {
 function ChipItem({ chip }) {
   return (
     <div
-      className="tw-service-chip inline-flex items-center gap-3 rounded-full bg-white py-[6px] pl-[7px] pr-[18px] shadow-[0_14px_30px_rgba(0,0,0,0.08),0_2px_6px_rgba(0,0,0,0.03)] border border-black/[0.04] select-none cursor-default"
+      className="tw-service-chip relative inline-block select-none cursor-default"
       style={{
-        ["--rotate"]: `${chip.rotate || 0}deg`,
+        ["--rotate"]: `${chip.rotate || -4}deg`,
         ["--offset-x"]: `${chip.offsetX || 0}px`
       }}
     >
-      <span
-        className="size-[30px] rounded-full flex items-center justify-center shrink-0 shadow-sm"
+      {/* 1. Ambient colored outer glow / aura */}
+      <div
+        className="absolute -inset-2.5 sm:-inset-3 rounded-full opacity-35 blur-[10px] sm:blur-[14px] pointer-events-none transition-opacity duration-300"
         style={{ backgroundColor: chip.color }}
-      >
-        <ChipIcon type={chip.icon} />
-      </span>
-      <span className="text-[14px] sm:text-[14.5px] font-medium tracking-tight text-[#1a1a1a] whitespace-nowrap">
-        {chip.label}
-      </span>
+        aria-hidden="true"
+      />
+
+      {/* 2. Frosted translucent outer bubble capsule (the "bg bubble around them") */}
+      <div
+        className="absolute -inset-[5px] sm:-inset-[6px] rounded-full bg-white/45 backdrop-blur-[6px] border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.05)] pointer-events-none"
+        aria-hidden="true"
+      />
+
+      {/* 3. Solid white inner pill */}
+      <div className="relative z-10 inline-flex items-center gap-3 rounded-full bg-white py-[6px] pl-[7px] pr-[18px] shadow-[0_14px_30px_rgba(0,0,0,0.08),0_2px_6px_rgba(0,0,0,0.03)] border border-black/[0.04]">
+        <span
+          className="size-[30px] rounded-full flex items-center justify-center shrink-0 shadow-sm"
+          style={{ backgroundColor: chip.color }}
+        >
+          <ChipIcon type={chip.icon} />
+        </span>
+        <span className="text-[14px] sm:text-[14.5px] font-medium tracking-tight text-[#1a1a1a] whitespace-nowrap">
+          {chip.label}
+        </span>
+      </div>
     </div>
   );
 }
 
+function getWordColor(index, totalWords, progress) {
+  // Transition window for each individual word
+  const step = 1 / totalWords;
+  const wordStart = index * step;
+  const wordEnd = (index + 1) * step;
+  const wordProgress = Math.min(Math.max((progress - wordStart) / (wordEnd - wordStart), 0), 1);
+
+  // Interpolate from unrevealed grey rgb(156, 156, 156) to active black rgb(17, 17, 17)
+  const r = Math.round(156 - wordProgress * (156 - 17));
+  const g = Math.round(156 - wordProgress * (156 - 17));
+  const b = Math.round(156 - wordProgress * (156 - 17));
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
 export function Services() {
-  const { eyebrow, statementTop1, statementTop2, statementBottom1, statementBottom2, leftChips, rightChips } = services;
+  const { eyebrow, statementLines, leftChips, rightChips } = services;
+  const textRef = useRef(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  // Track scroll position to gradually turn words from grey to black
+  useEffect(() => {
+    const updateScroll = () => {
+      if (!textRef.current) return;
+      const rect = textRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+
+      // Start reveal when the top of the text enters 82% of viewport
+      // Complete reveal when the center of the text reaches 38% of viewport
+      const start = windowHeight * 0.82;
+      const end = windowHeight * 0.38;
+      const current = rect.top;
+
+      const progress = Math.min(Math.max((start - current) / (start - end), 0), 1);
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener("scroll", updateScroll, { passive: true });
+    window.addEventListener("resize", updateScroll, { passive: true });
+    updateScroll();
+
+    return () => {
+      window.removeEventListener("scroll", updateScroll);
+      window.removeEventListener("resize", updateScroll);
+    };
+  }, []);
+
+  const totalWords = statementLines.reduce((acc, line) => acc + line.length, 0);
+  let globalWordIndex = 0;
 
   return (
     <section
@@ -84,14 +147,14 @@ export function Services() {
       aria-labelledby="services-statement"
       className="px-5 pt-16 pb-24 sm:px-8 sm:pt-20 sm:pb-32 overflow-hidden"
     >
-      {/* Eyebrow */}
+      {/* Eyebrow with refined editorial serif font matching reference */}
       <Reveal className="mx-auto max-w-[1200px]">
         <div className="flex items-center justify-center gap-4 text-ink-muted">
-          <span aria-hidden="true" className="tw-hair w-12 sm:w-16" />
-          <span className="tw-eyebrow shrink-0 text-[16px] sm:text-[18px] text-ink-muted">
+          <span aria-hidden="true" className="tw-hair w-12 sm:w-16 max-w-[60px]" />
+          <span className="tw-serif-italic shrink-0 text-[20px] sm:text-[23px] text-neutral-600 tracking-[0.02em] select-none">
             {eyebrow}
           </span>
-          <span aria-hidden="true" className="tw-hair w-12 sm:w-16" />
+          <span aria-hidden="true" className="tw-hair w-12 sm:w-16 max-w-[60px]" />
         </div>
       </Reveal>
 
@@ -100,7 +163,7 @@ export function Services() {
         <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-6 xl:gap-10">
           
           {/* Left Column (Desktop) */}
-          <div className="hidden lg:flex flex-col justify-between h-[195px] xl:h-[205px] items-end shrink-0 w-[190px] xl:w-[210px]">
+          <div className="hidden lg:flex flex-col justify-between h-[210px] xl:h-[225px] items-end shrink-0 w-[190px] xl:w-[210px]">
             {leftChips.map((chip, i) => (
               <Reveal key={chip.label} delay={100 + i * 70}>
                 <ChipItem chip={chip} />
@@ -108,29 +171,35 @@ export function Services() {
             ))}
           </div>
 
-          {/* Central Statement */}
+          {/* Central Statement with scroll-driven word-by-word reveal */}
           <Reveal delay={60} className="relative z-10 shrink-0 max-w-[760px] xl:max-w-[820px]">
             <p
               id="services-statement"
+              ref={textRef}
               className="text-center font-heading text-[clamp(1.5rem,2.4vw,2.35rem)] font-normal leading-[1.26] tracking-[-0.022em]"
             >
-              <span className="block text-[#111111] lg:whitespace-nowrap">
-                {statementTop1}
-              </span>
-              <span className="block text-[#111111] lg:whitespace-nowrap">
-                {statementTop2}
-              </span>
-              <span className="block text-[#9a9a9a] lg:whitespace-nowrap">
-                {statementBottom1}
-              </span>
-              <span className="block text-[#9a9a9a] lg:whitespace-nowrap">
-                {statementBottom2}
-              </span>
+              {statementLines.map((lineWords, lineIndex) => (
+                <span key={lineIndex} className="block lg:whitespace-nowrap">
+                  {lineWords.map((word) => {
+                    const wordIndex = globalWordIndex++;
+                    const color = getWordColor(wordIndex, totalWords, scrollProgress);
+                    return (
+                      <span
+                        key={wordIndex}
+                        style={{ color, transition: "color 0.12s ease-out" }}
+                        className="inline-block mx-[0.14em]"
+                      >
+                        {word}
+                      </span>
+                    );
+                  })}
+                </span>
+              ))}
             </p>
           </Reveal>
 
           {/* Right Column (Desktop) */}
-          <div className="hidden lg:flex flex-col justify-between h-[195px] xl:h-[205px] items-start shrink-0 w-[190px] xl:w-[210px]">
+          <div className="hidden lg:flex flex-col justify-between h-[210px] xl:h-[225px] items-start shrink-0 w-[190px] xl:w-[210px]">
             {rightChips.map((chip, i) => (
               <Reveal key={chip.label} delay={140 + i * 70}>
                 <ChipItem chip={chip} />
@@ -139,10 +208,10 @@ export function Services() {
           </div>
 
           {/* Mobile / Tablet Chips (< lg) */}
-          <div className="flex lg:hidden flex-wrap items-center justify-center gap-3.5 max-w-[560px] mt-4">
+          <div className="flex lg:hidden flex-wrap items-center justify-center gap-4 max-w-[560px] mt-6">
             {[...leftChips, ...rightChips].map((chip, i) => (
               <Reveal key={chip.label} delay={120 + i * 50}>
-                <ChipItem chip={{ ...chip, offsetX: 0, rotate: -2.5 }} />
+                <ChipItem chip={{ ...chip, offsetX: 0, rotate: -3 }} />
               </Reveal>
             ))}
           </div>
@@ -151,8 +220,13 @@ export function Services() {
       </div>
 
       <style>{`
+        .tw-serif-italic {
+          font-family: var(--font-serif);
+          font-style: italic;
+          font-weight: 400;
+        }
         .tw-service-chip {
-          transform: rotate(var(--rotate, 0deg)) translateX(var(--offset-x, 0px));
+          transform: rotate(var(--rotate, -4deg)) translateX(var(--offset-x, 0px));
           transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
         }
         .tw-service-chip:hover {

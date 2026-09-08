@@ -59,28 +59,34 @@ export const collage = [
 export const collageCta = { label: "See Recent Work", href: "#work" };
 export const services = {
   eyebrow: "Hello!",
+  statementLines: [
+    ["We", "help", "startups", "and", "enterprise", "to"],
+    ["establish", "an", "emotional", "connection"],
+    ["between", "their", "products", "and", "happy"],
+    ["engaged", "customers"]
+  ],
   statementTop1: "We help startups and enterprise to",
   statementTop2: "establish an emotional connection",
   statementBottom1: "between their products and happy",
   statementBottom2: "engaged customers",
   statement: "We help startups and enterprise to establish an emotional connection between their products and happy engaged customers",
   leftChips: [
-    { label: "Design systems", color: "#f95738", icon: "grid", rotate: -2.5, offsetX: 0 },
-    { label: "Advertising", color: "#252830", icon: "ad", rotate: -2.5, offsetX: 20 },
-    { label: "Research", color: "#2f80ed", icon: "search", rotate: -2.5, offsetX: -10 }
+    { label: "Design systems", color: "#f95738", icon: "grid", rotate: -4, offsetX: 0 },
+    { label: "Advertising", color: "#22252a", icon: "ad", rotate: -4, offsetX: 36 },
+    { label: "Research", color: "#2f80ed", icon: "search", rotate: -4, offsetX: -10 }
   ],
   rightChips: [
-    { label: "Branding", color: "#22c55e", icon: "curve", rotate: -2.5, offsetX: 0 },
-    { label: "Ads Planning", color: "#e91e63", icon: "planning", rotate: -2.5, offsetX: -20 },
-    { label: "Strategy", color: "#f59e0b", icon: "strategy", rotate: -2.5, offsetX: 10 }
+    { label: "Branding", color: "#22c55e", icon: "curve", rotate: -4, offsetX: 0 },
+    { label: "Ads Planning", color: "#e91e63", icon: "planning", rotate: -4, offsetX: -36 },
+    { label: "Strategy", color: "#f59e0b", icon: "strategy", rotate: -4, offsetX: 12 }
   ],
   chips: [
-    { label: "Design systems", dot: "#f95738", color: "#f95738", icon: "grid", rotate: -2.5 },
-    { label: "Advertising", dot: "#252830", color: "#252830", icon: "ad", rotate: -2.5 },
-    { label: "Research", dot: "#2f80ed", color: "#2f80ed", icon: "search", rotate: -2.5 },
-    { label: "Branding", dot: "#22c55e", color: "#22c55e", icon: "curve", rotate: -2.5 },
-    { label: "Ads Planning", dot: "#e91e63", color: "#e91e63", icon: "planning", rotate: -2.5 },
-    { label: "Strategy", dot: "#f59e0b", color: "#f59e0b", icon: "strategy", rotate: -2.5 }
+    { label: "Design systems", dot: "#f95738", color: "#f95738", icon: "grid", rotate: -4 },
+    { label: "Advertising", dot: "#22252a", color: "#22252a", icon: "ad", rotate: -4 },
+    { label: "Research", dot: "#2f80ed", color: "#2f80ed", icon: "search", rotate: -4 },
+    { label: "Branding", dot: "#22c55e", color: "#22c55e", icon: "curve", rotate: -4 },
+    { label: "Ads Planning", dot: "#e91e63", color: "#e91e63", icon: "planning", rotate: -4 },
+    { label: "Strategy", dot: "#f59e0b", color: "#f59e0b", icon: "strategy", rotate: -4 }
   ]
 };
 export const processSteps = [
