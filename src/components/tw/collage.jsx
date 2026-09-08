@@ -129,7 +129,7 @@ export function Collage() {
     >
       <Reveal className="relative mx-auto max-w-[1434px]">
         {/* Dark showroom container */}
-        <div className="relative overflow-hidden rounded-[28px] border-[4px] border-white bg-[#191919] p-3 sm:rounded-[36px] sm:p-4">
+        <div className="relative overflow-hidden rounded-[28px] border-[7px] border-white bg-[#191919] px-[22px] py-3 sm:rounded-[36px] sm:px-[26px] sm:py-4">
 
           {/* ── Desktop: two auto-scrolling marquee columns ── */}
           <div className="tw-collage hidden sm:grid">
