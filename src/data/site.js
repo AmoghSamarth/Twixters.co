@@ -94,21 +94,21 @@ export const processSteps = [
     n: "1",
     title: "Brief Us",
     body: "Tell us about your business, goals, and what you need.",
-    rotate: -5.5,
-    offsetY: 36
+    rotate: -5.0,
+    offsetY: 24
   },
   {
     n: "2",
     title: "We Create",
     body: "Our team gets to work on your design or campaign strategy.",
-    rotate: 5.5,
-    offsetY: -32
+    rotate: 9.0,
+    offsetY: -24
   },
   {
     n: "3",
     title: "Launch & Grow",
     body: "You get polished deliverables ready to use and results that follow.",
-    rotate: -1.5,
+    rotate: -3.0,
     offsetY: 24
   }
 ];
