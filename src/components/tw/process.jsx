@@ -8,33 +8,33 @@ function ProcessDoodles() {
         viewBox="0 0 1220 520"
         fill="none"
         aria-hidden="true"
-        className="w-full h-full"
+        className="w-full h-full overflow-visible"
         preserveAspectRatio="none"
       >
-        {/* Line 1: Arch connecting Card 1 to Card 2 */}
+        {/* Line 1: Exact reference arch connecting Card 1 to Card 2 */}
         <path
-          d="M 325 205 C 345 105, 415 80, 465 115"
+          d="M 268 185 C 283.2 126.5, 333.2 102.5, 383.2 102.5 C 408.2 102.5, 430.2 106.5, 445.4 111.3"
           stroke="#ff5520"
           strokeWidth="2.5"
           strokeLinecap="round"
         />
         {/* Dot on Card 1 */}
-        <circle cx="325" cy="205" r="5.5" stroke="#ff5520" strokeWidth="2.5" fill="white" />
+        <circle cx="268" cy="185" r="5.5" stroke="#ff5520" strokeWidth="2.5" fill="white" />
         {/* Dot on Card 2 */}
-        <circle cx="465" cy="115" r="5.5" stroke="#ff5520" strokeWidth="2.5" fill="white" />
+        <circle cx="445.4" cy="111.3" r="5.5" stroke="#ff5520" strokeWidth="2.5" fill="white" />
 
-        {/* Line 2: Playful loop-de-loop connecting Card 2 to Card 3 */}
+        {/* Line 2: Exact reference loop-de-loop connecting Card 2 to Card 3 */}
         <path
-          d="M 740 280 C 740 315, 748 348, 762 356 C 782 366, 796 345, 790 320 C 784 294, 754 290, 744 316 C 736 338, 755 365, 786 355 C 815 345, 835 330, 855 315"
+          d="M 726 275 C 726.7 290.7, 740.5 309.8, 763.8 312.9 C 779.7 315.1, 802 316.1, 802 309.2 C 802 302.3, 780.8 306.6, 761.7 315.1 C 744.8 322.5, 729.9 333.1, 733.1 352.2 C 736.3 371.2, 759.6 377.6, 779.7 375.5 C 806.2 372.3, 846.5 347.9, 875.8 318.9"
           stroke="#ff5520"
           strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         {/* Dot on Card 2 */}
-        <circle cx="740" cy="280" r="5.5" stroke="#ff5520" strokeWidth="2.5" fill="white" />
+        <circle cx="726" cy="275" r="5.5" stroke="#ff5520" strokeWidth="2.5" fill="white" />
         {/* Dot on Card 3 */}
-        <circle cx="855" cy="315" r="5.5" stroke="#ff5520" strokeWidth="2.5" fill="white" />
+        <circle cx="875.8" cy="318.9" r="5.5" stroke="#ff5520" strokeWidth="2.5" fill="white" />
       </svg>
     </div>
   );
