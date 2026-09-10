@@ -66,8 +66,11 @@ export function Hero() {
   ];
   return (
     <section id="top" className="relative overflow-hidden px-5 pt-[325px] pb-4 mb-5 sm:px-8 sm:pt-[465px] sm:pb-6">
-      {/* Photorealistic white diagonal sunbeams */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
+      {/* Photorealistic white diagonal sunbeams with seamless bottom falloff */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-[1] overflow-hidden [mask-image:linear-gradient(to_bottom,black_50%,transparent_98%)] [-webkit-mask-image:linear-gradient(to_bottom,black_50%,transparent_98%)]"
+      >
         <div className="tw-sunbeams" />
       </div>
 
@@ -96,13 +99,6 @@ export function Hero() {
           </p>
         </Reveal>
       </div>
-
-      {/* ── Seamless bottom fade into collage section ── */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 left-0 right-0 z-20"
-        style={{ height: "140px", background: "linear-gradient(to bottom, transparent 0%, #d9d9d9 100%)" }}
-      />
     </section>
   );
 }

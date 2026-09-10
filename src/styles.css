@@ -55,7 +55,7 @@
     background-color: var(--color-field);
     background-image: url("/assets/micro-texture.png");
     background-repeat: repeat;
-    background-size: 50px 50px;
+    background-size: 200px 200px;
     color: var(--color-ink);
     color-scheme: light;
     -webkit-text-size-adjust: 100%;
@@ -67,7 +67,7 @@
     background-color: var(--color-field);
     background-image: url("/assets/micro-texture.png");
     background-repeat: repeat;
-    background-size: 50px 50px;
+    background-size: 200px 200px;
     color: var(--color-ink);
     font-family: var(--font-sans);
     font-feature-settings: "cv11", "ss01";
