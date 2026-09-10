@@ -132,10 +132,10 @@ export const testimonials = [
 const BEHANCE = "https://www.behance.net/gallery/248456131/The-Saathh-Brand-Identity";
 export const caseStudies = [
   {
-    title: "The Saathh",
+    title: "The Saath",
     tags: ["Branding", "Brew Bar"],
     src: assetUrl("/assets/case-saathh.jpg"),
-    alt: "The Saathh — Visual Identity & Systems",
+    alt: "The Saath — Visual Identity & Systems",
     href: BEHANCE
   },
   {
