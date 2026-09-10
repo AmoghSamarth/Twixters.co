@@ -66,12 +66,20 @@ export function Hero() {
   ];
   return (
     <section id="top" className="relative overflow-hidden px-5 pt-[325px] pb-4 mb-5 sm:px-8 sm:pt-[465px] sm:pb-6">
-      {/* Photorealistic white diagonal sunbeams with seamless bottom falloff */}
+      {/* Photorealistic Hero lighting effect matching reference (diagonal window shadows & sunlight shafts) */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-[1] overflow-hidden [mask-image:linear-gradient(to_bottom,black_50%,transparent_98%)] [-webkit-mask-image:linear-gradient(to_bottom,black_50%,transparent_98%)]"
+        className="pointer-events-none absolute inset-0 z-[1] select-none overflow-hidden"
       >
-        <div className="tw-sunbeams" />
+        <img
+          src={assetUrl("/assets/hero-lighting.png")}
+          alt=""
+          width={1920}
+          height={1080}
+          loading="eager"
+          decoding="async"
+          className="size-full object-cover object-left-top opacity-95 [mask-image:linear-gradient(to_bottom,black_60%,transparent_98%)] [-webkit-mask-image:linear-gradient(to_bottom,black_60%,transparent_98%)]"
+        />
       </div>
 
       {/* Script wordmark watermark */}
