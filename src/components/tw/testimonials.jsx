@@ -7,23 +7,23 @@ import { testimonials } from "../../content/site";
 function QuoteMark({ className = "" }) {
   return (
     <svg
-      width="13"
-      height="16"
-      viewBox="0 0 13 16"
+      width="14"
+      height="18"
+      viewBox="0 0 14 18"
       fill="none"
       aria-hidden="true"
       className={`text-black/30 select-none shrink-0 ${className}`}
     >
-      <rect width="4" height="15" rx="1.5" fill="currentColor" />
-      <rect x="8" width="4" height="15" rx="1.5" fill="currentColor" />
+      <rect width="4.5" height="17" rx="1.5" fill="currentColor" />
+      <rect x="9" width="4.5" height="17" rx="1.5" fill="currentColor" />
     </svg>
   );
 }
 
 /**
  * Dynamic Typewriter with human-like rhythm:
- * - Large editorial font size matching reference
- * - Organic pauses at punctuation
+ * - 12-15% larger font size
+ * - Punctuation breathing pauses
  * - Active blinking accent cursor
  * - Zero layout shift via ghost text
  */
@@ -103,13 +103,13 @@ function DynamicTypewriterQuote({
       {/* Invisible placeholder locks line wrapping to exactly match reference */}
       <p
         aria-hidden="true"
-        className="invisible select-none whitespace-pre-line text-[19px] sm:text-[20px] lg:text-[21px] font-normal leading-[1.5] tracking-[-0.012em] text-[#111111]"
+        className="invisible select-none whitespace-pre-line text-[21px] sm:text-[23px] lg:text-[24px] font-normal leading-[1.5] tracking-[-0.015em] text-[#111111]"
       >
         {text}
       </p>
 
       {/* Visible typewriter text */}
-      <p className="absolute inset-0 whitespace-pre-line text-[19px] sm:text-[20px] lg:text-[21px] font-normal leading-[1.5] tracking-[-0.012em] text-[#111111]">
+      <p className="absolute inset-0 whitespace-pre-line text-[21px] sm:text-[23px] lg:text-[24px] font-normal leading-[1.5] tracking-[-0.015em] text-[#111111]">
         <span>{text.slice(0, displayedLength)}</span>
         {cursorVisible && (
           <span
@@ -164,21 +164,21 @@ export function Testimonials() {
     <section
       ref={sectionRef}
       aria-label="Client reviews"
-      className="px-6 py-24 sm:px-12 sm:py-32"
+      className="px-6 py-28 sm:px-12 sm:py-36 overflow-hidden"
     >
-      <div className="relative mx-auto max-w-[1240px]">
-        {/* Distinct visible black/dark center divider line matching reference */}
+      <div className="relative mx-auto max-w-[1360px]">
+        {/* 30% longer vertical black divider line extending well above and below reviews */}
         <div
           aria-hidden="true"
-          className="hidden md:block absolute left-1/2 top-4 bottom-10 w-[1px] bg-black/25 -translate-x-1/2"
+          className="hidden md:block absolute left-1/2 -top-8 -bottom-12 w-[1px] bg-black/25 -translate-x-1/2"
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-14 md:gap-0">
-          {/* Left Column: Review 1 (Top-aligned) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-0">
+          {/* Left Column: Review 1 (Top-aligned, 30% wider line length) */}
           {review1 && (
-            <div className="md:pr-12 lg:pr-16 flex justify-start md:justify-end">
-              <div className="w-full max-w-[580px] pt-2 md:pt-10">
-                <div className="flex items-start justify-between gap-6">
+            <div className="md:pr-14 lg:pr-20 flex justify-start md:justify-end">
+              <div className="w-full max-w-[650px] pt-2 md:pt-10">
+                <div className="flex items-start justify-between gap-8">
                   <div className="flex-1">
                     <DynamicTypewriterQuote
                       text={review1.quote}
@@ -190,24 +190,24 @@ export function Testimonials() {
                 </div>
 
                 <div
-                  className={`mt-8 sm:mt-9 flex items-center gap-3.5 transition-opacity duration-700 ${
+                  className={`mt-9 sm:mt-10 flex items-center gap-3.5 transition-opacity duration-700 ${
                     isInView ? "opacity-100" : "opacity-0"
                   }`}
                 >
                   <img
                     src={review1.avatar}
                     alt={review1.name}
-                    width={100}
-                    height={100}
+                    width={104}
+                    height={104}
                     loading="lazy"
                     decoding="async"
-                    className="size-12 sm:size-[48px] rounded-full object-cover shrink-0"
+                    className="size-12 sm:size-[52px] rounded-full object-cover shrink-0"
                   />
                   <div className="flex flex-col">
-                    <span className="text-[16px] sm:text-[17px] font-semibold text-[#111111] leading-tight tracking-[-0.01em]">
+                    <span className="text-[16.5px] sm:text-[17.5px] font-semibold text-[#111111] leading-tight tracking-[-0.01em]">
                       {review1.name}
                     </span>
-                    <span className="text-[14px] sm:text-[14.5px] font-normal text-neutral-500 leading-tight mt-1">
+                    <span className="text-[14px] sm:text-[15px] font-normal text-neutral-500 leading-tight mt-1">
                       {review1.role}
                     </span>
                   </div>
@@ -216,11 +216,11 @@ export function Testimonials() {
             </div>
           )}
 
-          {/* Right Column: Review 2 (Staggered to line up with Rishi's avatar) */}
+          {/* Right Column: Review 2 (30% wider line length, staggered to line up with Rishi's avatar) */}
           {review2 && (
-            <div className="md:pl-12 lg:pl-16 flex justify-start">
-              <div className="w-full max-w-[580px] pt-2 md:pt-[190px]">
-                <div className="flex items-start justify-between gap-6">
+            <div className="md:pl-14 lg:pl-20 flex justify-start">
+              <div className="w-full max-w-[650px] pt-2 md:pt-[210px]">
+                <div className="flex items-start justify-between gap-8">
                   <div className="flex-1">
                     <DynamicTypewriterQuote
                       text={review2.quote}
@@ -232,24 +232,24 @@ export function Testimonials() {
                 </div>
 
                 <div
-                  className={`mt-8 sm:mt-9 flex items-center gap-3.5 transition-opacity duration-700 ${
+                  className={`mt-9 sm:mt-10 flex items-center gap-3.5 transition-opacity duration-700 ${
                     startSecond ? "opacity-100" : "opacity-0"
                   }`}
                 >
                   <img
                     src={review2.avatar}
                     alt={review2.name}
-                    width={100}
-                    height={100}
+                    width={104}
+                    height={104}
                     loading="lazy"
                     decoding="async"
-                    className="size-12 sm:size-[48px] rounded-full object-cover shrink-0"
+                    className="size-12 sm:size-[52px] rounded-full object-cover shrink-0"
                   />
                   <div className="flex flex-col">
-                    <span className="text-[16px] sm:text-[17px] font-semibold text-[#111111] leading-tight tracking-[-0.01em]">
+                    <span className="text-[16.5px] sm:text-[17.5px] font-semibold text-[#111111] leading-tight tracking-[-0.01em]">
                       {review2.name}
                     </span>
-                    <span className="text-[14px] sm:text-[14.5px] font-normal text-neutral-500 leading-tight mt-1">
+                    <span className="text-[14px] sm:text-[15px] font-normal text-neutral-500 leading-tight mt-1">
                       {review2.role}
                     </span>
                   </div>
