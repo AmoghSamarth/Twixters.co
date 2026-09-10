@@ -164,9 +164,9 @@ export function Services() {
       const windowHeight = window.innerHeight || document.documentElement.clientHeight;
 
       // Start reveal when the top of the text enters 82% of viewport
-      // Complete reveal across a 10% wider scroll distance (10% slower pacing)
+      // Complete reveal across a 20% wider scroll distance (20% slower pacing)
       const start = windowHeight * 0.82;
-      const end = windowHeight * 0.336; // 10% longer scroll distance
+      const end = windowHeight * 0.239; // 20% longer scroll distance for slower reveal
       const current = rect.top;
 
       const progress = Math.min(Math.max((start - current) / (start - end), 0), 1);
@@ -231,7 +231,7 @@ export function Services() {
                     return (
                       <span
                         key={wordIndex}
-                        style={{ color, transition: "color 0.14s ease-out" }}
+                        style={{ color, transition: "color 0.17s ease-out" }}
                         className="inline-block mx-[0.14em]"
                       >
                         {word}
