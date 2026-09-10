@@ -5,36 +5,35 @@ function ProcessDoodles() {
   return (
     <div className="pointer-events-none absolute inset-0 z-30 hidden lg:block" aria-hidden="true">
       <svg
-        viewBox="0 0 1200 460"
+        viewBox="0 0 1200 424"
         fill="none"
         aria-hidden="true"
         className="w-full h-full overflow-visible"
-        preserveAspectRatio="none"
       >
         {/* Line 1: Exact reference arch connecting Card 1 to Card 2 */}
         <path
-          d="M 279.4 116.7 C 284.5 72.8, 320.9 48.6, 370.8 46.0 C 401.8 46.0, 424.7 48.6, 440.4 51.5"
+          d="M 315 115 C 322 15, 372 -18, 428 14"
           stroke="#ff5520"
           strokeWidth="3"
           strokeLinecap="round"
         />
         {/* Dot on Card 1 */}
-        <circle cx="279.4" cy="116.7" r="6" stroke="#ff5520" strokeWidth="3" fill="white" />
-        {/* Dot on Card 2 */}
-        <circle cx="440.4" cy="51.5" r="6" stroke="#ff5520" strokeWidth="3" fill="white" />
+        <circle cx="315" cy="115" r="5.5" stroke="#ff5520" strokeWidth="2.5" fill="white" />
+        {/* Dot on Card 2 border */}
+        <circle cx="428" cy="14" r="5.5" stroke="#ff5520" strokeWidth="2.5" fill="white" />
 
         {/* Line 2: Exact reference loop-de-loop connecting Card 2 to Card 3 */}
         <path
-          d="M 747.4 231.7 C 743.6 246.6, 751.0 264.5, 764.5 266.4 C 780.7 268.3, 796.9 264.5, 811.0 259.4 C 813.0 253.0, 786.1 251.7, 764.5 266.4 C 747.0 270.9, 747.6 306.7, 776.6 314.3 C 804.9 314.3, 846.7 297.7, 871.7 269.6"
+          d="M 720 160 C 722 195, 742 225, 775 238 C 798 245, 826 238, 836 226 C 840 220, 836 210, 822 208 C 804 206, 782 216, 765 235 C 742 255, 725 285, 730 320 C 735 355, 770 365, 810 355 C 845 345, 868 310, 885 260"
           stroke="#ff5520"
           strokeWidth="3"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         {/* Dot on Card 2 */}
-        <circle cx="747.4" cy="231.7" r="6" stroke="#ff5520" strokeWidth="3" fill="white" />
+        <circle cx="720" cy="160" r="5.5" stroke="#ff5520" strokeWidth="2.5" fill="white" />
         {/* Dot on Card 3 */}
-        <circle cx="871.7" cy="269.6" r="6" stroke="#ff5520" strokeWidth="3" fill="white" />
+        <circle cx="885" cy="260" r="5.5" stroke="#ff5520" strokeWidth="2.5" fill="white" />
       </svg>
     </div>
   );
@@ -76,7 +75,9 @@ export function Process() {
                 ["--y"]: `${step.offsetY}px`
               }}
             >
-              <article className="tw-step-card flex h-full min-h-[380px] sm:min-h-[420px] aspect-[1/1.08] flex-col justify-between rounded-[28px] sm:rounded-[32px] bg-white bg-clip-padding p-8 sm:p-9 border-[5px] border-white/60 shadow-[0_0_0_5px_rgba(255,255,255,0.45),0_20px_50px_rgba(0,0,0,0.08),0_4px_16px_rgba(0,0,0,0.03)] transition-transform duration-300 hover:scale-[1.02]">
+              <article
+                className="tw-step-card flex h-full min-h-[380px] sm:min-h-[420px] aspect-[1/1.08] flex-col justify-between rounded-[28px] sm:rounded-[32px] bg-white bg-clip-padding p-8 sm:p-9 border-[4px] border-white/60 shadow-[0_20px_50px_rgba(0,0,0,0.08),0_4px_16px_rgba(0,0,0,0.03)] transition-transform duration-300 hover:scale-[1.02]"
+              >
                 <p
                   aria-hidden="true"
                   className="text-[68px] sm:text-[78px] font-normal leading-none tracking-[-0.04em] text-[#111111]"

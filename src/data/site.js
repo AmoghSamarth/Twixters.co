@@ -122,7 +122,7 @@ export const testimonials = [
     align: "left"
   },
   {
-    quote: "Raj delivers more than design — he builds systems that work. Professional, detail-focused, and easy to collaborate with.",
+    quote: "Raj delivers more than design he builds systems that work. Professional, detail-focused, and easy to collaborate with.",
     name: "Ujwal",
     role: "Business Owner",
     avatar: assetUrl("/assets/ujwal.jpg"),
