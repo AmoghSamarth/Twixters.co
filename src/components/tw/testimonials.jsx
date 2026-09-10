@@ -1,32 +1,35 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { testimonials } from "../../content/site";
 
-function QuoteIcon({ className = "" }) {
+/**
+ * Exact replica of the two vertical pill bars quote icon from the reference
+ */
+function QuoteMark({ className = "" }) {
   return (
     <svg
-      width="20"
-      height="16"
-      viewBox="0 0 20 16"
-      fill="currentColor"
+      width="11"
+      height="13"
+      viewBox="0 0 11 13"
+      fill="none"
       aria-hidden="true"
-      className={`text-neutral-400/80 shrink-0 select-none ${className}`}
+      className={`text-neutral-400/90 select-none shrink-0 ${className}`}
     >
-      <path d="M0 2a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm11 0a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2V2z" />
+      <rect width="3.5" height="12" rx="1.2" fill="currentColor" />
+      <rect x="7" width="3.5" height="12" rx="1.2" fill="currentColor" />
     </svg>
   );
 }
 
 /**
- * Dynamic Typewriter with human-like rhythm:
- * - Variable keystroke delays (fast bursts for words)
- * - Natural breathing pauses at commas (120ms) and periods (200ms)
- * - Active blinking orange-accented cursor during typing
- * - Graceful fade-out of cursor after typing completes
+ * Dynamic Typewriter with organic human cadence:
+ * - Natural breathing pauses at commas and periods
+ * - Active sleek cursor during typing that gracefully fades out after finish
+ * - Invisible ghost text prevents layout shift
  */
 function DynamicTypewriterQuote({
   text,
   start = false,
-  baseSpeed = 22,
+  baseSpeed = 20,
   onComplete,
 }) {
   const [displayedLength, setDisplayedLength] = useState(0);
@@ -39,8 +42,7 @@ function DynamicTypewriterQuote({
       if (currentIndex >= text.length) {
         setIsDone(true);
         onComplete?.();
-        // Keep cursor blinking for 1.8s then fade out
-        setTimeout(() => setCursorVisible(false), 1800);
+        setTimeout(() => setCursorVisible(false), 1600);
         return;
       }
 
@@ -49,15 +51,14 @@ function DynamicTypewriterQuote({
       const currentChar = text[currentIndex];
       let delay = baseSpeed;
 
-      // Human-like rhythm: punctuation pauses
       if (currentChar === "." || currentChar === "!" || currentChar === "?") {
-        delay = 180 + Math.random() * 60; // 180-240ms after sentence end
+        delay = 180 + Math.random() * 50;
       } else if (currentChar === "," || currentChar === ";" || currentChar === "—") {
-        delay = 110 + Math.random() * 40; // 110-150ms after pause
+        delay = 110 + Math.random() * 30;
       } else if (currentChar === " ") {
-        delay = baseSpeed + (Math.random() * 18 - 6); // slight word boundary hesitation
+        delay = baseSpeed + (Math.random() * 14 - 4);
       } else {
-        delay = Math.max(12, baseSpeed + (Math.random() * 16 - 8)); // micro-jitter
+        delay = Math.max(12, baseSpeed + (Math.random() * 14 - 7));
       }
 
       timeoutRef.current = setTimeout(() => {
@@ -70,7 +71,6 @@ function DynamicTypewriterQuote({
   useEffect(() => {
     if (!start) return;
 
-    // Accessibility check: reduced motion displays full text immediately
     const prefersReducedMotion =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -83,13 +83,12 @@ function DynamicTypewriterQuote({
       return;
     }
 
-    // Start typing
     setDisplayedLength(0);
     setIsDone(false);
     setCursorVisible(true);
     timeoutRef.current = setTimeout(() => {
       typeNextChar(0);
-    }, 150);
+    }, 120);
 
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -100,22 +99,22 @@ function DynamicTypewriterQuote({
 
   return (
     <div className="relative">
-      {/* Invisible placeholder locks full bounding dimensions so text never jumps */}
+      {/* Invisible placeholder locks line wrapping to exactly match reference */}
       <p
         aria-hidden="true"
-        className="invisible select-none text-[18px] sm:text-[20px] font-normal leading-[1.5] sm:leading-[1.55] tracking-[-0.015em] text-[#111111]"
+        className="invisible select-none whitespace-pre-line text-[17px] font-normal leading-[1.5] tracking-[-0.012em] text-[#111111]"
       >
         {text}
       </p>
 
-      {/* Visible dynamically typed text */}
-      <p className="absolute inset-0 text-[18px] sm:text-[20px] font-normal leading-[1.5] sm:leading-[1.55] tracking-[-0.015em] text-[#111111]">
+      {/* Visible typewriter text */}
+      <p className="absolute inset-0 whitespace-pre-line text-[17px] font-normal leading-[1.5] tracking-[-0.012em] text-[#111111]">
         <span>{text.slice(0, displayedLength)}</span>
         {cursorVisible && (
           <span
             aria-hidden="true"
-            className={`inline-block w-[2.5px] h-[1.12em] bg-[#ff5520] ml-0.5 rounded-[1px] align-text-bottom transition-opacity duration-500 ${
-              isTyping ? "animate-pulse opacity-100" : isDone ? "animate-pulse opacity-70" : "opacity-0"
+            className={`inline-block w-[2px] h-[1.12em] bg-neutral-800 ml-0.5 rounded-[1px] align-text-bottom transition-opacity duration-500 ${
+              isTyping ? "animate-pulse opacity-100" : isDone ? "animate-pulse opacity-60" : "opacity-0"
             }`}
           />
         )}
@@ -147,12 +146,12 @@ export function Testimonials() {
     return () => observer.disconnect();
   }, []);
 
-  // Dynamically cascade: Review 2 starts after Review 1 has gained momentum (approx. 1.2s in)
+  // Natural cascade for second review
   useEffect(() => {
     if (isInView) {
       const timer = setTimeout(() => {
         setStartSecond(true);
-      }, 1100);
+      }, 900);
       return () => clearTimeout(timer);
     }
   }, [isInView]);
@@ -164,51 +163,53 @@ export function Testimonials() {
     <section
       ref={sectionRef}
       aria-label="Client reviews"
-      className="px-6 py-16 sm:px-12 sm:py-24"
+      className="px-6 py-20 sm:px-10 sm:py-28"
     >
-      <div className="relative mx-auto max-w-[1240px]">
-        {/* Subtle vertical center divider matching reference */}
+      <div className="relative mx-auto max-w-[1060px]">
+        {/* Subtle vertical center divider matching reference height and position */}
         <div
           aria-hidden="true"
-          className="hidden md:block absolute left-1/2 top-4 bottom-4 w-[1px] bg-neutral-300 -translate-x-1/2"
+          className="hidden md:block absolute left-1/2 top-2 bottom-8 w-[1px] bg-[#d1d5db] -translate-x-1/2"
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-0">
           {/* Left Column: Review 1 (Top-aligned) */}
           {review1 && (
-            <div className="md:pr-12 lg:pr-16 pt-2 md:pt-6">
-              <div className="flex items-start justify-between gap-6">
-                <div className="flex-1">
-                  <DynamicTypewriterQuote
-                    text={review1.quote}
-                    start={isInView}
-                    baseSpeed={20}
-                  />
+            <div className="md:pr-14 md:pl-2 flex justify-start md:justify-end">
+              <div className="w-full max-w-[430px] pt-2 md:pt-14">
+                <div className="flex items-start justify-between gap-6">
+                  <div className="flex-1">
+                    <DynamicTypewriterQuote
+                      text={review1.quote}
+                      start={isInView}
+                      baseSpeed={19}
+                    />
+                  </div>
+                  <QuoteMark className="mt-1" />
                 </div>
-                <QuoteIcon className="mt-1" />
-              </div>
 
-              <div
-                className={`mt-6 flex items-center gap-3.5 transition-opacity duration-700 ${
-                  isInView ? "opacity-100" : "opacity-0"
-                }`}
-              >
-                <img
-                  src={review1.avatar}
-                  alt={review1.name}
-                  width={88}
-                  height={88}
-                  loading="lazy"
-                  decoding="async"
-                  className="size-11 rounded-full object-cover"
-                />
-                <div className="flex flex-col">
-                  <span className="text-[15px] font-semibold text-[#111111] leading-snug">
-                    {review1.name}
-                  </span>
-                  <span className="text-[13.5px] font-normal text-neutral-500 leading-snug">
-                    {review1.role}
-                  </span>
+                <div
+                  className={`mt-7 flex items-center gap-3 transition-opacity duration-700 ${
+                    isInView ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  <img
+                    src={review1.avatar}
+                    alt={review1.name}
+                    width={80}
+                    height={80}
+                    loading="lazy"
+                    decoding="async"
+                    className="size-10 rounded-full object-cover shrink-0"
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-[14.5px] font-semibold text-[#111111] leading-tight tracking-[-0.01em]">
+                      {review1.name}
+                    </span>
+                    <span className="text-[13px] font-normal text-neutral-500 leading-tight mt-0.5">
+                      {review1.role}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -216,39 +217,41 @@ export function Testimonials() {
 
           {/* Right Column: Review 2 (Lower staggered placement) */}
           {review2 && (
-            <div className="md:pl-12 lg:pl-16 pt-2 md:pt-36 lg:pt-40">
-              <div className="flex items-start justify-between gap-6">
-                <div className="flex-1">
-                  <DynamicTypewriterQuote
-                    text={review2.quote}
-                    start={startSecond}
-                    baseSpeed={20}
-                  />
+            <div className="md:pl-14 md:pr-2 flex justify-start">
+              <div className="w-full max-w-[430px] pt-2 md:pt-[150px]">
+                <div className="flex items-start justify-between gap-6">
+                  <div className="flex-1">
+                    <DynamicTypewriterQuote
+                      text={review2.quote}
+                      start={startSecond}
+                      baseSpeed={19}
+                    />
+                  </div>
+                  <QuoteMark className="mt-1" />
                 </div>
-                <QuoteIcon className="mt-1" />
-              </div>
 
-              <div
-                className={`mt-6 flex items-center gap-3.5 transition-opacity duration-700 ${
-                  startSecond ? "opacity-100" : "opacity-0"
-                }`}
-              >
-                <img
-                  src={review2.avatar}
-                  alt={review2.name}
-                  width={88}
-                  height={88}
-                  loading="lazy"
-                  decoding="async"
-                  className="size-11 rounded-full object-cover"
-                />
-                <div className="flex flex-col">
-                  <span className="text-[15px] font-semibold text-[#111111] leading-snug">
-                    {review2.name}
-                  </span>
-                  <span className="text-[13.5px] font-normal text-neutral-500 leading-snug">
-                    {review2.role}
-                  </span>
+                <div
+                  className={`mt-7 flex items-center gap-3 transition-opacity duration-700 ${
+                    startSecond ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  <img
+                    src={review2.avatar}
+                    alt={review2.name}
+                    width={80}
+                    height={80}
+                    loading="lazy"
+                    decoding="async"
+                    className="size-10 rounded-full object-cover shrink-0"
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-[14.5px] font-semibold text-[#111111] leading-tight tracking-[-0.01em]">
+                      {review2.name}
+                    </span>
+                    <span className="text-[13px] font-normal text-neutral-500 leading-tight mt-0.5">
+                      {review2.role}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>

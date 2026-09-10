@@ -114,7 +114,7 @@ export const processSteps = [
 ];
 export const testimonials = [
   {
-    quote: "Twixters transformed our brand into something clear, consistent, and impactful. We've seen better engagement and stronger recall since the rebrand.",
+    quote: "Twixters transformed our brand into something\nclear, consistent, and impactful. We’ve seen better\nengagement and stronger recall since the rebrand.",
     name: "Rishi",
     role: "Product Lead",
     avatar: assetUrl("/assets/rishi.jpg"),
@@ -122,7 +122,7 @@ export const testimonials = [
     align: "left"
   },
   {
-    quote: "Raj delivers more than design he builds systems that work. Professional, detail-focused, and easy to collaborate with.",
+    quote: "Raj delivers more than design he\nbuilds systems that work. Professional,\ndetail-focused, and easy to collaborate with.",
     name: "Ujwal",
     role: "Business Owner",
     avatar: assetUrl("/assets/ujwal.jpg"),
