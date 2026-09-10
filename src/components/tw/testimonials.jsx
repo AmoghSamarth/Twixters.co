@@ -2,34 +2,35 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { testimonials } from "../../content/site";
 
 /**
- * Exact replica of the two vertical pill bars quote icon from the reference
+ * Two vertical pill bars quotation mark icon matching reference
  */
 function QuoteMark({ className = "" }) {
   return (
     <svg
-      width="11"
-      height="13"
-      viewBox="0 0 11 13"
+      width="13"
+      height="16"
+      viewBox="0 0 13 16"
       fill="none"
       aria-hidden="true"
-      className={`text-neutral-400/90 select-none shrink-0 ${className}`}
+      className={`text-black/30 select-none shrink-0 ${className}`}
     >
-      <rect width="3.5" height="12" rx="1.2" fill="currentColor" />
-      <rect x="7" width="3.5" height="12" rx="1.2" fill="currentColor" />
+      <rect width="4" height="15" rx="1.5" fill="currentColor" />
+      <rect x="8" width="4" height="15" rx="1.5" fill="currentColor" />
     </svg>
   );
 }
 
 /**
- * Dynamic Typewriter with organic human cadence:
- * - Natural breathing pauses at commas and periods
- * - Active sleek cursor during typing that gracefully fades out after finish
- * - Invisible ghost text prevents layout shift
+ * Dynamic Typewriter with human-like rhythm:
+ * - Large editorial font size matching reference
+ * - Organic pauses at punctuation
+ * - Active blinking accent cursor
+ * - Zero layout shift via ghost text
  */
 function DynamicTypewriterQuote({
   text,
   start = false,
-  baseSpeed = 20,
+  baseSpeed = 19,
   onComplete,
 }) {
   const [displayedLength, setDisplayedLength] = useState(0);
@@ -102,18 +103,18 @@ function DynamicTypewriterQuote({
       {/* Invisible placeholder locks line wrapping to exactly match reference */}
       <p
         aria-hidden="true"
-        className="invisible select-none whitespace-pre-line text-[17px] font-normal leading-[1.5] tracking-[-0.012em] text-[#111111]"
+        className="invisible select-none whitespace-pre-line text-[19px] sm:text-[20px] lg:text-[21px] font-normal leading-[1.5] tracking-[-0.012em] text-[#111111]"
       >
         {text}
       </p>
 
       {/* Visible typewriter text */}
-      <p className="absolute inset-0 whitespace-pre-line text-[17px] font-normal leading-[1.5] tracking-[-0.012em] text-[#111111]">
+      <p className="absolute inset-0 whitespace-pre-line text-[19px] sm:text-[20px] lg:text-[21px] font-normal leading-[1.5] tracking-[-0.012em] text-[#111111]">
         <span>{text.slice(0, displayedLength)}</span>
         {cursorVisible && (
           <span
             aria-hidden="true"
-            className={`inline-block w-[2px] h-[1.12em] bg-neutral-800 ml-0.5 rounded-[1px] align-text-bottom transition-opacity duration-500 ${
+            className={`inline-block w-[2.5px] h-[1.12em] bg-neutral-800 ml-0.5 rounded-[1px] align-text-bottom transition-opacity duration-500 ${
               isTyping ? "animate-pulse opacity-100" : isDone ? "animate-pulse opacity-60" : "opacity-0"
             }`}
           />
@@ -163,20 +164,20 @@ export function Testimonials() {
     <section
       ref={sectionRef}
       aria-label="Client reviews"
-      className="px-6 py-20 sm:px-10 sm:py-28"
+      className="px-6 py-24 sm:px-12 sm:py-32"
     >
-      <div className="relative mx-auto max-w-[1060px]">
-        {/* Subtle vertical center divider matching reference height and position */}
+      <div className="relative mx-auto max-w-[1240px]">
+        {/* Distinct visible black/dark center divider line matching reference */}
         <div
           aria-hidden="true"
-          className="hidden md:block absolute left-1/2 top-2 bottom-8 w-[1px] bg-[#d1d5db] -translate-x-1/2"
+          className="hidden md:block absolute left-1/2 top-4 bottom-10 w-[1px] bg-black/25 -translate-x-1/2"
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-14 md:gap-0">
           {/* Left Column: Review 1 (Top-aligned) */}
           {review1 && (
-            <div className="md:pr-14 md:pl-2 flex justify-start md:justify-end">
-              <div className="w-full max-w-[430px] pt-2 md:pt-14">
+            <div className="md:pr-12 lg:pr-16 flex justify-start md:justify-end">
+              <div className="w-full max-w-[580px] pt-2 md:pt-10">
                 <div className="flex items-start justify-between gap-6">
                   <div className="flex-1">
                     <DynamicTypewriterQuote
@@ -185,28 +186,28 @@ export function Testimonials() {
                       baseSpeed={19}
                     />
                   </div>
-                  <QuoteMark className="mt-1" />
+                  <QuoteMark className="mt-1.5" />
                 </div>
 
                 <div
-                  className={`mt-7 flex items-center gap-3 transition-opacity duration-700 ${
+                  className={`mt-8 sm:mt-9 flex items-center gap-3.5 transition-opacity duration-700 ${
                     isInView ? "opacity-100" : "opacity-0"
                   }`}
                 >
                   <img
                     src={review1.avatar}
                     alt={review1.name}
-                    width={80}
-                    height={80}
+                    width={100}
+                    height={100}
                     loading="lazy"
                     decoding="async"
-                    className="size-10 rounded-full object-cover shrink-0"
+                    className="size-12 sm:size-[48px] rounded-full object-cover shrink-0"
                   />
                   <div className="flex flex-col">
-                    <span className="text-[14.5px] font-semibold text-[#111111] leading-tight tracking-[-0.01em]">
+                    <span className="text-[16px] sm:text-[17px] font-semibold text-[#111111] leading-tight tracking-[-0.01em]">
                       {review1.name}
                     </span>
-                    <span className="text-[13px] font-normal text-neutral-500 leading-tight mt-0.5">
+                    <span className="text-[14px] sm:text-[14.5px] font-normal text-neutral-500 leading-tight mt-1">
                       {review1.role}
                     </span>
                   </div>
@@ -215,10 +216,10 @@ export function Testimonials() {
             </div>
           )}
 
-          {/* Right Column: Review 2 (Lower staggered placement) */}
+          {/* Right Column: Review 2 (Staggered to line up with Rishi's avatar) */}
           {review2 && (
-            <div className="md:pl-14 md:pr-2 flex justify-start">
-              <div className="w-full max-w-[430px] pt-2 md:pt-[150px]">
+            <div className="md:pl-12 lg:pl-16 flex justify-start">
+              <div className="w-full max-w-[580px] pt-2 md:pt-[190px]">
                 <div className="flex items-start justify-between gap-6">
                   <div className="flex-1">
                     <DynamicTypewriterQuote
@@ -227,28 +228,28 @@ export function Testimonials() {
                       baseSpeed={19}
                     />
                   </div>
-                  <QuoteMark className="mt-1" />
+                  <QuoteMark className="mt-1.5" />
                 </div>
 
                 <div
-                  className={`mt-7 flex items-center gap-3 transition-opacity duration-700 ${
+                  className={`mt-8 sm:mt-9 flex items-center gap-3.5 transition-opacity duration-700 ${
                     startSecond ? "opacity-100" : "opacity-0"
                   }`}
                 >
                   <img
                     src={review2.avatar}
                     alt={review2.name}
-                    width={80}
-                    height={80}
+                    width={100}
+                    height={100}
                     loading="lazy"
                     decoding="async"
-                    className="size-10 rounded-full object-cover shrink-0"
+                    className="size-12 sm:size-[48px] rounded-full object-cover shrink-0"
                   />
                   <div className="flex flex-col">
-                    <span className="text-[14.5px] font-semibold text-[#111111] leading-tight tracking-[-0.01em]">
+                    <span className="text-[16px] sm:text-[17px] font-semibold text-[#111111] leading-tight tracking-[-0.01em]">
                       {review2.name}
                     </span>
-                    <span className="text-[13px] font-normal text-neutral-500 leading-tight mt-0.5">
+                    <span className="text-[14px] sm:text-[14.5px] font-normal text-neutral-500 leading-tight mt-1">
                       {review2.role}
                     </span>
                   </div>
