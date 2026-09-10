@@ -18,16 +18,20 @@ export function CaseStudies() {
     rel="noreferrer"
     className="group block focus-visible:outline-none"
   >
-              <div className="overflow-hidden rounded-[28px] bg-[#cfcfcf] shadow-float transition-[transform,box-shadow] duration-500 group-hover:-translate-y-1.5 group-hover:shadow-lift sm:rounded-[36px]">
+              <div className="relative overflow-hidden rounded-[28px] bg-[#cfcfcf] shadow-float transition-[transform,box-shadow] duration-500 group-hover:-translate-y-1.5 group-hover:shadow-lift sm:rounded-[36px]">
                 <img
-    src={project.src}
-    alt={project.alt}
-    width={1024}
-    height={720}
-    loading="lazy"
-    decoding="async"
-    className="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-[1.035]"
-  />
+                  src={project.src}
+                  alt={project.alt}
+                  width={1024}
+                  height={720}
+                  loading="lazy"
+                  decoding="async"
+                  className="aspect-[4/3] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                />
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 bg-white opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
+                />
               </div>
               <div className="mt-5 flex flex-wrap items-center justify-between gap-3 px-1">
                 <p className="flex items-center gap-2 text-[16px] font-medium tracking-tight text-ink-muted">

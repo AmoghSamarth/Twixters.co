@@ -132,31 +132,31 @@ export const testimonials = [
 const BEHANCE = "https://www.behance.net/gallery/248456131/The-Saathh-Brand-Identity";
 export const caseStudies = [
   {
-    title: "The Saath",
+    title: "The Saathh",
     tags: ["Branding", "Brew Bar"],
-    src: assetUrl("/assets/work-1.jpg"),
-    alt: "The Saath — Branding",
+    src: assetUrl("/assets/case-saathh.jpg"),
+    alt: "The Saathh — Visual Identity & Systems",
     href: BEHANCE
   },
   {
     title: "Gamla",
     tags: ["Design System", "Organic Brand"],
-    src: assetUrl("/assets/work-2.jpg"),
+    src: assetUrl("/assets/case-gamla.png"),
     alt: "Gamla — Design System",
     href: BEHANCE
   },
   {
     title: "Cognito Bite",
     tags: ["Visual Identity", "Protein Bar"],
-    src: assetUrl("/assets/work-3.jpg"),
-    alt: "Cognito Bite — Visual Identity",
+    src: assetUrl("/assets/case-cognito.jpg"),
+    alt: "Cognito Bite — Visual Identity & Systems",
     href: BEHANCE
   },
   {
     title: "The Biryani Story",
     tags: ["Logo Design", "Food"],
-    src: assetUrl("/assets/work-4.jpg"),
-    alt: "The Biryani Story — Logo Design",
+    src: assetUrl("/assets/case-biryani.jpg"),
+    alt: "The Biryani Story — Visual Identity & Systems",
     href: BEHANCE
   }
 ];
