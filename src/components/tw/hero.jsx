@@ -128,8 +128,8 @@ export function Hero() {
       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-[1280px]">
-        {/* Script wordmark watermark (10% smaller, placed relative to H1) */}
-        <TwixtersWatermark className="pointer-events-none absolute -top-[110px] left-1/2 w-[clamp(306px,43.2vw,615px)] -translate-x-1/2 text-ink/[0.06] select-none sm:-top-[135px]" />
+        {/* Script wordmark watermark with added lower margin spacing matching reference */}
+        <TwixtersWatermark className="pointer-events-none absolute -top-[160px] sm:-top-[195px] md:-top-[215px] left-1/2 w-[clamp(330px,46vw,650px)] -translate-x-1/2 text-ink/[0.06] select-none" />
 
         {/* H1 Headline with integrated animated slideshow chips (10% smaller font size) */}
         <h1 className="tw-display relative mx-auto max-w-[960px] text-center text-[clamp(2.1rem,5.76vw,5.4rem)] font-normal leading-[1.12] tracking-[-0.04em]">
