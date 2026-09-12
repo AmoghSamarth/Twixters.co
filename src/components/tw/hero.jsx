@@ -3,6 +3,7 @@ import { hero } from "../../content/site";
 import { InkPill } from "./primitives";
 import { Reveal } from "./reveal";
 import { assetUrl } from "../../utils/asset";
+import { HeroMarqueePanel } from "./hero-marquee";
 function TwixtersWatermark({ className = "" }) {
   return <svg
     id="Layer_2"
@@ -26,43 +27,66 @@ function TwixtersWatermark({ className = "" }) {
 }
 function AnimatedHeroChip({
   slides,
+  children,
   tone,
-  delay
+  delay,
+  tilt = 0,
+  bgColor
 }) {
   const [index, setIndex] = useState(0);
   useEffect(() => {
-    if (slides.length <= 1) return;
+    if (!slides || slides.length <= 1) return;
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % slides.length);
     }, 3200);
     return () => clearInterval(interval);
-  }, [slides.length]);
-  return <Reveal
-    as="span"
-    delay={delay}
-    className={`relative mx-[0.16em] inline-block h-[0.77em] w-[1.18em] translate-y-[-0.03em] overflow-hidden rounded-[0.22em] align-middle shadow-[0_10px_25px_rgba(0,0,0,0.15)] ring-1 ring-black/10 ${tone === "dark" ? "bg-[#141414] ring-white/15" : "bg-white"}`}
-  >
-      {slides.map((slide, i) => <img
-    key={slide.src}
-    src={slide.src}
-    alt={slide.alt}
-    loading="eager"
-    decoding="async"
-    className={`absolute inset-0 size-full object-cover transition-opacity duration-700 ease-in-out ${i === index ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}`}
-  />)}
-    </Reveal>;
+  }, [slides]);
+
+  const shadowStyle =
+    tone === "dark"
+      ? "0 26px 54px -6px rgba(0, 0, 0, 0.46), 0 14px 28px -4px rgba(0, 0, 0, 0.32), 0 4px 10px rgba(0, 0, 0, 0.18)"
+      : "0 22px 48px -8px rgba(0, 0, 0, 0.25), 0 11px 22px -4px rgba(0, 0, 0, 0.14), 0 3px 7px rgba(0, 0, 0, 0.07)";
+
+  return (
+    <Reveal
+      as="span"
+      delay={delay}
+      className="relative mx-[0.18em] inline-block align-middle"
+    >
+      <span
+        style={{
+          transform: `rotate(${tilt}deg)`,
+          boxShadow: shadowStyle,
+          backgroundColor: bgColor || (tone === "dark" ? "#212124" : "#ffffff")
+        }}
+        className="relative block h-[0.95em] w-[1.46em] translate-y-[-0.04em] overflow-hidden rounded-[0.30em] border-2 border-black"
+      >
+        {children ? (
+          children
+        ) : (
+          slides?.map((slide, i) => (
+            <img
+              key={slide.src}
+              src={slide.src}
+              alt={slide.alt}
+              loading="eager"
+              decoding="async"
+              className={`absolute inset-0 size-full object-cover transition-opacity duration-700 ease-in-out ${
+                i === index ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+              }`}
+            />
+          ))
+        )}
+      </span>
+    </Reveal>
+  );
 }
 export function Hero() {
   const chipASlides = [
-    { src: assetUrl("/assets/work-1.jpg"), alt: "The Saath branding collateral" },
     { src: assetUrl("/assets/chip-collage.jpg"), alt: "Branding collateral moodboard" },
+    { src: assetUrl("/assets/work-1.jpg"), alt: "The Saath branding collateral" },
     { src: assetUrl("/assets/work-2.jpg"), alt: "Gamla organic brand design" },
     { src: assetUrl("/assets/work-5.jpg"), alt: "Twixters packaging collateral" }
-  ];
-  const chipBSlides = [
-    { src: assetUrl("/assets/chip-mark.jpg"), alt: "Twixters monogram mark" },
-    { src: assetUrl("/assets/work-3.jpg"), alt: "Cognito Bite brand identity" },
-    { src: assetUrl("/assets/work-4.jpg"), alt: "The Biryani Story mark" }
   ];
   return (
     <section id="top" className="relative overflow-hidden px-5 pt-[325px] pb-4 mb-5 sm:px-8 sm:pt-[465px] sm:pb-6">
@@ -87,16 +111,18 @@ export function Hero() {
 
       <div className="relative z-10 mx-auto max-w-[1280px]">
         {/* H1 Headline with integrated animated slideshow chips */}
-        <h1 className="tw-display mx-auto max-w-[1040px] text-center text-[clamp(2.35rem,6.4vw,6rem)] leading-[1.12] tracking-[-0.04em]">
+        <h1 className="tw-display mx-auto max-w-[1040px] text-center text-[clamp(2.35rem,6.4vw,6rem)] font-normal leading-[1.12] tracking-[-0.04em]">
           <Reveal as="span" className="block" delay={0}>
-            <span className="font-bold text-ink">{hero.lineOneBefore}</span>
-            <AnimatedHeroChip slides={chipASlides} tone="light" delay={420} />
-            <span className="font-light text-ink-muted">{hero.lineOneAfter}</span>
+            <span className="font-medium text-ink">{hero.lineOneBefore}</span>
+            <AnimatedHeroChip slides={chipASlides} tone="light" delay={420} tilt={-3.5} />
+            <span className="font-normal text-ink-muted">{hero.lineOneAfter}</span>
           </Reveal>
           <Reveal as="span" className="block whitespace-nowrap sm:whitespace-nowrap" delay={110}>
-            <span className="font-light text-ink-muted">{hero.lineTwoBefore}</span>
-            <AnimatedHeroChip slides={chipBSlides} tone="dark" delay={520} />
-            <span className="font-bold text-ink">{hero.lineTwoAfter}</span>
+            <span className="font-normal text-ink-muted">{hero.lineTwoBefore}</span>
+            <AnimatedHeroChip tone="dark" delay={520} tilt={2.5} bgColor="#212124">
+              <HeroMarqueePanel />
+            </AnimatedHeroChip>
+            <span className="font-medium text-ink">{hero.lineTwoAfter}</span>
           </Reveal>
         </h1>
 
