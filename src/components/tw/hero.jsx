@@ -33,19 +33,31 @@ function AnimatedHeroChip({
   tilt = 0,
   bgColor
 }) {
-  const [index, setIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+
   useEffect(() => {
     if (!slides || slides.length <= 1) return;
     const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % slides.length);
-    }, 3200);
+      setIsTransitioning(true);
+      setCurrentIndex((prev) => prev + 1);
+    }, 3000);
     return () => clearInterval(interval);
   }, [slides]);
+
+  const handleTransitionEnd = () => {
+    if (slides && currentIndex === slides.length) {
+      setIsTransitioning(false);
+      setCurrentIndex(0);
+    }
+  };
 
   const shadowStyle =
     tone === "dark"
       ? "0 26px 54px -6px rgba(0, 0, 0, 0.46), 0 14px 28px -4px rgba(0, 0, 0, 0.32), 0 4px 10px rgba(0, 0, 0, 0.18)"
       : "0 22px 48px -8px rgba(0, 0, 0, 0.25), 0 11px 22px -4px rgba(0, 0, 0, 0.14), 0 3px 7px rgba(0, 0, 0, 0.07)";
+
+  const trackItems = slides && slides.length > 1 ? [...slides, slides[0]] : (slides || []);
 
   return (
     <Reveal
@@ -64,18 +76,28 @@ function AnimatedHeroChip({
         {children ? (
           children
         ) : (
-          slides?.map((slide, i) => (
-            <img
-              key={slide.src}
-              src={slide.src}
-              alt={slide.alt}
-              loading="eager"
-              decoding="async"
-              className={`absolute inset-0 size-full object-cover transition-opacity duration-700 ease-in-out ${
-                i === index ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
-              }`}
-            />
-          ))
+          <div
+            className="flex flex-col size-full"
+            style={{
+              transform: `translateY(-${currentIndex * 100}%)`,
+              transition: isTransitioning
+                ? "transform 750ms cubic-bezier(0.22, 1, 0.36, 1)"
+                : "none"
+            }}
+            onTransitionEnd={handleTransitionEnd}
+          >
+            {trackItems.map((slide, i) => (
+              <div key={`${slide.src}-${i}`} className="relative size-full shrink-0">
+                <img
+                  src={slide.src}
+                  alt={slide.alt}
+                  loading="eager"
+                  decoding="async"
+                  className="size-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
         )}
       </span>
     </Reveal>
@@ -83,10 +105,9 @@ function AnimatedHeroChip({
 }
 export function Hero() {
   const chipASlides = [
-    { src: assetUrl("/assets/chip-collage.jpg"), alt: "Branding collateral moodboard" },
-    { src: assetUrl("/assets/work-1.jpg"), alt: "The Saath branding collateral" },
-    { src: assetUrl("/assets/work-2.jpg"), alt: "Gamla organic brand design" },
-    { src: assetUrl("/assets/work-5.jpg"), alt: "Twixters packaging collateral" }
+    { src: assetUrl("/assets/chip-highland.jpg"), alt: "Highland's Water Front branding collateral" },
+    { src: assetUrl("/assets/chip-indizaa.png"), alt: "Indizaa Kitchen & Bar branding collateral" },
+    { src: assetUrl("/assets/chip-collage.jpg"), alt: "Twixters branding collateral moodboard" }
   ];
   return (
     <section id="top" className="relative overflow-hidden px-5 pt-[325px] pb-4 mb-5 sm:px-8 sm:pt-[465px] sm:pb-6">
