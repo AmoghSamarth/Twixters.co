@@ -110,7 +110,7 @@ export function Hero() {
     { src: assetUrl("/assets/chip-collage.jpg"), alt: "Twixters branding collateral moodboard" }
   ];
   return (
-    <section id="top" className="relative flex min-h-[85vh] flex-col justify-start overflow-hidden px-5 pt-[135px] pb-10 sm:px-8 sm:pt-[150px] sm:pb-14">
+    <section id="top" className="relative flex min-h-[85vh] flex-col justify-start overflow-hidden px-5 pt-[135px] pb-[60px] sm:px-8 sm:pt-[150px] sm:pb-[76px]">
       {/* Photorealistic Hero lighting effect matching reference (diagonal window shadows & sunlight shafts) */}
       <div
         aria-hidden="true"

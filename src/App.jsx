@@ -19,7 +19,7 @@ export default function App() {
       {/* Background texture at the absolute lowest z-index */}
       <div
         aria-hidden="true"
-        className="pointer-events-none fixed inset-0 -z-50 select-none bg-[#d9d9d9]"
+        className="pointer-events-none fixed inset-0 -z-50 select-none bg-[#f2f2f2]"
         style={{
           backgroundImage: `url("${assetUrl("/assets/micro-texture.png")}")`,
           backgroundRepeat: "repeat",

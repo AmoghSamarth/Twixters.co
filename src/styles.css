@@ -17,8 +17,8 @@
  * This is a standalone brand: no Quanta tokens, no q-* utilities in app code.
  * ------------------------------------------------------------------------- */
 @theme {
-  --color-field: #d9d9d9;
-  --color-field-deep: #d1d1d1;
+  --color-field: #f2f2f2;
+  --color-field-deep: #e9e9e9;
   --color-surface: #ffffff;
   --color-ink: #111111;
   --color-ink-muted: #5a5a5a;
