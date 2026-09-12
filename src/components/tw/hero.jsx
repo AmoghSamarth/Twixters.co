@@ -123,11 +123,11 @@ export function Hero() {
           height={1080}
           loading="eager"
           decoding="async"
-          className="size-full object-cover object-left-top opacity-95 [mask-image:linear-gradient(to_bottom,black_60%,transparent_98%)] [-webkit-mask-image:linear-gradient(to_bottom,black_60%,transparent_98%)]"
+          className="size-full object-cover object-left-top opacity-45 [mask-image:linear-gradient(to_bottom,black_60%,transparent_98%)] [-webkit-mask-image:linear-gradient(to_bottom,black_60%,transparent_98%)]"
         />
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-[1280px]">
+      <div className="relative z-10 mx-auto w-full max-w-[1280px] mt-[50px]">
         {/* Script wordmark watermark with added lower margin spacing matching reference */}
         <TwixtersWatermark className="pointer-events-none absolute -top-[160px] sm:-top-[195px] md:-top-[215px] left-1/2 w-[clamp(330px,46vw,650px)] -translate-x-1/2 text-ink/[0.06] select-none" />
 
