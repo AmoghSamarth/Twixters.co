@@ -71,7 +71,7 @@ function AnimatedHeroChip({
           boxShadow: shadowStyle,
           backgroundColor: bgColor || (tone === "dark" ? "#212124" : "#ffffff")
         }}
-        className="relative block h-[0.95em] w-[1.46em] translate-y-[-0.04em] overflow-hidden rounded-[0.30em] border-2 border-black"
+        className="relative block h-[1.06em] w-[1.62em] translate-y-[-0.045em] overflow-hidden rounded-[0.33em] border-2 border-black"
       >
         {children ? (
           children
@@ -110,7 +110,7 @@ export function Hero() {
     { src: assetUrl("/assets/chip-collage.jpg"), alt: "Twixters branding collateral moodboard" }
   ];
   return (
-    <section id="top" className="relative overflow-hidden px-5 pt-[325px] pb-4 mb-5 sm:px-8 sm:pt-[465px] sm:pb-6">
+    <section id="top" className="relative flex min-h-[90vh] flex-col justify-center overflow-hidden px-5 pt-28 pb-12 sm:px-8 sm:pt-32 sm:pb-16">
       {/* Photorealistic Hero lighting effect matching reference (diagonal window shadows & sunlight shafts) */}
       <div
         aria-hidden="true"
@@ -127,12 +127,12 @@ export function Hero() {
         />
       </div>
 
-      {/* Script wordmark watermark */}
-      <TwixtersWatermark className="pointer-events-none absolute z-[2] top-[170px] left-1/2 w-[clamp(340px,48vw,684px)] -translate-x-1/2 text-ink/[0.06] select-none sm:top-[200px]" />
+      <div className="relative z-10 mx-auto w-full max-w-[1280px]">
+        {/* Script wordmark watermark (10% smaller, placed relative to H1) */}
+        <TwixtersWatermark className="pointer-events-none absolute -top-[110px] left-1/2 w-[clamp(306px,43.2vw,615px)] -translate-x-1/2 text-ink/[0.06] select-none sm:-top-[135px]" />
 
-      <div className="relative z-10 mx-auto max-w-[1280px]">
-        {/* H1 Headline with integrated animated slideshow chips */}
-        <h1 className="tw-display mx-auto max-w-[1040px] text-center text-[clamp(2.35rem,6.4vw,6rem)] font-normal leading-[1.12] tracking-[-0.04em]">
+        {/* H1 Headline with integrated animated slideshow chips (10% smaller font size) */}
+        <h1 className="tw-display relative mx-auto max-w-[960px] text-center text-[clamp(2.1rem,5.76vw,5.4rem)] font-normal leading-[1.12] tracking-[-0.04em]">
           <Reveal as="span" className="block" delay={0}>
             <span className="font-medium text-ink">{hero.lineOneBefore}</span>
             <AnimatedHeroChip slides={chipASlides} tone="light" delay={420} tilt={-3.5} />
@@ -147,9 +147,9 @@ export function Hero() {
           </Reveal>
         </h1>
 
-        {/* Supporting Copy */}
-        <Reveal delay={200} className="mx-auto mt-6 max-w-[540px] px-4 sm:mt-7">
-          <p className="text-center text-[15px] leading-[1.5] text-ink-muted sm:text-[16px]">
+        {/* Supporting Copy (10% smaller) */}
+        <Reveal delay={200} className="mx-auto mt-6 max-w-[490px] px-4 sm:mt-7">
+          <p className="text-center text-[13.5px] leading-[1.5] text-ink-muted sm:text-[14.5px]">
             {hero.sub}
           </p>
         </Reveal>
