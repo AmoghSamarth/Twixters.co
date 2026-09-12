@@ -110,7 +110,7 @@ export function Hero() {
     { src: assetUrl("/assets/chip-collage.jpg"), alt: "Twixters branding collateral moodboard" }
   ];
   return (
-    <section id="top" className="relative flex min-h-[90vh] flex-col justify-center overflow-hidden px-5 pt-28 pb-12 sm:px-8 sm:pt-32 sm:pb-16">
+    <section id="top" className="relative flex min-h-[85vh] flex-col justify-start overflow-hidden px-5 pt-[135px] pb-10 sm:px-8 sm:pt-[150px] sm:pb-14">
       {/* Photorealistic Hero lighting effect matching reference (diagonal window shadows & sunlight shafts) */}
       <div
         aria-hidden="true"
@@ -127,9 +127,9 @@ export function Hero() {
         />
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-[1280px] mt-[50px]">
-        {/* Script wordmark watermark with added lower margin spacing matching reference */}
-        <TwixtersWatermark className="pointer-events-none absolute -top-[160px] sm:-top-[195px] md:-top-[215px] left-1/2 w-[clamp(330px,46vw,650px)] -translate-x-1/2 text-ink/[0.06] select-none" />
+      <div className="relative z-10 mx-auto w-full max-w-[1280px] flex flex-col items-center">
+        {/* Script wordmark watermark replicating exact spacing from red arrows */}
+        <TwixtersWatermark className="pointer-events-none w-[clamp(320px,32vw,490px)] text-ink/[0.06] select-none mb-8 sm:mb-12 md:mb-[52px]" />
 
         {/* H1 Headline with integrated animated slideshow chips (10% smaller font size) */}
         <h1 className="tw-display relative mx-auto max-w-[960px] text-center text-[clamp(2.1rem,5.76vw,5.4rem)] font-normal leading-[1.12] tracking-[-0.04em]">
