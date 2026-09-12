@@ -160,11 +160,11 @@ export function Collage() {
             ))}
           </ul>
 
-          {/* ── Floating "See Recent Work" CTA ── */}
+          {/* ── Floating "See Recent Work" CTA centered in showroom ── */}
           <div
-            className="pointer-events-none absolute z-30 hidden sm:block"
+            className="pointer-events-none absolute z-30 block"
             style={{
-              left: "calc(50% + 60px)",
+              left: "50%",
               top: "50%",
               transform: "translateX(-50%) translateY(-50%)",
             }}

@@ -123,7 +123,7 @@ export function Hero() {
           height={1080}
           loading="eager"
           decoding="async"
-          className="size-full object-cover object-left-top opacity-45 [mask-image:linear-gradient(to_bottom,black_60%,transparent_98%)] [-webkit-mask-image:linear-gradient(to_bottom,black_60%,transparent_98%)]"
+          className="size-full object-cover object-left-top opacity-55 brightness-110 [mask-image:linear-gradient(to_bottom,black_60%,transparent_98%)] [-webkit-mask-image:linear-gradient(to_bottom,black_60%,transparent_98%)]"
         />
       </div>
 
