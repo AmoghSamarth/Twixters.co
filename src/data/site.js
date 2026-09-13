@@ -171,6 +171,11 @@ export const founder = {
   },
   name: "Raj Shegaonkar",
   role: "Twixters.Co, Founder",
+  socials: {
+    instagram: "https://www.instagram.com/twixters.co",
+    linkedin: "https://www.linkedin.com/in/rajshegaonkar",
+    behance: "https://www.behance.net/gallery/248456131/The-Saathh-Brand-Identity"
+  },
   bio: "Founded in 2021 by Raj Shegaonkar, Twixters blends creative design with sharp marketing strategy. With 10+ years of experience, we've helped local businesses and growing brands build identities that make people stop, notice, and remember.",
   timeline: [
     {

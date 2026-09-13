@@ -19,6 +19,59 @@ function Smiley() {
   );
 }
 
+function InstagramIcon({ className = "size-[18px]" }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.8}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+    </svg>
+  );
+}
+
+function LinkedInIcon({ className = "size-[18px]" }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.8}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <rect width="20" height="20" x="2" y="2" rx="4" />
+      <path d="M8 11v5" />
+      <circle cx="8" cy="8" r="0.75" fill="currentColor" stroke="none" />
+      <path d="M12 16v-5" />
+      <path d="M12 13a2 2 0 0 1 4 0v3" />
+    </svg>
+  );
+}
+
+function BehanceIcon({ className = "size-[18px]" }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M7.799 13.1c1.2 0 2.2-.6 2.2-2 0-1.1-.8-1.7-1.8-1.8V9.2c.8-.1 1.6-.7 1.6-1.7 0-1.3-1-1.8-2.2-1.8H3.5v7.4h4.299zm-2.399-5.8h2.1c.6 0 1 .3 1 .9 0 .6-.4.9-1 .9H5.4V7.3zm0 4.2h2.2c.7 0 1.2.3 1.2 1 0 .7-.5 1.1-1.3 1.1H5.4v-2.1zm11.2-2.9c-2.1 0-3.6 1.6-3.6 3.8s1.5 3.8 3.7 3.8c1.6 0 2.8-.8 3.3-2.1h-1.8c-.3.5-.8.7-1.5.7-1.1 0-1.8-.7-1.9-1.8h5.3c0-.2.1-.5.1-.7 0-2.3-1.4-3.7-3.6-3.7zm-1.8 3c.1-1 .8-1.6 1.8-1.6s1.6.6 1.7 1.6h-3.5zm.3-4.5h3.2v1.1h-3.2V7.1z" />
+    </svg>
+  );
+}
+
 export function Founder() {
   return (
     <section id="about" aria-labelledby="about-heading" className="px-5 py-24 sm:px-8 sm:py-32">
@@ -43,9 +96,43 @@ export function Founder() {
               className="aspect-[4/3] w-full object-cover object-[center_35%]"
             />
           </div>
-          <div className="mt-6 text-right pr-2">
-            <p className="text-[17px] font-semibold tracking-tight text-ink">{founder.name}</p>
-            <p className="mt-0.5 text-[14px] text-ink-muted">{founder.role}</p>
+
+          {/* Caption row: Social logos on the left, Name/Role on the right */}
+          <div className="mt-6 flex items-center justify-between pl-1 pr-2">
+            <div className="flex items-center gap-3 text-neutral-500">
+              <a
+                href={founder.socials?.instagram || "https://instagram.com"}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="transition-colors duration-200 hover:text-ink"
+              >
+                <InstagramIcon />
+              </a>
+              <a
+                href={founder.socials?.linkedin || "https://linkedin.com"}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+                className="transition-colors duration-200 hover:text-ink"
+              >
+                <LinkedInIcon />
+              </a>
+              <a
+                href={founder.socials?.behance || "https://behance.net"}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Behance"
+                className="transition-colors duration-200 hover:text-ink"
+              >
+                <BehanceIcon />
+              </a>
+            </div>
+
+            <div className="text-right">
+              <p className="text-[17px] font-semibold tracking-tight text-ink">{founder.name}</p>
+              <p className="mt-0.5 text-[14px] text-ink-muted">{founder.role}</p>
+            </div>
           </div>
         </Reveal>
 
