@@ -4,7 +4,7 @@ import { offPageContent } from "../../content/site";
 
 const { groups } = offPageContent.whatWeDo;
 
-/* ─── 3D Drum Wheel with variable speed & deceleration ─── */
+/* ─── 3D Drum Wheel with variable speed, deceleration & blur depth-of-field ─── */
 function DrumWheel({ items, phaseOffset = 0, initialRot = 0 }) {
   const rotRef = useRef(initialRot);
   const velRef = useRef(16);
@@ -18,7 +18,7 @@ function DrumWheel({ items, phaseOffset = 0, initialRot = 0 }) {
 
   const N = items.length;
   const ANGLE_STEP = 360 / N;
-  const WHEEL_RADIUS = 145; // px — virtual drum radius
+  const WHEEL_RADIUS = 135; // px — virtual drum radius
 
   useEffect(() => {
     const prefersReduced =
@@ -87,24 +87,43 @@ function DrumWheel({ items, phaseOffset = 0, initialRot = 0 }) {
       onMouseLeave={() => { isHoveredRef.current = false; }}
       className="relative overflow-hidden cursor-default select-none w-full"
       style={{
-        height: "260px",
+        height: "220px",
         perspective: "800px",
         maskImage:
-          "linear-gradient(to bottom, transparent 0%, black 24%, black 76%, transparent 100%)",
+          "linear-gradient(to bottom, transparent 0%, black 22%, black 78%, transparent 100%)",
         WebkitMaskImage:
-          "linear-gradient(to bottom, transparent 0%, black 24%, black 76%, transparent 100%)",
+          "linear-gradient(to bottom, transparent 0%, black 22%, black 78%, transparent 100%)",
       }}
     >
       {items.map((item, i) => {
         const raw = (i * ANGLE_STEP - (rot % 360) + 3600) % 360;
         const signed = raw > 180 ? raw - 360 : raw;
-        if (Math.abs(signed) > 82) return null;
+        const dist = Math.abs(signed) / ANGLE_STEP;
+
+        // Cull items more than ~1.4 items away so only 1 sharp + 1 blurred above/below are visible
+        if (dist > 1.4) return null;
 
         const rad = (signed * Math.PI) / 180;
         const yOff = Math.sin(rad) * WHEEL_RADIUS;
         const sc = Math.cos(rad);
-        const opacity = Math.max(0, Math.pow(Math.cos(rad), 0.65));
-        const isActive = Math.abs(signed) < ANGLE_STEP * 0.45;
+
+        // Compute progressive Gaussian blur and opacity
+        let blurPx = 0;
+        let opacity = 1;
+        const isActive = dist < 0.3;
+
+        if (dist <= 0.22) {
+          blurPx = 0;
+          opacity = 1;
+        } else if (dist <= 1.0) {
+          const t = (dist - 0.22) / 0.78;
+          blurPx = t * 4.5;
+          opacity = 1 - t * 0.65;
+        } else {
+          const t2 = Math.min((dist - 1.0) / 0.4, 1);
+          blurPx = 4.5 + t2 * 3.5;
+          opacity = Math.max(0, 0.35 - t2 * 0.35);
+        }
 
         return (
           <div
@@ -117,29 +136,21 @@ function DrumWheel({ items, phaseOffset = 0, initialRot = 0 }) {
               top: "50%",
               transform: `translateY(calc(-50% + ${yOff.toFixed(2)}px)) rotateX(${(-signed * 0.55).toFixed(1)}deg) scaleY(${sc.toFixed(4)})`,
               transformOrigin: "left center",
-              opacity,
-              willChange: "transform, opacity",
+              opacity: Number(opacity.toFixed(3)),
+              filter: `blur(${blurPx.toFixed(1)}px)`,
+              WebkitFilter: `blur(${blurPx.toFixed(1)}px)`,
+              willChange: "transform, opacity, filter",
               pointerEvents: "none",
             }}
           >
-            <div className="flex items-center gap-2.5 whitespace-nowrap">
+            <div className="whitespace-nowrap">
               <span
-                className="select-none text-[0.85em] shrink-0"
-                style={{
-                  color: isActive ? "var(--color-accent, #c95d3b)" : "#a1a1aa",
-                  transform: isActive ? "scale(1.15)" : "scale(1)",
-                  transition: "transform 0.2s ease, color 0.2s ease",
-                }}
-              >
-                *
-              </span>
-              <span
-                className="tracking-[-0.015em]"
+                className="tracking-[-0.015em] select-none"
                 style={{
                   fontFamily: "var(--font-sans)",
-                  fontSize: "clamp(1.05rem, 1.35vw, 1.4rem)",
+                  fontSize: "clamp(1.15rem, 1.6vw, 1.55rem)",
                   fontWeight: 400,
-                  color: isActive ? "#111111" : "#71717a",
+                  color: isActive ? "#111111" : "#555555",
                   transition: "color 0.25s ease",
                 }}
               >
@@ -200,7 +211,7 @@ export function Expertise() {
                 {/* Vertical hairline between Title & Drum */}
                 <div
                   aria-hidden="true"
-                  className="hidden sm:block h-[180px] w-px shrink-0 self-center bg-hair"
+                  className="hidden sm:block h-[150px] w-px shrink-0 self-center bg-hair"
                 />
 
                 {/* Drum Wheel */}
@@ -216,7 +227,7 @@ export function Expertise() {
                 {gi === 0 && (
                   <div
                     aria-hidden="true"
-                    className="hidden lg:block absolute -right-6 xl:-right-8 top-1/2 -translate-y-1/2 h-[220px] w-px bg-hair"
+                    className="hidden lg:block absolute -right-6 xl:-right-8 top-1/2 -translate-y-1/2 h-[180px] w-px bg-hair"
                   />
                 )}
               </div>
