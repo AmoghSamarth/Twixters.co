@@ -64,38 +64,17 @@ export function FinalCta() {
       className="relative z-20 w-full px-2.5 pb-6 pt-2 sm:px-4 sm:pb-8 sm:pt-4 md:px-6"
     >
       <div
-        className="group relative mx-auto flex min-h-[88vh] sm:min-h-[92vh] lg:min-h-[94vh] w-full max-w-[1720px] flex-col justify-between overflow-hidden rounded-[30px] sm:rounded-[44px] border border-white/[0.08] bg-[#090a0c] shadow-[0_-25px_80px_rgba(0,0,0,0.5),0_30px_100px_rgba(0,0,0,0.6)] transition-all duration-300 ease-out"
+        className="group relative mx-auto flex min-h-[88vh] sm:min-h-[92vh] lg:min-h-[94vh] w-full max-w-[1720px] flex-col justify-between overflow-hidden rounded-[30px] sm:rounded-[44px] border border-white/[0.08] bg-[#070709] shadow-[0_-25px_80px_rgba(0,0,0,0.5),0_30px_100px_rgba(0,0,0,0.6)] transition-all duration-300 ease-out"
+        style={{
+          backgroundImage: `url("${assetUrl("/assets/exact-contact-card.png")}")`,
+          backgroundSize: "cover",
+          backgroundPosition: "left top",
+        }}
       >
-        {/* Ambient subtle center glow */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,rgba(255,255,255,0.06)_0%,transparent_70%)]"
-        />
-
-        {/* Photorealistic satin reflection beam matching reference video and ChatGPT image */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-[1] select-none overflow-hidden mix-blend-screen"
-          style={{
-            WebkitMaskImage: "radial-gradient(ellipse 110% 95% at 18% 18%, black 40%, rgba(0,0,0,0.5) 75%, transparent 100%)",
-            maskImage: "radial-gradient(ellipse 110% 95% at 18% 18%, black 40%, rgba(0,0,0,0.5) 75%, transparent 100%)"
-          }}
-        >
-          <img
-            src={assetUrl("/assets/chatgpt-reflection.png")}
-            alt=""
-            width={1759}
-            height={894}
-            loading="eager"
-            decoding="async"
-            className="size-full object-cover object-left-top opacity-65 sm:opacity-75 transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-          />
-        </div>
-
         {/* Tactile micro-texture film grain */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-[2] select-none opacity-20 mix-blend-overlay"
+          className="pointer-events-none absolute inset-0 z-[2] select-none opacity-15 mix-blend-overlay"
           style={{
             backgroundImage: `url("${assetUrl("/assets/micro-texture.png")}")`,
             backgroundRepeat: "repeat"
