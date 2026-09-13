@@ -33,8 +33,8 @@ export default function App() {
           <Hero />
           <Collage />
         </div>
-        <Expertise />
         <Services />
+        <Expertise />
         <Process />
         <Testimonials />
         <CaseStudies />
