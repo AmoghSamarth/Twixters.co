@@ -1,6 +1,6 @@
 import { useId, useState } from "react";
 import { faqContact, faqs, site } from "../../content/site";
-import { ArrowUpRight, Eyebrow } from "./primitives";
+import { ArrowRight, Eyebrow } from "./primitives";
 import { Reveal } from "./reveal";
 function FaqRow({
   q,
@@ -57,7 +57,8 @@ function FaqRow({
 }
 export function Faq() {
   const [openIndex, setOpenIndex] = useState(null);
-  return <section id="faq" aria-labelledby="faq-heading" className="px-5 py-24 sm:px-8 sm:py-32">
+  return (
+    <section id="faq" aria-labelledby="faq-heading" className="px-5 py-24 sm:px-8 sm:py-32">
       <Reveal className="mx-auto max-w-[1200px]">
         <Eyebrow>FAQ</Eyebrow>
         <h2 id="faq-heading" className="tw-h2 mt-6 text-center text-[clamp(1.9rem,5.6vw,3.5rem)]">
@@ -65,42 +66,53 @@ export function Faq() {
         </h2>
       </Reveal>
 
-      <div className="mx-auto mt-14 grid max-w-[1200px] gap-12 lg:grid-cols-[36%_1fr] lg:gap-16">
+      <div className="mx-auto mt-14 grid max-w-[1200px] items-start gap-12 lg:grid-cols-[36%_1fr] lg:gap-16">
         {
     /* Contact card — below the accordion on mobile, beside it on desktop */
   }
         <Reveal delay={80} className="order-2 lg:order-1">
-          <div className="overflow-hidden rounded-[26px] bg-surface shadow-float lg:sticky lg:top-28">
-            <img
-    src={faqContact.image.src}
-    alt={faqContact.image.alt}
-    width={1280}
-    height={800}
-    loading="lazy"
-    decoding="async"
-    className="aspect-[16/10] w-full object-cover"
-  />
-            <div className="p-7">
-              <h3 className="text-[19px] leading-[1.3] font-semibold tracking-tight text-ink">
-                {faqContact.heading}
-                <span className="block font-normal text-ink-muted">{faqContact.sub}</span>
-              </h3>
-              <a
-    href={faqContact.cta.href}
-    target="_blank"
-    rel="noreferrer"
-    className="group mt-6 flex min-h-[54px] items-center justify-center gap-2.5 rounded-pill bg-ink px-6 text-[14.5px] font-semibold tracking-tight text-white transition-[transform,background-color] duration-300 hover:-translate-y-0.5 hover:bg-black"
-  >
-                {faqContact.cta.label}
-                <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-              <p className="mt-5 text-[13.5px] text-ink-muted">
-                {faqContact.emailPrefix}{" "}
-                <a href={`mailto:${site.email}`} className="text-ink underline underline-offset-2">
-                  {site.email}
-                </a>
-              </p>
+          <div className="rotate-[-2.5deg] rounded-[28px] border border-black/[0.06] bg-white/80 p-6 sm:p-7 shadow-[0_20px_45px_rgba(0,0,0,0.06)] backdrop-blur-sm transition-transform duration-500 hover:rotate-0 lg:sticky lg:top-28">
+            <div className="flex items-center gap-4">
+              <div className="size-14 sm:size-16 shrink-0 overflow-hidden rounded-full border-2 border-white/80 bg-neutral-900 shadow-sm">
+                <img
+                  src={faqContact.avatar?.src || faqContact.image?.src}
+                  alt={faqContact.avatar?.alt || faqContact.image?.alt}
+                  width={400}
+                  height={400}
+                  loading="lazy"
+                  decoding="async"
+                  className="size-full object-cover object-center"
+                />
+              </div>
+              <div>
+                <h3 className="text-[17px] sm:text-[18px] font-semibold tracking-tight text-ink">
+                  {faqContact.heading}
+                </h3>
+                <p className="mt-0.5 text-[14px] sm:text-[14.5px] text-ink-muted">
+                  {faqContact.sub}
+                </p>
+              </div>
             </div>
+
+            <a
+              href={faqContact.cta.href}
+              target="_blank"
+              rel="noreferrer"
+              className="group mt-6 flex min-h-[50px] sm:min-h-[52px] w-full items-center justify-center gap-2.5 rounded-full bg-ink px-6 text-[14.5px] font-semibold tracking-tight text-white shadow-[0_10px_25px_-5px_rgba(0,0,0,0.35)] transition-[transform,background-color,shadow] duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-[0_14px_28px_-5px_rgba(0,0,0,0.45)]"
+            >
+              <span>{faqContact.cta.label}</span>
+              <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </a>
+
+            <p className="mt-5 text-center text-[13.5px] text-ink-muted">
+              {faqContact.emailPrefix}{" "}
+              <a
+                href={`mailto:${site.email}`}
+                className="font-medium text-accent transition-opacity duration-200 hover:opacity-80"
+              >
+                {site.email}
+              </a>
+            </p>
           </div>
         </Reveal>
 
@@ -117,5 +129,6 @@ export function Faq() {
           </ul>
         </Reveal>
       </div>
-    </section>;
+    </section>
+  );
 }

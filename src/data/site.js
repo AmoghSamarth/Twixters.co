@@ -275,7 +275,7 @@ export const faqs = [
   }
 ];
 export const faqContact = {
-  image: { src: assetUrl("/assets/desk.jpg"), alt: "Twixters.Co design studio desk" },
+  avatar: { src: assetUrl("/assets/raj-faq-avatar.jpg"), alt: "Raj Shegaonkar" },
   heading: "Have more questions?",
   sub: "Book a free discovery call",
   cta: { label: "Book a Discovery Call", href: site.bookingUrl, external: true },
