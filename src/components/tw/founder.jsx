@@ -2,23 +2,6 @@ import { founder } from "../../content/site";
 import { Eyebrow } from "./primitives";
 import { Reveal } from "./reveal";
 
-function Smiley() {
-  return (
-    <svg
-      viewBox="0 0 32 32"
-      fill="none"
-      aria-hidden="true"
-      className="size-7 shrink-0 text-accent"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-    >
-      <circle cx="16" cy="16" r="13" />
-      <path d="M11 13.5v.01M21 13.5v.01M10.5 20c1.8 2.2 3.6 3.2 5.5 3.2s3.7-1 5.5-3.2" />
-    </svg>
-  );
-}
-
 function InstagramIcon({ className = "h-[22px] sm:h-[24px] w-auto" }) {
   return (
     <svg
@@ -126,11 +109,10 @@ export function Founder() {
         </Reveal>
 
         <Reveal delay={140}>
-          <div className="flex items-start gap-4">
+          <div>
             <p className="max-w-[38rem] text-[16px] leading-[1.62] text-ink-muted sm:text-[17px]">
               {founder.bio}
             </p>
-            <Smiley />
           </div>
 
           <ul className="mt-12">
