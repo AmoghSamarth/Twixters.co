@@ -134,7 +134,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="sticky top-0 z-10 flex w-full flex-col justify-start items-center overflow-hidden px-4 pt-[135px] pb-2 sm:px-8 sm:pt-[165px] md:pt-[185px] lg:pt-[205px] sm:pb-3"
+      className="sticky top-0 z-10 flex min-h-screen w-full flex-col justify-start items-center overflow-hidden px-4 pt-[150px] pb-24 sm:px-8 sm:pt-[175px] sm:pb-28 md:pt-[195px] md:pb-32 lg:pt-[260px] lg:pb-36 xl:pt-[270px]"
     >
       {/* Photorealistic Hero lighting effect matching reference (diagonal window shadows & sunlight shafts) */}
       <div
@@ -152,9 +152,9 @@ export function Hero() {
         />
       </div>
 
-      {/* Script wordmark watermark positioned absolutely in upper area matching Image 2 */}
+      {/* Script wordmark watermark — generous space above and below matching reference */}
       <TwixtersWatermark
-        className="pointer-events-none absolute z-[2] top-[95px] sm:top-[110px] md:top-[125px] left-1/2 w-[clamp(320px,32vw,490px)] -translate-x-1/2 text-ink/[0.06] select-none"
+        className="pointer-events-none absolute z-[2] top-[72px] sm:top-[82px] md:top-[90px] lg:top-[100px] left-1/2 w-[clamp(300px,30vw,480px)] -translate-x-1/2 text-ink/[0.06] select-none"
       />
 
       <div
