@@ -283,8 +283,12 @@ export const faqContact = {
 };
 export const finalCta = {
   mark: "Twixters",
-  heading: "Let's Connect",
-  body: "Ready to build a brand that actually works? Let's build something remarkable together \u2014 available for new projects or just for a chat.",
+  heading: { plain: "Let's ", muted: "Connect" },
+  body: "Feel free to contact me if having any questions.\nI'm available for new projects or just for chatting.",
+  bodyLines: [
+    "Feel free to contact me if having any questions.",
+    "I'm available for new projects or just for chatting."
+  ],
   cta: { label: "Book a free intro call", href: site.bookingUrl, external: true }
 };
 export const offPageContent = {
