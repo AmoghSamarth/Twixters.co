@@ -25,7 +25,7 @@ export function Expertise() {
       {/* Eyebrow */}
       <Reveal className="mb-16 flex items-center justify-center gap-5 sm:mb-20 lg:mb-24">
         <div className="tw-hair flex-1 max-w-[90px]" />
-        <span className="tw-eyebrow text-[13px] tracking-[0.02em] text-ink-faint sm:text-[14px]">
+        <span className="tw-eyebrow text-[20px] sm:text-[23px] text-neutral-600 tracking-[0.02em] select-none">
           Our Expertise
         </span>
         <div className="tw-hair flex-1 max-w-[90px]" />
@@ -39,7 +39,7 @@ export function Expertise() {
           <div className="sm:flex-1">
             <h2
               className="tw-display whitespace-nowrap text-left font-semibold leading-[1.0] tracking-[-0.045em] text-ink"
-              style={{ fontSize: "clamp(3.2rem, 8vw, 8.5rem)" }}
+              style={{ fontSize: "clamp(3.5rem, 10vw, 10rem)" }}
             >
               We<br />design
             </h2>
@@ -56,7 +56,7 @@ export function Expertise() {
             <div
               className="relative w-full overflow-hidden"
               style={{
-                height: "clamp(170px, 21vh, 270px)",
+                height: "clamp(220px, 28vh, 360px)",
                 maskImage: "linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%)",
                 WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%)",
               }}
@@ -65,11 +65,11 @@ export function Expertise() {
                 {loopItems.map((item, i) => (
                   <div
                     key={item + "-" + i}
-                    className="tw-expertise-item font-medium tracking-[-0.025em] text-ink-muted"
+                    className="tw-expertise-item font-medium tracking-[-0.03em] text-ink-muted"
                     style={{
                       fontFamily: "var(--font-display)",
-                      fontSize: "clamp(1.5rem, 3.6vw, 3.4rem)",
-                      lineHeight: "1.45",
+                      fontSize: "clamp(1.8rem, 4.5vw, 4.5rem)",
+                      lineHeight: "1.4",
                     }}
                   >
                     {item}
