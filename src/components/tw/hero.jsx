@@ -176,6 +176,11 @@ export function Hero() {
             <span className="font-medium text-ink">{hero.lineTwoAfter}</span>
           </Reveal>
         </h1>
+
+        {/* Hero subtitle — rendered below the headline matching Image 1 reference */}
+        <Reveal as="p" delay={260} className="mt-5 sm:mt-6 md:mt-7 max-w-[340px] sm:max-w-[420px] text-center text-[13px] sm:text-[14px] leading-[1.6] text-ink-faint font-normal tracking-[0.005em]">
+          {hero.sub}
+        </Reveal>
       </div>
     </section>
   );
