@@ -1,6 +1,5 @@
-﻿import { Reveal } from "./reveal";
+import { Reveal } from "./reveal";
 
-/* ─── Expertise items that scroll vertically in the slot ─── */
 const expertiseItems = [
   "brand identities",
   "visual concepts",
@@ -15,7 +14,6 @@ const expertiseItems = [
 ];
 
 export function Expertise() {
-  /* Duplicate for seamless infinite loop */
   const loopItems = [...expertiseItems, ...expertiseItems];
 
   return (
@@ -24,19 +22,19 @@ export function Expertise() {
       aria-label="Our Expertise"
       className="relative overflow-hidden bg-[#0a0a0a] px-4 py-20 sm:px-8 sm:py-28 lg:px-16 lg:py-36 xl:px-[96px] 2xl:px-[112px]"
     >
-      {/* Subtle grain overlay */}
+      {/* Grain texture overlay */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.035] select-none"
+        className="pointer-events-none absolute inset-0 select-none"
         style={{
-          backgroundImage:
-            "url(data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E)",
+          backgroundImage: "url('/assets/micro-texture.png')",
           backgroundRepeat: "repeat",
-          backgroundSize: "200px 200px",
+          backgroundSize: "50px 50px",
+          opacity: 0.04,
         }}
       />
 
-      {/* ── Eyebrow ── */}
+      {/* Eyebrow */}
       <Reveal className="mb-16 flex items-center justify-center gap-5 sm:mb-20 lg:mb-24">
         <div className="h-px max-w-[90px] flex-1 bg-white/15" />
         <span className="tw-eyebrow text-[13px] tracking-[0.02em] text-white/40 sm:text-[14px]">
@@ -45,11 +43,11 @@ export function Expertise() {
         <div className="h-px max-w-[90px] flex-1 bg-white/15" />
       </Reveal>
 
-      {/* ── Main layout ── */}
+      {/* Main layout */}
       <Reveal className="mx-auto max-w-[1280px]">
         <div className="flex flex-col items-start gap-10 sm:flex-row sm:items-center sm:gap-0">
 
-          {/* Left: Static "We design" headline */}
+          {/* Left: Static headline */}
           <div className="sm:flex-1">
             <h2
               className="tw-display whitespace-nowrap text-left font-semibold leading-[1.0] tracking-[-0.045em] text-white"
@@ -59,28 +57,26 @@ export function Expertise() {
             </h2>
           </div>
 
-          {/* Vertical hairline divider (desktop) */}
+          {/* Vertical hairline divider */}
           <div
             aria-hidden="true"
             className="hidden sm:block h-[200px] w-px shrink-0 self-center bg-white/10 mx-12 lg:mx-20"
           />
 
-          {/* Right: Vertical scrolling expertise slot */}
+          {/* Right: Vertical scrolling slot */}
           <div className="sm:flex-1 w-full">
             <div
               className="relative w-full overflow-hidden"
               style={{
                 height: "clamp(170px, 21vh, 270px)",
-                maskImage:
-                  "linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%)",
-                WebkitMaskImage:
-                  "linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%)",
+                maskImage: "linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%)",
+                WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 28%, black 72%, transparent 100%)",
               }}
             >
               <div className="tw-expertise-scroll">
                 {loopItems.map((item, i) => (
                   <div
-                    key={${item}-}
+                    key={item + "-" + i}
                     className="tw-expertise-item font-medium tracking-[-0.025em] text-white/75"
                     style={{
                       fontFamily: "var(--font-display)",
@@ -98,7 +94,7 @@ export function Expertise() {
         </div>
       </Reveal>
 
-      <style>{
+      <style>{`
         .tw-expertise-scroll {
           display: flex;
           flex-direction: column;
@@ -119,7 +115,7 @@ export function Expertise() {
         @media (prefers-reduced-motion: reduce) {
           .tw-expertise-scroll { animation: none !important; }
         }
-      }</style>
+      `}</style>
     </section>
   );
 }
