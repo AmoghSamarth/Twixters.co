@@ -125,11 +125,11 @@ export function Collage() {
     <section
       ref={sectionRef}
       aria-label="Selected work"
-      className="relative px-2 pb-20 sm:px-[112px] sm:pb-24"
+      className="relative z-20 px-3 pb-16 sm:px-6 md:px-10 lg:px-16 xl:px-[96px] 2xl:px-[112px] sm:pb-24"
     >
       <Reveal className="relative mx-auto max-w-[1444px]">
         {/* Dark showroom container */}
-        <div className="relative overflow-hidden rounded-[28px] border-[5px] border-white/30 bg-[#191919] px-[32px] py-3 sm:rounded-[36px] sm:px-[36px] sm:py-4">
+        <div className="relative overflow-hidden rounded-[24px] border-[4px] sm:border-[5px] border-white/30 bg-[#191919] px-3 py-3 sm:rounded-[32px] md:rounded-[36px] sm:px-[28px] lg:px-[36px] sm:py-4">
 
           {/* ── Desktop: two auto-scrolling marquee columns ── */}
           <div className="tw-collage hidden sm:grid">
@@ -141,7 +141,7 @@ export function Collage() {
           </div>
 
           {/* ── Mobile: horizontal snap rail ── */}
-          <ul className="-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-1 sm:hidden">
+          <ul className="-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-1 sm:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {[...leftImages, ...rightImages].map((img, i) => (
               <li
                 key={`m-${img.src}-${i}`}

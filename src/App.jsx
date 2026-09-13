@@ -28,8 +28,10 @@ export default function App() {
       />
       <Nav />
       <main className="relative z-0">
-        <Hero />
-        <Collage />
+        <div className="relative">
+          <Hero />
+          <Collage />
+        </div>
         <Services />
         <Process />
         <Testimonials />

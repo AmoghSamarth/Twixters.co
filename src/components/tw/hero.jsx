@@ -109,8 +109,33 @@ export function Hero() {
     { src: assetUrl("/assets/chip-indizaa.png"), alt: "Indizaa Kitchen & Bar branding collateral" },
     { src: assetUrl("/assets/chip-collage.jpg"), alt: "Twixters branding collateral moodboard" }
   ];
+
+  const [pushY, setPushY] = useState(0);
+
+  useEffect(() => {
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const sy = window.scrollY;
+          const vh = window.innerHeight || 800;
+          if (sy <= vh * 1.5) {
+            setPushY(sy * 0.16);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <section id="top" className="relative flex min-h-[85vh] flex-col justify-start overflow-hidden px-5 pt-[135px] pb-[60px] sm:px-8 sm:pt-[150px] sm:pb-[76px]">
+    <section
+      id="top"
+      className="sticky top-0 z-10 flex min-h-screen min-h-[100svh] w-full flex-col justify-center items-center overflow-hidden px-4 pt-16 pb-8 sm:px-8 sm:pt-20 sm:pb-12"
+    >
       {/* Photorealistic Hero lighting effect matching reference (diagonal window shadows & sunlight shafts) */}
       <div
         aria-hidden="true"
@@ -127,18 +152,23 @@ export function Hero() {
         />
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-[1280px] flex flex-col items-center">
-        {/* Script wordmark watermark replicating exact spacing from red arrows */}
-        <TwixtersWatermark className="pointer-events-none w-[clamp(320px,32vw,490px)] text-ink/[0.06] select-none mb-8 sm:mb-12 md:mb-[52px]" />
+      {/* Script wordmark watermark centered behind headline */}
+      <TwixtersWatermark
+        className="pointer-events-none absolute z-[2] top-1/2 left-1/2 w-[clamp(280px,50vw,720px)] -translate-x-1/2 -translate-y-[70%] text-ink/[0.06] select-none"
+      />
 
-        {/* H1 Headline with integrated animated slideshow chips (10% smaller font size) */}
-        <h1 className="tw-display relative mx-auto max-w-[960px] text-center text-[clamp(2.1rem,5.76vw,5.4rem)] font-normal leading-[1.12] tracking-[-0.04em]">
+      <div
+        className="relative z-10 mx-auto max-w-[1280px] w-full text-center transition-transform duration-100 ease-out will-change-transform"
+        style={{ transform: `translate3d(0, -${pushY.toFixed(1)}px, 0)` }}
+      >
+        {/* H1 Headline with integrated animated slideshow chips */}
+        <h1 className="tw-display relative mx-auto max-w-[1040px] text-center text-[clamp(2.05rem,6.2vw,5.5rem)] font-normal leading-[1.12] tracking-[-0.04em]">
           <Reveal as="span" className="block" delay={0}>
             <span className="font-medium text-ink">{hero.lineOneBefore}</span>
             <AnimatedHeroChip slides={chipASlides} tone="light" delay={420} tilt={-3.5} />
             <span className="font-normal text-ink-muted">{hero.lineOneAfter}</span>
           </Reveal>
-          <Reveal as="span" className="block whitespace-nowrap sm:whitespace-nowrap" delay={110}>
+          <Reveal as="span" className="block whitespace-normal sm:whitespace-nowrap mt-0.5 sm:mt-1" delay={110}>
             <span className="font-normal text-ink-muted">{hero.lineTwoBefore}</span>
             <AnimatedHeroChip tone="dark" delay={520} tilt={2.5} bgColor="#212124">
               <HeroMarqueePanel />
@@ -147,9 +177,9 @@ export function Hero() {
           </Reveal>
         </h1>
 
-        {/* Supporting Copy (10% smaller) */}
-        <Reveal delay={200} className="mx-auto mt-6 max-w-[490px] px-4 sm:mt-7">
-          <p className="text-center text-[13.5px] leading-[1.5] text-ink-muted sm:text-[14.5px]">
+        {/* Supporting Copy */}
+        <Reveal delay={200} className="mx-auto mt-5 max-w-[540px] px-4 sm:mt-7">
+          <p className="text-center text-[14px] sm:text-[15.5px] leading-[1.55] text-ink-muted">
             {hero.sub}
           </p>
         </Reveal>
