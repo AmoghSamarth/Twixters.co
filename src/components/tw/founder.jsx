@@ -1,22 +1,27 @@
 import { founder } from "../../content/site";
 import { Eyebrow } from "./primitives";
 import { Reveal } from "./reveal";
+
 function Smiley() {
-  return <svg
-    viewBox="0 0 32 32"
-    fill="none"
-    aria-hidden="true"
-    className="size-7 shrink-0 text-accent"
-    stroke="currentColor"
-    strokeWidth={2}
-    strokeLinecap="round"
-  >
+  return (
+    <svg
+      viewBox="0 0 32 32"
+      fill="none"
+      aria-hidden="true"
+      className="size-7 shrink-0 text-accent"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+    >
       <circle cx="16" cy="16" r="13" />
       <path d="M11 13.5v.01M21 13.5v.01M10.5 20c1.8 2.2 3.6 3.2 5.5 3.2s3.7-1 5.5-3.2" />
-    </svg>;
+    </svg>
+  );
 }
+
 export function Founder() {
-  return <section id="about" aria-labelledby="about-heading" className="px-5 py-24 sm:px-8 sm:py-32">
+  return (
+    <section id="about" aria-labelledby="about-heading" className="px-5 py-24 sm:px-8 sm:py-32">
       <Reveal className="mx-auto max-w-[1200px]">
         <Eyebrow>{founder.eyebrow}</Eyebrow>
         <h2 id="about-heading" className="tw-h2 mt-6 text-center text-[clamp(1.9rem,5.6vw,3.5rem)]">
@@ -25,22 +30,22 @@ export function Founder() {
         </h2>
       </Reveal>
 
-      <div className="mx-auto mt-16 grid max-w-[1200px] items-start gap-12 lg:grid-cols-[42%_1fr] lg:gap-16">
-        <Reveal delay={80} className="mx-auto w-full max-w-[22rem] lg:mx-0 lg:max-w-none">
-          <div className="rotate-[-3deg] overflow-hidden rounded-[26px] bg-[#cfcfcf] shadow-lift">
+      <div className="mx-auto mt-16 grid max-w-[1200px] items-start gap-12 lg:grid-cols-[48%_1fr] lg:gap-16">
+        <Reveal delay={80} className="mx-auto w-full max-w-[30rem] lg:mx-0 lg:max-w-none">
+          <div className="rotate-[-2.5deg] overflow-hidden rounded-[26px] border-[3px] border-white bg-[#1a1a1a] shadow-[0_20px_50px_rgba(0,0,0,0.18)] transition-transform duration-500 hover:rotate-0">
             <img
-    src={founder.portrait.src}
-    alt={founder.portrait.alt}
-    width={founder.portrait.width}
-    height={founder.portrait.height}
-    loading="lazy"
-    decoding="async"
-    className="aspect-[9/10] w-full object-cover"
-  />
+              src={founder.portrait.src}
+              alt={founder.portrait.alt}
+              width={founder.portrait.width}
+              height={founder.portrait.height}
+              loading="lazy"
+              decoding="async"
+              className="aspect-[4/3] w-full object-cover object-[center_35%]"
+            />
           </div>
-          <div className="mt-8 pl-1">
+          <div className="mt-6 text-right pr-2">
             <p className="text-[17px] font-semibold tracking-tight text-ink">{founder.name}</p>
-            <p className="mt-1 text-[14px] text-ink-muted">{founder.role}</p>
+            <p className="mt-0.5 text-[14px] text-ink-muted">{founder.role}</p>
           </div>
         </Reveal>
 
@@ -53,20 +58,23 @@ export function Founder() {
           </div>
 
           <ul className="mt-12">
-            {founder.timeline.map((row, i) => <Reveal
-    as="li"
-    key={row.role + row.org}
-    delay={i * 80}
-    className="border-t border-hair-soft py-5 last:border-b"
-  >
+            {founder.timeline.map((row, i) => (
+              <Reveal
+                as="li"
+                key={row.role + row.org}
+                delay={i * 80}
+                className="border-t border-hair-soft py-5 last:border-b"
+              >
                 <div className="grid gap-1 sm:grid-cols-[minmax(0,10rem)_1fr_auto] sm:items-baseline sm:gap-6">
                   <p className="text-[15.5px] font-medium tracking-tight text-ink">{row.role}</p>
                   <p className="text-[14.5px] text-ink-muted">{row.org}</p>
                   <p className="text-[13.5px] whitespace-nowrap text-ink-faint">{row.period}</p>
                 </div>
-              </Reveal>)}
+              </Reveal>
+            ))}
           </ul>
         </Reveal>
       </div>
-    </section>;
+    </section>
+  );
 }

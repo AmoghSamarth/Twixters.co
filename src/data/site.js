@@ -164,10 +164,10 @@ export const founder = {
   eyebrow: "Our Studio",
   heading: { plain: "Pushing boundaries ", muted: "since 2021" },
   portrait: {
-    src: assetUrl("/assets/raj.jpg"),
-    alt: "Raj Shegaonkar, founder of Twixters.Co",
-    width: 900,
-    height: 1e3
+    src: assetUrl("/assets/raj-presenting.jpg"),
+    alt: "Raj Shegaonkar speaking at design presentation",
+    width: 1400,
+    height: 966
   },
   name: "Raj Shegaonkar",
   role: "Twixters.Co, Founder",
