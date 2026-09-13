@@ -125,7 +125,7 @@ export function Collage() {
     <section
       ref={sectionRef}
       aria-label="Selected work"
-      className="relative z-20 px-3 pb-16 sm:px-6 md:px-10 lg:px-16 xl:px-[96px] 2xl:px-[112px] sm:pb-24"
+      className="relative z-20 -mt-6 sm:-mt-8 md:-mt-[44px] px-3 pb-16 sm:px-6 md:px-10 lg:px-16 xl:px-[96px] 2xl:px-[112px] sm:pb-24"
     >
       <Reveal className="relative mx-auto max-w-[1444px]">
         {/* Dark showroom container */}
