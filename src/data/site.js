@@ -186,7 +186,27 @@ export const founder = {
     { role: "Graphic Designer", org: "Dreams Experential", period: "Mar 2019 → Feb 2020" },
     { role: "Senior Designer", org: "Center Point Hotel", period: "Jun 2022 → Nov 2023" },
     { role: "Founder / CEO", org: "Twixters.Co", period: "Nov 2023 → Till Now" }
-  ]
+  ],
+  fullTimeline: [
+    { role: "Design Internship", org: "Samsung", period: "2016" },
+    { role: "Industrial Devices — Internship", org: "Panasonic", period: "2017" },
+    { role: "Design Internship", org: "Asian Paints", period: "2018" },
+    { role: "Design Internship", org: "Ultratech", period: "2019" },
+    { role: "Graphic Designer", org: "Dreams Experiential Marketing", period: "2020" },
+    { role: "Graphic Designer", org: "Friend's Events", period: "2021 – 2022" },
+    { role: "Senior Graphic Designer", org: "Centre Point Hotel", period: "2022 – 2023" },
+    { role: "Graphic Designer", org: "VIPL", period: "2023 – 2024" },
+    { role: "Founder / CEO", org: "Twixters.Co", period: "Nov 2023 → Till Now" },
+    { role: "Graphic Designer", org: "Batukbhai Jewellers", period: "2024 – 2025" },
+    { role: "Graphic Designer", org: "National Academy of Defence Production", period: "2025 – 2026 (Current)" }
+  ],
+  highlights: [
+    "India Today Awards",
+    "Xenicon Healthcare",
+    "Replay India",
+    "Indizaa Kitchen & Bar"
+  ],
+  stats: "10 years in design · 4 internships · 6 professional roles"
 };
 export const pricing = {
   eyebrow: "Pricing",

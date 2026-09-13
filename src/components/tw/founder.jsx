@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { founder } from "../../content/site";
 import { Eyebrow } from "./primitives";
 import { Reveal } from "./reveal";
@@ -45,6 +46,9 @@ function BehanceIcon({ className = "h-[20px] sm:h-[21.5px] w-auto" }) {
 }
 
 export function Founder() {
+  const [showAll, setShowAll] = useState(false);
+  const currentTimeline = showAll ? founder.fullTimeline || founder.timeline : founder.timeline;
+
   return (
     <section id="about" aria-labelledby="about-heading" className="px-5 py-24 sm:px-8 sm:py-32">
       <Reveal className="mx-auto max-w-[1200px]">
@@ -116,21 +120,83 @@ export function Founder() {
           </div>
 
           <ul className="mt-12">
-            {founder.timeline.map((row, i) => (
-              <Reveal
-                as="li"
-                key={row.role + row.org}
-                delay={i * 80}
-                className="border-t border-hair-soft py-5 last:border-b"
+            {currentTimeline.map((row) => (
+              <li
+                key={row.role + row.org + row.period}
+                className="border-t border-hair-soft py-5 last:border-b transition-colors duration-200"
               >
-                <div className="grid gap-1 sm:grid-cols-[minmax(0,10rem)_1fr_auto] sm:items-baseline sm:gap-6">
+                <div className="grid gap-1 sm:grid-cols-[minmax(0,10.5rem)_1fr_auto] sm:items-baseline sm:gap-6">
                   <p className="text-[15.5px] font-medium tracking-tight text-ink">{row.role}</p>
                   <p className="text-[14.5px] text-ink-muted">{row.org}</p>
                   <p className="text-[13.5px] whitespace-nowrap text-ink-faint">{row.period}</p>
                 </div>
-              </Reveal>
+              </li>
             ))}
           </ul>
+
+          {/* Additional Highlights from Image 1, revealed when expanded */}
+          {showAll && (
+            <div className="mt-8 rounded-2xl border border-hair-soft bg-[#fafafa]/80 p-5 sm:p-6 transition-all duration-300">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-hair-soft pb-3">
+                <div>
+                  <h4 className="text-[14.5px] font-medium tracking-tight text-ink">
+                    Additional Highlights
+                  </h4>
+                  <p className="text-[12.5px] text-ink-faint">Awards & Key Collaborations</p>
+                </div>
+                <span className="rounded-full border border-hair-soft bg-surface px-3 py-0.5 text-[12px] font-medium text-ink-muted">
+                  Featured
+                </span>
+              </div>
+
+              <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+                {founder.highlights?.map((item) => (
+                  <div
+                    key={item}
+                    className="flex items-center justify-center rounded-xl border border-hair-soft bg-surface px-3 py-3 text-center text-[13px] font-medium text-ink shadow-[0_1px_2px_rgba(0,0,0,0.02)]"
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
+
+              {founder.stats && (
+                <p className="mt-4 text-center text-[12.5px] tracking-wide text-ink-muted">
+                  {founder.stats}
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Show more / Show less toggle button positioned right where circled in Image 2 */}
+          <div className="mt-5 flex items-center justify-between">
+            {showAll ? (
+              <span className="text-[12.5px] font-medium tracking-wide uppercase text-ink-faint">
+                2016 – 2026 · A Decade in Design
+              </span>
+            ) : (
+              <span />
+            )}
+            <button
+              type="button"
+              onClick={() => setShowAll((prev) => !prev)}
+              className="group inline-flex items-center gap-2 rounded-full border border-hair-soft bg-surface/80 px-4 py-2 text-[13.5px] font-medium tracking-tight text-ink transition-all duration-300 hover:border-hair hover:bg-surface hover:shadow-sm"
+              aria-expanded={showAll}
+            >
+              <span>{showAll ? "Show less" : "Show more"}</span>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className={`size-3.5 text-ink-muted transition-transform duration-300 group-hover:text-ink ${showAll ? "rotate-180" : ""}`}
+              >
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
+          </div>
         </Reveal>
       </div>
     </section>
