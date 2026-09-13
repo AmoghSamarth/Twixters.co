@@ -1,6 +1,7 @@
 import { Nav } from "./components/tw/nav";
 import { Hero } from "./components/tw/hero";
 import { Collage } from "./components/tw/collage";
+import { Expertise } from "./components/tw/expertise";
 import { Services } from "./components/tw/services";
 import { Process } from "./components/tw/process";
 import { Testimonials } from "./components/tw/testimonials";
@@ -32,6 +33,7 @@ export default function App() {
           <Hero />
           <Collage />
         </div>
+        <Expertise />
         <Services />
         <Process />
         <Testimonials />
