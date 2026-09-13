@@ -20,7 +20,7 @@ export function Expertise() {
     <section
       id="expertise"
       aria-label="Our Expertise"
-      className="relative overflow-hidden bg-field px-4 py-20 sm:px-8 sm:py-28 lg:px-16 lg:py-36 xl:px-[96px] 2xl:px-[112px]"
+      className="relative overflow-hidden px-4 py-20 sm:px-8 sm:py-28 lg:px-16 lg:py-36 xl:px-[96px] 2xl:px-[112px]"
     >
       {/* Eyebrow */}
       <Reveal className="mb-16 flex items-center justify-center gap-5 sm:mb-20 lg:mb-24">
