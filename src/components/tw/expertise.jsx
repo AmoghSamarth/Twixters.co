@@ -75,7 +75,7 @@ export function Expertise() {
       <Reveal className="mb-16 flex items-center justify-center gap-5 sm:mb-20 lg:mb-24">
         <div className="tw-hair flex-1 max-w-[90px]" />
         <span className="tw-eyebrow text-[20px] sm:text-[23px] text-neutral-600 tracking-[0.02em] select-none">
-          Our Expertise
+          What we design
         </span>
         <div className="tw-hair flex-1 max-w-[90px]" />
       </Reveal>
@@ -135,7 +135,7 @@ export function Expertise() {
                       top: "50%",
                       fontFamily: "var(--font-display)",
                       fontSize: "clamp(1.8rem, 4.5vw, 4.5rem)",
-                      fontWeight: 600,
+                      fontWeight: 400,
                       letterSpacing: "-0.03em",
                       color: isActive ? "#111111" : "#5a5a5a",
                       opacity,
