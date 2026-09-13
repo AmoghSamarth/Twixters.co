@@ -208,11 +208,6 @@ export function Expertise() {
                   </h2>
                 </div>
 
-                {/* Vertical hairline between Title & Drum */}
-                <div
-                  aria-hidden="true"
-                  className="hidden sm:block h-[150px] w-px shrink-0 self-center bg-hair"
-                />
 
                 {/* Drum Wheel */}
                 <div className="flex-1 w-full min-w-0 overflow-hidden">
