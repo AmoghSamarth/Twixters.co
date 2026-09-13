@@ -65,12 +65,27 @@ export function FinalCta() {
     >
       <div
         className="group relative mx-auto flex min-h-[88vh] sm:min-h-[92vh] lg:min-h-[94vh] w-full max-w-[1720px] flex-col justify-between overflow-hidden rounded-[30px] sm:rounded-[44px] border border-white/[0.08] bg-[#070709] shadow-[0_-25px_80px_rgba(0,0,0,0.5),0_30px_100px_rgba(0,0,0,0.6)] transition-all duration-300 ease-out"
-        style={{
-          backgroundImage: `url("${assetUrl("/assets/exact-contact-card.png")}")`,
-          backgroundSize: "cover",
-          backgroundPosition: "left top",
-        }}
       >
+        {/* Photorealistic Hero lighting overlay with controlled low opacity */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-[1] select-none overflow-hidden"
+          style={{
+            WebkitMaskImage: "radial-gradient(ellipse 115% 100% at 15% 15%, black 40%, rgba(0,0,0,0.4) 75%, transparent 100%)",
+            maskImage: "radial-gradient(ellipse 115% 100% at 15% 15%, black 40%, rgba(0,0,0,0.4) 75%, transparent 100%)"
+          }}
+        >
+          <img
+            src={assetUrl("/assets/hero-lighting.png")}
+            alt=""
+            width={1759}
+            height={894}
+            loading="eager"
+            decoding="async"
+            className="size-full object-cover object-left-top opacity-20 sm:opacity-25 transition-transform duration-700 ease-out group-hover:scale-[1.01]"
+          />
+        </div>
+
         {/* Tactile micro-texture film grain */}
         <div
           aria-hidden="true"
