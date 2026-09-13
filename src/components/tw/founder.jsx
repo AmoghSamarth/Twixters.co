@@ -2,7 +2,7 @@ import { founder } from "../../content/site";
 import { Eyebrow } from "./primitives";
 import { Reveal } from "./reveal";
 
-function InstagramIcon({ className = "h-[22px] sm:h-[24px] w-auto" }) {
+function InstagramIcon({ className = "h-[20px] sm:h-[21.5px] w-auto" }) {
   return (
     <svg
       viewBox="0 0 73 73"
@@ -16,7 +16,7 @@ function InstagramIcon({ className = "h-[22px] sm:h-[24px] w-auto" }) {
   );
 }
 
-function LinkedInIcon({ className = "h-[22px] sm:h-[24px] w-auto" }) {
+function LinkedInIcon({ className = "h-[20px] sm:h-[21.5px] w-auto" }) {
   return (
     <svg
       viewBox="0 0 73 73"
@@ -30,7 +30,7 @@ function LinkedInIcon({ className = "h-[22px] sm:h-[24px] w-auto" }) {
   );
 }
 
-function BehanceIcon({ className = "h-[22px] sm:h-[24px] w-auto" }) {
+function BehanceIcon({ className = "h-[20px] sm:h-[21.5px] w-auto" }) {
   return (
     <svg
       viewBox="0 0 79 73"
