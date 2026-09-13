@@ -34,4 +34,5 @@ dist-ssr
 # Scratch reference & test images
 ref_*.png
 test_*.*
+scratch/
 .github/

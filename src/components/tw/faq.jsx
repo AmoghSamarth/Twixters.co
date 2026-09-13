@@ -1,5 +1,6 @@
 import { useId, useState } from "react";
 import { faqContact, faqs, site } from "../../content/site";
+import { assetUrl } from "../../utils/asset";
 import { ArrowRight, Eyebrow } from "./primitives";
 import { Reveal } from "./reveal";
 function FaqRow({
@@ -20,7 +21,7 @@ function FaqRow({
     aria-expanded={open}
     aria-controls={panelId}
     onClick={onToggle}
-    className="flex min-h-[64px] w-full items-center justify-between gap-6 py-6 text-left"
+    className="flex min-h-[60px] w-full items-center justify-between gap-6 py-5 sm:py-5.5 text-left"
   >
           <span className="text-[16px] leading-[1.4] font-medium tracking-[-0.015em] text-ink sm:text-[17.5px]">
             {q}
@@ -50,7 +51,7 @@ function FaqRow({
     style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
   >
         <div className="overflow-hidden">
-          <p className="pr-10 pb-7 text-[15px] leading-[1.62] text-ink-muted">{a}</p>
+          <p className="pr-10 pb-6 text-[15px] leading-[1.62] text-ink-muted">{a}</p>
         </div>
       </div>
     </li>;
@@ -58,15 +59,24 @@ function FaqRow({
 export function Faq() {
   const [openIndex, setOpenIndex] = useState(null);
   return (
-    <section id="faq" aria-labelledby="faq-heading" className="px-5 py-24 sm:px-8 sm:py-32">
+    <section
+      id="faq"
+      aria-labelledby="faq-heading"
+      className="sticky top-0 z-10 flex min-h-[90vh] sm:min-h-screen flex-col justify-center px-5 py-12 sm:px-8 sm:py-16 bg-[#f2f2f2]"
+      style={{
+        backgroundImage: `url("${assetUrl("/assets/micro-texture.png")}")`,
+        backgroundRepeat: "repeat",
+        backgroundSize: "50px 50px",
+      }}
+    >
       <Reveal className="mx-auto max-w-[1200px]">
         <Eyebrow>FAQ</Eyebrow>
-        <h2 id="faq-heading" className="tw-h2 mt-6 text-center text-[clamp(1.9rem,5.6vw,3.5rem)]">
+        <h2 id="faq-heading" className="tw-h2 mt-4 sm:mt-5 text-center text-[clamp(1.8rem,5vw,3.2rem)]">
           Your Questions, Answered
         </h2>
       </Reveal>
 
-      <div className="mx-auto mt-14 grid max-w-[1200px] items-start gap-12 lg:grid-cols-[36%_1fr] lg:gap-16">
+      <div className="mx-auto mt-10 sm:mt-12 grid max-w-[1200px] items-start gap-10 lg:grid-cols-[36%_1fr] lg:gap-14">
         {
     /* Contact card — below the accordion on mobile, beside it on desktop */
   }
