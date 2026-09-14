@@ -69,10 +69,10 @@ export function FinalCta() {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="relative z-20 w-full p-2 sm:p-3"
+      className="relative z-20 w-full p-1 sm:p-1.5 md:p-2"
     >
       <div
-        className="group relative flex min-h-[calc(100vh-1rem)] sm:min-h-[calc(100vh-1.5rem)] w-full flex-col justify-between overflow-hidden rounded-[24px] sm:rounded-[36px] md:rounded-[44px] border border-white/[0.08] bg-[#070709] transition-all duration-300 ease-out"
+        className="group relative flex min-h-[calc(100vh-0.5rem)] sm:min-h-[calc(100vh-0.75rem)] md:min-h-[calc(100vh-1rem)] w-full flex-col justify-between overflow-hidden rounded-[20px] sm:rounded-[30px] md:rounded-[38px] border border-white/[0.08] bg-[#070709] transition-all duration-300 ease-out"
       >
         {/* Photorealistic Hero lighting overlay with controlled low opacity */}
         <div
