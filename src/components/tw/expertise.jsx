@@ -24,8 +24,11 @@ const ADVERTISING_SERVICES = [
 export function Expertise() {
   const leftDeckRef = useRef(null);
   const rightDeckRef = useRef(null);
+  const leftDeckWrapperRef = useRef(null);
+  const rightDeckWrapperRef = useRef(null);
   const lastWheelLeftRef = useRef(0);
   const lastWheelRightRef = useRef(0);
+  const touchStartRef = useRef({ left: 0, right: 0 });
 
   // Active indices: start with reference states (Brand Assets & Hoardings)
   const [activeLeft, setActiveLeft] = useState(6);
@@ -44,15 +47,22 @@ export function Expertise() {
   useEffect(() => {
     const leftEl = leftDeckRef.current;
     const rightEl = rightDeckRef.current;
+    const leftWrapEl = leftDeckWrapperRef.current;
+    const rightWrapEl = rightDeckWrapperRef.current;
 
     const onLeftWheel = (e) => {
+      // Support both vertical scroll and horizontal trackpad swipes
+      const delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      if (Math.abs(delta) < 2) return;
+
       e.preventDefault();
+      e.stopPropagation();
+
       const now = performance.now();
-      if (now - lastWheelLeftRef.current < 260) return;
-      if (Math.abs(e.deltaY) < 12) return;
+      if (now - lastWheelLeftRef.current < 180) return;
       lastWheelLeftRef.current = now;
 
-      if (e.deltaY > 0) {
+      if (delta > 0) {
         setActiveLeft((prev) => (prev + 1) % BRANDING_SERVICES.length);
       } else {
         setActiveLeft((prev) => (prev - 1 + BRANDING_SERVICES.length) % BRANDING_SERVICES.length);
@@ -60,25 +70,36 @@ export function Expertise() {
     };
 
     const onRightWheel = (e) => {
+      // Support both vertical scroll and horizontal trackpad swipes
+      const delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      if (Math.abs(delta) < 2) return;
+
       e.preventDefault();
+      e.stopPropagation();
+
       const now = performance.now();
-      if (now - lastWheelRightRef.current < 260) return;
-      if (Math.abs(e.deltaY) < 12) return;
+      if (now - lastWheelRightRef.current < 180) return;
       lastWheelRightRef.current = now;
 
-      if (e.deltaY > 0) {
+      if (delta > 0) {
         setActiveRight((prev) => (prev + 1) % ADVERTISING_SERVICES.length);
       } else {
         setActiveRight((prev) => (prev - 1 + ADVERTISING_SERVICES.length) % ADVERTISING_SERVICES.length);
       }
     };
 
+    // Attach to both inner deck and outer wrapper to catch all scroll events over the card area
     if (leftEl) leftEl.addEventListener("wheel", onLeftWheel, { passive: false });
+    if (leftWrapEl) leftWrapEl.addEventListener("wheel", onLeftWheel, { passive: false });
+
     if (rightEl) rightEl.addEventListener("wheel", onRightWheel, { passive: false });
+    if (rightWrapEl) rightWrapEl.addEventListener("wheel", onRightWheel, { passive: false });
 
     return () => {
       if (leftEl) leftEl.removeEventListener("wheel", onLeftWheel);
+      if (leftWrapEl) leftWrapEl.removeEventListener("wheel", onLeftWheel);
       if (rightEl) rightEl.removeEventListener("wheel", onRightWheel);
+      if (rightWrapEl) rightWrapEl.removeEventListener("wheel", onRightWheel);
     };
   }, []);
 
@@ -147,7 +168,8 @@ export function Expertise() {
       transform: `rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) translate3d(${translateX}px, ${translateY}px, ${translateZ}px) scale(${scale})`,
       opacity,
       zIndex,
-      pointerEvents: isCenter ? "auto" : "none",
+      pointerEvents: "auto",
+      cursor: "pointer",
       transition: "transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.4s ease, box-shadow 0.4s ease",
       boxShadow: isCenter
         ? "-16px 24px 48px -10px rgba(0,0,0,0.32), -6px 12px 24px -6px rgba(0,0,0,0.18)"
@@ -220,7 +242,8 @@ export function Expertise() {
       transform: `rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) translate3d(${translateX}px, ${translateY}px, ${translateZ}px) scale(${scale})`,
       opacity,
       zIndex,
-      pointerEvents: isCenter ? "auto" : "none",
+      pointerEvents: "auto",
+      cursor: "pointer",
       transition: "transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.4s ease, box-shadow 0.4s ease",
       boxShadow: isCenter
         ? "-18px 24px 50px -10px rgba(0,0,0,0.35), -8px 14px 26px -6px rgba(0,0,0,0.2)"
@@ -320,7 +343,24 @@ export function Expertise() {
               </div>
 
               {/* Horizontal Image Gallery Deck (Moved inward toward center divider, 10% smaller) */}
-              <div className="flex justify-center lg:justify-end py-2 lg:py-0 overflow-visible lg:pr-4 xl:pr-8">
+              <div
+                ref={leftDeckWrapperRef}
+                onClick={() => setActiveLeft((prev) => (prev + 1) % BRANDING_SERVICES.length)}
+                onTouchStart={(e) => {
+                  touchStartRef.current.left = e.touches[0].clientX;
+                }}
+                onTouchEnd={(e) => {
+                  const diff = touchStartRef.current.left - e.changedTouches[0].clientX;
+                  if (Math.abs(diff) > 25) {
+                    if (diff > 0) {
+                      setActiveLeft((prev) => (prev + 1) % BRANDING_SERVICES.length);
+                    } else {
+                      setActiveLeft((prev) => (prev - 1 + BRANDING_SERVICES.length) % BRANDING_SERVICES.length);
+                    }
+                  }
+                }}
+                className="flex justify-center lg:justify-end py-2 lg:py-0 overflow-visible lg:pr-4 xl:pr-8 cursor-pointer"
+              >
                 <div
                   ref={leftDeckRef}
                   className="relative w-[260px] sm:w-[280px] xl:w-[300px] h-[270px] sm:h-[295px] xl:h-[320px] flex items-center justify-center select-none will-change-transform cursor-pointer"
@@ -328,6 +368,10 @@ export function Expertise() {
                 >
                   {/* Card 0: Brand Strategy */}
                   <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectLeft(0);
+                    }}
                     style={getLeftDeckStyle(0)}
                     className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#161619] p-5 flex flex-col justify-between border border-white/[0.08] select-none"
                   >
@@ -352,6 +396,10 @@ export function Expertise() {
 
                   {/* Card 1: Logo Design */}
                   <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectLeft(1);
+                    }}
                     style={getLeftDeckStyle(1)}
                     className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#141416] p-5 flex flex-col justify-between border border-white/[0.08] select-none"
                   >
@@ -381,6 +429,10 @@ export function Expertise() {
 
                   {/* Card 2: Visual Identity */}
                   <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectLeft(2);
+                    }}
                     style={getLeftDeckStyle(2)}
                     className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] overflow-hidden border border-black/[0.06] select-none"
                   >
@@ -394,6 +446,10 @@ export function Expertise() {
 
                   {/* Card 3: Typography & Color Systems */}
                   <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectLeft(3);
+                    }}
                     style={getLeftDeckStyle(3)}
                     className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#fbf9f5] border border-black/[0.06] p-5 flex flex-col justify-between select-none"
                   >
@@ -423,6 +479,10 @@ export function Expertise() {
 
                   {/* Card 4: Stationery */}
                   <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectLeft(4);
+                    }}
                     style={getLeftDeckStyle(4)}
                     className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#faf9f6] p-4.5 flex flex-col justify-between border border-black/[0.07] select-none"
                   >
@@ -445,6 +505,10 @@ export function Expertise() {
 
                   {/* Card 5: Packaging (Light Identity Card with Fold) */}
                   <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectLeft(5);
+                    }}
                     style={getLeftDeckStyle(5)}
                     className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#f7f5f0] p-4.5 flex flex-col justify-between border border-black/[0.06] overflow-hidden select-none"
                   >
@@ -473,6 +537,10 @@ export function Expertise() {
 
                   {/* Card 6: Brand Assets (HERO MATTE DARK "Aa" CARD) */}
                   <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectLeft(6);
+                    }}
                     style={getLeftDeckStyle(6)}
                     className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#141416] p-5 flex flex-col justify-between border border-white/[0.08] select-none"
                   >
@@ -518,7 +586,24 @@ export function Expertise() {
                 ──────────────────────────────────────────────── */}
             <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-x-8 xl:gap-x-12 gap-y-8 lg:items-center">
               {/* Horizontal Image Gallery Deck (Moved inward toward center divider, 10% smaller) */}
-              <div className="order-2 lg:order-1 flex justify-center lg:justify-start py-2 lg:py-0 overflow-visible lg:pl-4 xl:pl-8">
+              <div
+                ref={rightDeckWrapperRef}
+                onClick={() => setActiveRight((prev) => (prev + 1) % ADVERTISING_SERVICES.length)}
+                onTouchStart={(e) => {
+                  touchStartRef.current.right = e.touches[0].clientX;
+                }}
+                onTouchEnd={(e) => {
+                  const diff = touchStartRef.current.right - e.changedTouches[0].clientX;
+                  if (Math.abs(diff) > 25) {
+                    if (diff > 0) {
+                      setActiveRight((prev) => (prev + 1) % ADVERTISING_SERVICES.length);
+                    } else {
+                      setActiveRight((prev) => (prev - 1 + ADVERTISING_SERVICES.length) % ADVERTISING_SERVICES.length);
+                    }
+                  }
+                }}
+                className="order-2 lg:order-1 flex justify-center lg:justify-start py-2 lg:py-0 overflow-visible lg:pl-4 xl:pl-8 cursor-pointer"
+              >
                 <div
                   ref={rightDeckRef}
                   className="relative w-[260px] sm:w-[280px] xl:w-[300px] h-[270px] sm:h-[295px] xl:h-[320px] flex items-center justify-center select-none will-change-transform cursor-pointer"
@@ -526,6 +611,10 @@ export function Expertise() {
                 >
                   {/* Card 0: Campaign Strategy */}
                   <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectRight(0);
+                    }}
                     style={getRightDeckStyle(0)}
                     className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#161619] p-5 flex flex-col justify-between border border-white/[0.08] select-none"
                   >
@@ -545,6 +634,10 @@ export function Expertise() {
 
                   {/* Card 1: Product Launch Campaigns */}
                   <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectRight(1);
+                    }}
                     style={getRightDeckStyle(1)}
                     className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#141416] p-5 flex flex-col justify-between border border-white/10 select-none"
                   >
@@ -564,6 +657,10 @@ export function Expertise() {
 
                   {/* Card 2: Hoardings (HERO BILLBOARD WITH SPOTLIGHTS & LEAF SHADOW) */}
                   <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectRight(2);
+                    }}
                     style={getRightDeckStyle(2)}
                     className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[6px] bg-[#161618] p-2 flex flex-col border-[2.5px] border-[#252528] select-none"
                   >
@@ -633,6 +730,10 @@ export function Expertise() {
 
                   {/* Card 3: Posters & Flyers (Urban Street Photography Card) */}
                   <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectRight(3);
+                    }}
                     style={getRightDeckStyle(3)}
                     className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] overflow-hidden border border-black/[0.08] select-none"
                   >
@@ -646,6 +747,10 @@ export function Expertise() {
 
                   {/* Card 4: Digital Display Ads */}
                   <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectRight(4);
+                    }}
                     style={getRightDeckStyle(4)}
                     className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#151518] p-4.5 flex flex-col justify-between border border-white/10 select-none"
                   >
@@ -670,6 +775,10 @@ export function Expertise() {
 
                   {/* Card 5: Social Media Creatives */}
                   <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectRight(5);
+                    }}
                     style={getRightDeckStyle(5)}
                     className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#fbf9f5] p-4.5 flex flex-col justify-between border border-black/[0.08] select-none"
                   >
@@ -692,6 +801,10 @@ export function Expertise() {
 
                   {/* Card 6: Festival & Event Promotions */}
                   <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectRight(6);
+                    }}
                     style={getRightDeckStyle(6)}
                     className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#0d0d0f] p-4.5 flex flex-col justify-between border border-white/10 select-none"
                   >
