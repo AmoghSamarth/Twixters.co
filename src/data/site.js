@@ -55,11 +55,11 @@ export const hero = {
   availability: "Booking Open — 2 Spots Left"
 };
 export const collage = [
-  { area: "a", src: assetUrl("/assets/work-1.jpg"), alt: "The Saath brand identity collateral" },
-  { area: "b", src: assetUrl("/assets/work-2.jpg"), alt: "Gamla organic brand design system" },
-  { area: "c", src: assetUrl("/assets/work-3.jpg"), alt: "Cognito Bite protein bar visual identity" },
+  { area: "a", src: assetUrl("/assets/work-1.jpg"), alt: "The Saath brand identity collateral", href: "https://www.behance.net/gallery/248456131/The-Saathh-Brand-Identity" },
+  { area: "b", src: assetUrl("/assets/work-2.jpg"), alt: "Gamla organic brand design system", href: "https://www.behance.net/gallery/247494757/Gamla-Logo-Desing-Branding" },
+  { area: "c", src: assetUrl("/assets/work-3.jpg"), alt: "Cognito Bite protein bar visual identity", href: "https://www.behance.net/gallery/248505845/Cognito-Bite-Modern-Chocolate-Brand" },
   { area: "d", src: assetUrl("/assets/work-5.jpg"), alt: "Twixters.Co packaging and print collateral" },
-  { area: "e", src: assetUrl("/assets/work-4.jpg"), alt: "The Biryani Story logo and packaging" },
+  { area: "e", src: assetUrl("/assets/work-4.jpg"), alt: "The Biryani Story logo and packaging", href: "https://www.behance.net/gallery/248506041/The-Biryani-Story-Modern-Food-Brand" },
   { area: "f", src: assetUrl("/assets/work-6.jpg"), alt: "Twixters.Co campaign and social creative" }
 ];
 export const collageCta = { label: "See Recent Work", href: "#work" };
@@ -135,35 +135,34 @@ export const testimonials = [
     align: "right"
   }
 ];
-const BEHANCE = "https://www.behance.net/gallery/248456131/The-Saathh-Brand-Identity";
 export const caseStudies = [
   {
     title: "The Saath",
     tags: ["Branding", "Brew Bar"],
     src: assetUrl("/assets/case-saathh.jpg"),
     alt: "The Saath — Visual Identity & Systems",
-    href: BEHANCE
+    href: "https://www.behance.net/gallery/248456131/The-Saathh-Brand-Identity"
   },
   {
     title: "Gamla",
     tags: ["Design System", "Organic Brand"],
     src: assetUrl("/assets/case-gamla.png"),
     alt: "Gamla — Design System",
-    href: BEHANCE
+    href: "https://www.behance.net/gallery/247494757/Gamla-Logo-Desing-Branding"
   },
   {
     title: "Cognito Bite",
     tags: ["Visual Identity", "Protein Bar"],
     src: assetUrl("/assets/case-cognito.jpg"),
     alt: "Cognito Bite — Visual Identity & Systems",
-    href: BEHANCE
+    href: "https://www.behance.net/gallery/248505845/Cognito-Bite-Modern-Chocolate-Brand"
   },
   {
     title: "The Biryani Story",
     tags: ["Logo Design", "Food"],
     src: assetUrl("/assets/case-biryani.jpg"),
     alt: "The Biryani Story — Visual Identity & Systems",
-    href: BEHANCE
+    href: "https://www.behance.net/gallery/248506041/The-Biryani-Story-Modern-Food-Brand"
   }
 ];
 export const founder = {
