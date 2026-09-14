@@ -107,29 +107,29 @@ export function FinalCta() {
         {/* Center Main Content */}
         <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 pt-24 pb-12 text-center sm:pt-32 sm:pb-16">
           {/* Cursive script wordmark with horizontal wings */}
-          <div className="flex items-center justify-center gap-4 sm:gap-6">
+          <div className="flex items-center justify-center gap-5 sm:gap-7">
             <span
               aria-hidden="true"
-              className="h-px w-14 sm:w-24 bg-gradient-to-r from-transparent to-white/30"
+              className="h-px w-16 sm:w-28 bg-gradient-to-r from-transparent to-white/30"
             />
-            <TwixtersWatermark className="h-6 sm:h-7 w-auto text-white select-none" />
+            <TwixtersWatermark className="h-7 sm:h-8 w-auto text-white select-none" />
             <span
               aria-hidden="true"
-              className="h-px w-14 sm:w-24 bg-gradient-to-l from-transparent to-white/30"
+              className="h-px w-16 sm:w-28 bg-gradient-to-l from-transparent to-white/30"
             />
           </div>
 
           {/* Heading matching video: "Let's" in pure white, "Connect" in muted silver */}
           <h2
             id="contact-heading"
-            className="mt-6 sm:mt-7 text-[clamp(2.75rem,7vw,5.5rem)] font-normal leading-[1.06] tracking-[-0.035em]"
+            className="mt-6 sm:mt-7 text-[clamp(3rem,7.7vw,6.1rem)] font-normal leading-[1.06] tracking-[-0.035em]"
           >
             <span className="text-white">{finalCta.heading.plain}</span>
             <span className="text-[#8e8e93]">{finalCta.heading.muted}</span>
           </h2>
 
           {/* Body copy matching reference video */}
-          <p className="mx-auto mt-5 sm:mt-6 max-w-[34rem] text-[15.5px] sm:text-[17px] leading-[1.62] text-white/70 font-normal">
+          <p className="mx-auto mt-5 sm:mt-6 max-w-[37.5rem] text-[17px] sm:text-[18.7px] leading-[1.62] text-white/70 font-normal">
             Feel free to contact me if having any questions.
             <br className="hidden sm:block" /> I'm available for new projects or just for chatting.
           </p>
@@ -140,11 +140,11 @@ export function FinalCta() {
               href={finalCta.cta.href}
               target="_blank"
               rel="noreferrer"
-              className="group/btn inline-flex items-center justify-center rounded-full border border-white/20 bg-white/[0.04] p-1.5 backdrop-blur-xs transition-all duration-300 hover:border-white/40 hover:bg-white/[0.08]"
+              className="group/btn inline-flex items-center justify-center rounded-full border border-white/20 bg-white/[0.04] p-2 backdrop-blur-xs transition-all duration-300 hover:border-white/40 hover:bg-white/[0.08]"
             >
-              <span className="flex items-center gap-2.5 rounded-full bg-black px-7 sm:px-8 py-3 text-[14.5px] sm:text-[15px] font-medium tracking-tight text-white shadow-[0_4px_25px_rgba(0,0,0,0.7)] transition-transform duration-300 group-hover/btn:scale-[1.01]">
+              <span className="flex items-center gap-3 rounded-full bg-black px-8 sm:px-9 py-3.5 text-[16px] sm:text-[16.5px] font-medium tracking-tight text-white shadow-[0_4px_25px_rgba(0,0,0,0.7)] transition-transform duration-300 group-hover/btn:scale-[1.01]">
                 {finalCta.cta.label}
-                <ArrowRight className="size-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
+                <ArrowRight className="size-[17.5px] transition-transform duration-300 group-hover/btn:translate-x-1" />
               </span>
             </a>
           </div>
