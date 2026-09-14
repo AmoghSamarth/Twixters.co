@@ -90,7 +90,7 @@ export function FinalCta() {
             height={894}
             loading="eager"
             decoding="async"
-            className="size-full object-cover object-left-top opacity-[0.16] sm:opacity-[0.20] transition-transform duration-700 ease-out group-hover:scale-[1.01]"
+            className="size-full object-cover object-left-top opacity-[0.13] sm:opacity-[0.16] transition-transform duration-700 ease-out group-hover:scale-[1.01]"
           />
         </div>
 
