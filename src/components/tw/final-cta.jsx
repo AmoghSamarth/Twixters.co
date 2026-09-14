@@ -2,7 +2,7 @@ import { finalCta, founder, site } from "../../content/site";
 import { assetUrl } from "../../utils/asset";
 import { ArrowRight } from "./primitives";
 
-function PinterestIcon({ className = "size-[15px]" }) {
+function PinterestIcon({ className = "size-[16.5px]" }) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
       <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.09.375-.291 1.199-.334 1.357-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z" />
@@ -10,7 +10,7 @@ function PinterestIcon({ className = "size-[15px]" }) {
   );
 }
 
-function BehanceIcon({ className = "size-[15px]" }) {
+function BehanceIcon({ className = "size-[16.5px]" }) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
       <path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.171 3-4.144 0-6.555-3.045-6.555-6.507 0-3.834 2.709-6.493 6.455-6.493 3.904 0 6.002 2.825 5.762 6.643h-9.288c.078 2.052 1.545 3.491 3.738 3.491 1.761 0 2.955-.866 3.435-1.92l1.624.786zm-8.293-5.289h6.398c-.131-1.748-1.425-2.617-3.059-2.617-1.803 0-3.093.896-3.339 2.617zm-10.433 8.289h-5v-14h5.688c3.279 0 5.04 1.341 5.04 3.864 0 1.523-.74 2.645-2.029 3.197 1.637.525 2.501 1.83 2.501 3.639 0 2.684-1.929 4.3-6.2 4.3zm-2.072-8.309h2.392c1.782 0 2.812-.663 2.812-1.854 0-1.229-1.071-1.837-2.812-1.837h-2.392v3.691zm0 6.309h2.571c1.947 0 3.256-.707 3.256-2.146 0-1.477-1.282-2.163-3.256-2.163h-2.571v4.309z" />
@@ -18,7 +18,7 @@ function BehanceIcon({ className = "size-[15px]" }) {
   );
 }
 
-function LinkedInIcon({ className = "size-[14px]" }) {
+function LinkedInIcon({ className = "size-[15.5px]" }) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
       <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45c-.9 0-1.63.73-1.63 1.63s.73 1.63 1.63 1.63 1.63-.73 1.63-1.63-.73-1.63-1.63-1.63Z" />
@@ -26,7 +26,7 @@ function LinkedInIcon({ className = "size-[14px]" }) {
   );
 }
 
-function InstagramIcon({ className = "size-[15px]" }) {
+function InstagramIcon({ className = "size-[16.5px]" }) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -152,18 +152,18 @@ export function FinalCta() {
 
         {/* Footer inside the card matching reference image */}
         <footer className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6 w-full px-6 sm:px-12 pb-7 sm:pb-9">
-          <p className="border-y border-white/20 py-1.5 sm:py-2 px-1 text-[12px] sm:text-[12.5px] tracking-tight text-white/70">
+          <p className="border-y border-white/20 py-2 sm:py-2.5 px-1.5 text-[13px] sm:text-[14px] tracking-tight text-white/75">
             {site.copyright}
           </p>
 
-          <ul className="flex items-center gap-2.5 sm:gap-3">
+          <ul className="flex items-center gap-3 sm:gap-3.5">
             <li>
               <a
                 href={site.socials?.behance || "https://www.behance.net/rajshegaonkar"}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Behance"
-                className="flex size-9 sm:size-10 items-center justify-center rounded-full border border-white/15 bg-[#141416] text-white/70 transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white"
+                className="flex size-10 sm:size-11 items-center justify-center rounded-full border border-white/15 bg-[#141416] text-white/70 transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white"
               >
                 <BehanceIcon />
               </a>
@@ -174,7 +174,7 @@ export function FinalCta() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Pinterest"
-                className="flex size-9 sm:size-10 items-center justify-center rounded-full border border-white/15 bg-[#141416] text-white/70 transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white"
+                className="flex size-10 sm:size-11 items-center justify-center rounded-full border border-white/15 bg-[#141416] text-white/70 transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white"
               >
                 <PinterestIcon />
               </a>
@@ -185,7 +185,7 @@ export function FinalCta() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="LinkedIn"
-                className="flex size-9 sm:size-10 items-center justify-center rounded-full border border-white/15 bg-[#141416] text-white/70 transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white"
+                className="flex size-10 sm:size-11 items-center justify-center rounded-full border border-white/15 bg-[#141416] text-white/70 transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white"
               >
                 <LinkedInIcon />
               </a>
@@ -196,7 +196,7 @@ export function FinalCta() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Instagram"
-                className="flex size-9 sm:size-10 items-center justify-center rounded-full border border-white/15 bg-[#141416] text-white/70 transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white"
+                className="flex size-10 sm:size-11 items-center justify-center rounded-full border border-white/15 bg-[#141416] text-white/70 transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white"
               >
                 <InstagramIcon />
               </a>
