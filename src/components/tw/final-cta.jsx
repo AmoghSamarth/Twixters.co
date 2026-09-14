@@ -152,8 +152,8 @@ export function FinalCta() {
 
         {/* Footer inside the card matching reference image */}
         <footer className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6 w-full px-6 sm:px-12 pb-7 sm:pb-9">
-          {/* Image 1: Copyright 20% bigger */}
-          <p className="border-y border-white/25 py-2.5 sm:py-3 px-2 text-[15.5px] sm:text-[17px] tracking-tight text-white/75">
+          {/* Image 1: Copyright 20% brighter */}
+          <p className="border-y border-white/40 py-2.5 sm:py-3 px-2 text-[15.5px] sm:text-[17px] tracking-tight text-white/95">
             {site.copyright}
           </p>
 
