@@ -134,36 +134,36 @@ export function FinalCta() {
             <br className="hidden sm:block" /> I'm available for new projects or just for chatting.
           </p>
 
-          {/* Double-pill CTA button matching reference video */}
+          {/* Double-pill CTA button matching reference video & image */}
           <div className="mt-8 sm:mt-10">
             <a
               href={finalCta.cta.href}
               target="_blank"
               rel="noreferrer"
-              className="group/btn inline-flex items-center justify-center rounded-full border border-white/20 bg-white/[0.04] p-[9px] backdrop-blur-xs transition-all duration-300 hover:border-white/40 hover:bg-white/[0.08]"
+              className="group/btn inline-flex items-center justify-center rounded-full border border-[#3a3a3c] bg-[#161618] p-1.5 transition-all duration-300 hover:border-white/40"
             >
-              <span className="flex items-center gap-3.5 rounded-full bg-black px-9 sm:px-10 py-3.5 text-[17px] sm:text-[17.5px] font-medium tracking-tight text-white shadow-[0_4px_25px_rgba(0,0,0,0.7)] transition-transform duration-300 group-hover/btn:scale-[1.01]">
+              <span className="flex items-center gap-2.5 rounded-full bg-black px-6 sm:px-7 py-2.5 sm:py-3 text-[14.5px] sm:text-[15px] font-medium tracking-tight text-white transition-transform duration-300 group-hover/btn:scale-[1.01]">
                 {finalCta.cta.label}
-                <ArrowRight className="size-[18.5px] transition-transform duration-300 group-hover/btn:translate-x-1" />
+                <ArrowRight className="size-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
               </span>
             </a>
           </div>
         </div>
 
-        {/* Footer inside the card */}
+        {/* Footer inside the card matching reference image */}
         <footer className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6 w-full px-6 sm:px-12 pb-7 sm:pb-9">
-          <p className="rounded-[10px] border border-white/20 bg-white/[0.02] px-3.5 py-1.5 text-[12px] sm:text-[12.5px] tracking-tight text-white/75">
+          <p className="border-y border-white/20 py-1.5 sm:py-2 px-1 text-[12px] sm:text-[12.5px] tracking-tight text-white/70">
             {site.copyright}
           </p>
 
-          <ul className="flex items-center gap-3">
+          <ul className="flex items-center gap-2.5 sm:gap-3">
             <li>
               <a
                 href={site.socials?.behance || "https://www.behance.net/rajshegaonkar"}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Behance"
-                className="flex size-10 sm:size-11 items-center justify-center rounded-full border border-white/25 text-white/80 transition-all duration-300 hover:border-white hover:text-white hover:bg-white/10"
+                className="flex size-9 sm:size-10 items-center justify-center rounded-full border border-white/15 bg-[#141416] text-white/70 transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white"
               >
                 <BehanceIcon />
               </a>
@@ -174,7 +174,7 @@ export function FinalCta() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Pinterest"
-                className="flex size-10 sm:size-11 items-center justify-center rounded-full border border-white/25 text-white/80 transition-all duration-300 hover:border-white hover:text-white hover:bg-white/10"
+                className="flex size-9 sm:size-10 items-center justify-center rounded-full border border-white/15 bg-[#141416] text-white/70 transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white"
               >
                 <PinterestIcon />
               </a>
@@ -185,7 +185,7 @@ export function FinalCta() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="LinkedIn"
-                className="flex size-10 sm:size-11 items-center justify-center rounded-full border border-white/25 text-white/80 transition-all duration-300 hover:border-white hover:text-white hover:bg-white/10"
+                className="flex size-9 sm:size-10 items-center justify-center rounded-full border border-white/15 bg-[#141416] text-white/70 transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white"
               >
                 <LinkedInIcon />
               </a>
@@ -196,7 +196,7 @@ export function FinalCta() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Instagram"
-                className="flex size-10 sm:size-11 items-center justify-center rounded-full border border-white/25 text-white/80 transition-all duration-300 hover:border-white hover:text-white hover:bg-white/10"
+                className="flex size-9 sm:size-10 items-center justify-center rounded-full border border-white/15 bg-[#141416] text-white/70 transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white"
               >
                 <InstagramIcon />
               </a>
