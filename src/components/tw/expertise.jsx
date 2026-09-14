@@ -164,23 +164,64 @@ function DrumWheel({ items, phaseOffset = 0, initialRot = 0 }) {
   );
 }
 
+function AllItemsView({ items, onClick }) {
+  return (
+    <div
+      onClick={onClick}
+      className="relative w-full cursor-pointer select-none py-2 animate-in fade-in duration-300"
+      title="Click to switch back to rolling wheel"
+    >
+      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2.5">
+        {items.map((item) => (
+          <li
+            key={item}
+            className="group/item flex items-center gap-2.5 text-ink-muted hover:text-ink transition-colors duration-150"
+          >
+            <span className="size-1.5 rounded-full bg-neutral-300 group-hover/item:bg-ink transition-colors duration-150 shrink-0" />
+            <span
+              className="tracking-[-0.015em] font-normal transition-transform duration-150 group-hover/item:translate-x-0.5"
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: "clamp(0.95rem, 1.25vw, 1.12rem)",
+              }}
+            >
+              {item}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export function Expertise() {
+  const [showAll, setShowAll] = useState(false);
+
   return (
     <section
       id="expertise"
       aria-label="What we design"
       className="relative overflow-hidden px-4 py-20 sm:px-8 sm:py-28 lg:px-16 lg:py-32 xl:px-[96px] 2xl:px-[112px]"
     >
-      {/* Eyebrow */}
-      <Reveal className="mb-16 flex items-center justify-center gap-5 sm:mb-20 lg:mb-24">
-        <div className="tw-hair flex-1 max-w-[90px]" />
-        <span className="tw-eyebrow text-[20px] sm:text-[23px] text-neutral-600 tracking-[0.02em] select-none">
-          What we design
-        </span>
-        <div className="tw-hair flex-1 max-w-[90px]" />
+      {/* Eyebrow with toggle button */}
+      <Reveal className="mb-14 sm:mb-18 lg:mb-20 flex flex-col items-center justify-center gap-3">
+        <div className="flex items-center justify-center gap-5 w-full max-w-[500px]">
+          <div className="tw-hair flex-1" />
+          <span className="tw-eyebrow text-[20px] sm:text-[23px] text-neutral-600 tracking-[0.02em] select-none">
+            What we design
+          </span>
+          <div className="tw-hair flex-1" />
+        </div>
+        <button
+          type="button"
+          onClick={() => setShowAll((v) => !v)}
+          className="mt-1 inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/80 px-4 py-1.5 text-[12.5px] font-medium tracking-tight text-neutral-700 shadow-sm backdrop-blur-xs transition-all duration-200 hover:border-black/30 hover:text-ink hover:bg-white cursor-pointer"
+        >
+          <span>{showAll ? "← Switch to Animated Wheel" : "Click to view all deliverables (22) ↓"}</span>
+        </button>
       </Reveal>
 
-      {/* Two-group drum wheel layout */}
+      {/* Two-group drum wheel layout / all items */}
       <Reveal className="mx-auto max-w-[1360px]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-12 xl:gap-16 items-center">
           {groups.map((group, gi) => {
@@ -199,30 +240,56 @@ export function Expertise() {
                     0{gi + 1}
                   </span>
                   <h2
-                    className="tw-display font-medium leading-[1.08] tracking-[-0.035em] text-ink"
+                    className="tw-display font-medium leading-[1.08] tracking-[-0.035em] text-ink cursor-pointer select-none"
                     style={{ fontSize: "clamp(1.9rem, 2.7vw, 3.1rem)" }}
+                    onClick={() => setShowAll((v) => !v)}
+                    title={showAll ? "Click to view animated wheel" : "Click to view all items"}
                   >
                     {firstWord}
                     <br />
                     {restWords}
                   </h2>
+                  <button
+                    type="button"
+                    onClick={() => setShowAll((v) => !v)}
+                    className="mt-3 inline-flex items-center gap-1.5 text-[12px] font-medium tracking-tight text-neutral-500 hover:text-ink transition-colors cursor-pointer"
+                  >
+                    <span>{showAll ? "Show wheel ↑" : `Show all (${group.items.length}) →`}</span>
+                  </button>
                 </div>
 
-
-                {/* Drum Wheel */}
-                <div className="flex-1 w-full min-w-0 overflow-hidden">
-                  <DrumWheel
-                    items={group.items}
-                    phaseOffset={gi * 2400}
-                    initialRot={gi * 55}
-                  />
+                {/* Content: Drum Wheel OR Full List */}
+                <div className="flex-1 w-full min-w-0">
+                  {showAll ? (
+                    <AllItemsView
+                      items={group.items}
+                      onClick={() => setShowAll(false)}
+                    />
+                  ) : (
+                    <div
+                      className="relative group/wheel cursor-pointer"
+                      onClick={() => setShowAll(true)}
+                      title="Click to view all deliverables"
+                    >
+                      <DrumWheel
+                        items={group.items}
+                        phaseOffset={gi * 2400}
+                        initialRot={gi * 55}
+                      />
+                      <div className="absolute right-2 bottom-1 z-10 opacity-0 group-hover/wheel:opacity-100 transition-opacity duration-200 pointer-events-none">
+                        <span className="rounded-full bg-ink/90 text-white text-[11px] px-2.5 py-1 font-medium shadow-sm backdrop-blur-xs">
+                          Click to view all
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Column divider between Group 1 & Group 2 (Desktop only, positioned right) */}
                 {gi === 0 && (
                   <div
                     aria-hidden="true"
-                    className="hidden lg:block absolute -right-6 xl:-right-8 top-1/2 -translate-y-1/2 h-[180px] w-px bg-hair"
+                    className="hidden lg:block absolute -right-6 xl:-right-8 top-1/2 -translate-y-1/2 h-[220px] w-px bg-hair"
                   />
                 )}
               </div>
