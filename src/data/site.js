@@ -8,6 +8,12 @@ export const site = {
   /** The only booking destination that exists in the current implementation. */
   bookingUrl: "https://wa.me/message/TIRNTDQIVJ2YF1",
   copyright: "© Twixters Studio, 2026",
+  socials: {
+    behance: "https://www.behance.net/rajshegaonkar",
+    pinterest: "https://pin.it/7mAOBTb8Z",
+    linkedin: "https://www.linkedin.com/company/twixters-co/",
+    instagram: "https://www.instagram.com/twixters.co?stkn=MWk1YTM1d2dmZWcwYg%3D%3D&utm_source=qr"
+  },
   nav: [
     { label: "Work", href: "#work" },
     { label: "Process", href: "#process" },
@@ -172,9 +178,10 @@ export const founder = {
   name: "Raj Shegaonkar",
   role: "Twixters.Co, Founder",
   socials: {
-    instagram: "https://www.instagram.com/twixters.co",
-    linkedin: "https://www.linkedin.com/in/rajshegaonkar",
-    behance: "https://www.behance.net/gallery/248456131/The-Saathh-Brand-Identity"
+    behance: "https://www.behance.net/rajshegaonkar",
+    pinterest: "https://pin.it/7mAOBTb8Z",
+    linkedin: "https://www.linkedin.com/company/twixters-co/",
+    instagram: "https://www.instagram.com/twixters.co?stkn=MWk1YTM1d2dmZWcwYg%3D%3D&utm_source=qr"
   },
   bio: "Founded in 2021 by Raj Shegaonkar, Twixters blends creative design with sharp marketing strategy. With 10+ years of experience, we've helped local businesses and growing brands build identities that make people stop, notice, and remember.",
   timeline: [

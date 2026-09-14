@@ -45,6 +45,14 @@ function BehanceIcon({ className = "h-[20px] sm:h-[21.5px] w-auto" }) {
   );
 }
 
+function PinterestIcon({ className = "h-[19px] sm:h-[20.5px] w-auto" }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+      <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.09.375-.291 1.199-.334 1.357-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z" />
+    </svg>
+  );
+}
+
 export function Founder() {
   const [showAll, setShowAll] = useState(false);
   const currentTimeline = showAll ? founder.fullTimeline || founder.timeline : founder.timeline;
@@ -54,14 +62,14 @@ export function Founder() {
       <Reveal className="mx-auto max-w-[1200px]">
         <Eyebrow>{founder.eyebrow}</Eyebrow>
         <h2 id="about-heading" className="tw-h2 mt-6 text-center text-[clamp(1.9rem,5.6vw,3.5rem)]">
-          {founder.heading.plain}
-          <span className="text-ink-faint">{founder.heading.muted}</span>
+          <span className="text-ink">{founder.heading.plain}</span>
+          <span className="text-ink-muted">{founder.heading.muted}</span>
         </h2>
       </Reveal>
 
-      <div className="mx-auto mt-16 grid max-w-[1200px] items-start gap-12 lg:grid-cols-[48%_1fr] lg:gap-16">
-        <Reveal delay={80} className="mx-auto w-full max-w-[30rem] lg:mx-0 lg:max-w-none">
-          <div className="rotate-[-2.5deg] overflow-hidden rounded-[26px] border-[3px] border-white bg-[#1a1a1a] shadow-[0_20px_50px_rgba(0,0,0,0.18)] transition-transform duration-500 hover:rotate-0">
+      <div className="mx-auto mt-14 grid max-w-[1200px] items-start gap-12 lg:grid-cols-[46%_1fr] lg:gap-16">
+        <Reveal delay={60}>
+          <div className="overflow-hidden rounded-[28px] border border-black/[0.08] bg-white p-2 shadow-float sm:rounded-[36px]">
             <img
               src={founder.portrait.src}
               alt={founder.portrait.alt}
@@ -75,9 +83,9 @@ export function Founder() {
 
           {/* Caption row: Social logos on the left, Name/Role on the right */}
           <div className="mt-6 flex items-center justify-between pl-1 pr-2">
-            <div className="flex items-center gap-4 text-neutral-500">
+            <div className="flex items-center gap-3.5 sm:gap-4 text-neutral-500">
               <a
-                href={founder.socials?.instagram || "https://instagram.com"}
+                href={founder.socials?.instagram || "https://www.instagram.com/twixters.co?stkn=MWk1YTM1d2dmZWcwYg%3D%3D&utm_source=qr"}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Instagram"
@@ -86,7 +94,7 @@ export function Founder() {
                 <InstagramIcon />
               </a>
               <a
-                href={founder.socials?.linkedin || "https://linkedin.com"}
+                href={founder.socials?.linkedin || "https://www.linkedin.com/company/twixters-co/"}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="LinkedIn"
@@ -95,13 +103,22 @@ export function Founder() {
                 <LinkedInIcon />
               </a>
               <a
-                href={founder.socials?.behance || "https://behance.net"}
+                href={founder.socials?.behance || "https://www.behance.net/rajshegaonkar"}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Behance"
                 className="transition-colors duration-200 hover:text-ink"
               >
                 <BehanceIcon />
+              </a>
+              <a
+                href={founder.socials?.pinterest || "https://pin.it/7mAOBTb8Z"}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Pinterest"
+                className="transition-colors duration-200 hover:text-ink"
+              >
+                <PinterestIcon />
               </a>
             </div>
 

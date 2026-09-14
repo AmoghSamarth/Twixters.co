@@ -10,6 +10,12 @@ export function StructuredData() {
         foundingDate: "2021",
         email: site.email,
         description: site.description,
+        sameAs: [
+          site.socials?.behance,
+          site.socials?.pinterest,
+          site.socials?.linkedin,
+          site.socials?.instagram
+        ].filter(Boolean),
         founder: {
           "@type": "Person",
           name: founder.name,

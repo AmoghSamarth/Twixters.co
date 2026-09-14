@@ -10,6 +10,14 @@ function PinterestIcon({ className = "size-[15px]" }) {
   );
 }
 
+function BehanceIcon({ className = "size-[15px]" }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+      <path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.171 3-4.144 0-6.555-3.045-6.555-6.507 0-3.834 2.709-6.493 6.455-6.493 3.904 0 6.002 2.825 5.762 6.643h-9.288c.078 2.052 1.545 3.491 3.738 3.491 1.761 0 2.955-.866 3.435-1.92l1.624.786zm-8.293-5.289h6.398c-.131-1.748-1.425-2.617-3.059-2.617-1.803 0-3.093.896-3.339 2.617zm-10.433 8.289h-5v-14h5.688c3.279 0 5.04 1.341 5.04 3.864 0 1.523-.74 2.645-2.029 3.197 1.637.525 2.501 1.83 2.501 3.639 0 2.684-1.929 4.3-6.2 4.3zm-2.072-8.309h2.392c1.782 0 2.812-.663 2.812-1.854 0-1.229-1.071-1.837-2.812-1.837h-2.392v3.691zm0 6.309h2.571c1.947 0 3.256-.707 3.256-2.146 0-1.477-1.282-2.163-3.256-2.163h-2.571v4.309z" />
+    </svg>
+  );
+}
+
 function LinkedInIcon({ className = "size-[14px]" }) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
@@ -151,7 +159,18 @@ export function FinalCta() {
           <ul className="flex items-center gap-3">
             <li>
               <a
-                href={founder.socials?.behance || "https://pinterest.com"}
+                href={site.socials?.behance || "https://www.behance.net/rajshegaonkar"}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Behance"
+                className="flex size-10 sm:size-11 items-center justify-center rounded-full border border-white/25 text-white/80 transition-all duration-300 hover:border-white hover:text-white hover:bg-white/10"
+              >
+                <BehanceIcon />
+              </a>
+            </li>
+            <li>
+              <a
+                href={site.socials?.pinterest || "https://pin.it/7mAOBTb8Z"}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Pinterest"
@@ -162,7 +181,7 @@ export function FinalCta() {
             </li>
             <li>
               <a
-                href={founder.socials?.linkedin || "https://linkedin.com"}
+                href={site.socials?.linkedin || "https://www.linkedin.com/company/twixters-co/"}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="LinkedIn"
@@ -173,7 +192,7 @@ export function FinalCta() {
             </li>
             <li>
               <a
-                href={founder.socials?.instagram || "https://instagram.com"}
+                href={site.socials?.instagram || "https://www.instagram.com/twixters.co?stkn=MWk1YTM1d2dmZWcwYg%3D%3D&utm_source=qr"}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Instagram"
