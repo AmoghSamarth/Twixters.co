@@ -224,12 +224,7 @@ export function Expertise() {
     <section
       id="expertise"
       aria-label="What we design"
-      className="relative w-full min-h-screen flex flex-col justify-between overflow-hidden px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 pt-14 sm:pt-16 lg:pt-12 pb-7 lg:pb-8 select-text bg-[#f2f1ec] border-t border-[#dfdfd8]"
-      style={{
-        backgroundImage: `url("${assetUrl("/assets/micro-texture.png")}")`,
-        backgroundRepeat: "repeat",
-        backgroundSize: "50px 50px",
-      }}
+      className="relative w-full min-h-screen flex flex-col justify-between overflow-hidden px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 pt-14 sm:pt-16 lg:pt-12 pb-7 lg:pb-8 select-text"
     >
       <div className="mx-auto w-full max-w-[1460px] flex-1 flex flex-col justify-between">
         {/* ─── 1. TOP HEADER ROW: ────────  What we design  ──────── ─── */}
