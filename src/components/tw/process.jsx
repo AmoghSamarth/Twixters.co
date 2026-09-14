@@ -76,19 +76,36 @@ export function Process() {
               }}
             >
               <article
-                className="tw-step-card flex h-full min-h-[380px] sm:min-h-[420px] aspect-[1/1.08] flex-col justify-between rounded-[28px] sm:rounded-[32px] bg-white bg-clip-padding p-8 sm:p-9 border-[4px] border-white/60 shadow-[0_20px_50px_rgba(0,0,0,0.08),0_4px_16px_rgba(0,0,0,0.03)] transition-transform duration-300 hover:scale-[1.02]"
+                className="tw-step-card group relative flex h-full min-h-[420px] sm:min-h-[460px] flex-col justify-between overflow-hidden rounded-[28px] sm:rounded-[32px] bg-white bg-clip-padding p-7 sm:p-8 border-[4px] border-white/60 shadow-[0_20px_50px_rgba(0,0,0,0.08),0_4px_16px_rgba(0,0,0,0.03)] transition-all duration-300 hover:scale-[1.02]"
               >
-                <p
-                  aria-hidden="true"
-                  className="text-[68px] sm:text-[78px] font-normal leading-none tracking-[-0.04em] text-[#111111]"
-                >
-                  {step.n}
-                </p>
-                <div className="mt-8">
-                  <h3 className="text-[22px] sm:text-[24px] font-semibold tracking-[-0.02em] text-[#111111]">
+                {/* Top Row: Big Number */}
+                <div className="flex items-start justify-between">
+                  <p
+                    aria-hidden="true"
+                    className="text-[64px] sm:text-[74px] font-normal leading-none tracking-[-0.04em] text-[#111111] select-none"
+                  >
+                    {step.n}
+                  </p>
+                </div>
+
+                {/* Middle: Sequence-wise MP4 video animation in center of box */}
+                <div className="relative my-4 flex-1 flex items-center justify-center overflow-hidden rounded-[20px] bg-[#f8f8f8]/60">
+                  <video
+                    src={step.video}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full max-h-[190px] sm:max-h-[210px] object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105 pointer-events-none"
+                  />
+                </div>
+
+                {/* Bottom: Title & Description */}
+                <div className="mt-2">
+                  <h3 className="text-[21px] sm:text-[23px] font-semibold tracking-[-0.02em] text-[#111111]">
                     {step.title}
                   </h3>
-                  <p className="mt-2.5 text-[14px] sm:text-[15px] leading-[1.55] text-neutral-500 font-normal">
+                  <p className="mt-2 text-[13.5px] sm:text-[14.5px] leading-[1.5] text-neutral-500 font-normal">
                     {step.body}
                   </p>
                 </div>
