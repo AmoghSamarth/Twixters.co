@@ -243,10 +243,14 @@ export function Services() {
             </p>
           </Reveal>
 
-          {/* Right Column (Desktop) */}
-          <div className="hidden lg:flex flex-col justify-between h-[205px] xl:h-[220px] items-start shrink-0 w-[190px] xl:w-[210px]">
+          {/* Right Column (Desktop) — Circled contents fly in from outside */}
+          <div className="hidden lg:flex flex-col justify-between h-[205px] xl:h-[220px] items-start shrink-0 w-[190px] xl:w-[210px] overflow-visible">
             {rightChips.map((chip, i) => (
-              <Reveal key={chip.label} delay={140 + i * 70}>
+              <Reveal
+                key={chip.label}
+                delay={160 + i * 110}
+                className="tw-reveal-fly-right"
+              >
                 <ChipItem chip={chip} />
               </Reveal>
             ))}
@@ -254,11 +258,18 @@ export function Services() {
 
           {/* Mobile / Tablet Chips (< lg) */}
           <div className="flex lg:hidden flex-wrap items-center justify-center gap-4 max-w-[560px] mt-6">
-            {[...leftChips, ...rightChips].map((chip, i) => (
-              <Reveal key={chip.label} delay={120 + i * 50}>
-                <ChipItem chip={{ ...chip, offsetX: 0 }} />
-              </Reveal>
-            ))}
+            {[...leftChips, ...rightChips].map((chip, i) => {
+              const isRight = i >= leftChips.length;
+              return (
+                <Reveal
+                  key={chip.label}
+                  delay={120 + i * 60}
+                  className={isRight ? "tw-reveal-fly-right" : ""}
+                >
+                  <ChipItem chip={{ ...chip, offsetX: 0 }} />
+                </Reveal>
+              );
+            })}
           </div>
 
         </div>
