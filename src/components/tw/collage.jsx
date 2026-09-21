@@ -3,17 +3,53 @@ import { collage, collageCta } from "../../content/site";
 import { Reveal } from "./reveal";
 import { assetUrl } from "../../utils/asset";
 
-/* ─── Image sets for each column (duplicated for seamless loop) ─── */
+/* ─── Image sets for each column (duplicated for seamless loop) with exact intrinsic dimensions ─── */
 const leftImages = [
-  { src: assetUrl("/assets/portfolio-a1.jpg"), alt: "Portfolio work A1" },
-  { src: assetUrl("/assets/portfolio-a2.png"), alt: "Portfolio work A2" },
-  { src: assetUrl("/assets/portfolio-a3.png"), alt: "Portfolio work A3" },
+  {
+    src: assetUrl("/assets/portfolio-a1.jpg"),
+    srcMobile: assetUrl("/assets/portfolio-a1-m.webp"),
+    alt: "Portfolio work A1",
+    width: 1400,
+    height: 787,
+  },
+  {
+    src: assetUrl("/assets/portfolio-a2.png"),
+    srcMobile: assetUrl("/assets/portfolio-a2-m.webp"),
+    alt: "Portfolio work A2",
+    width: 1400,
+    height: 1026,
+  },
+  {
+    src: assetUrl("/assets/portfolio-a3.png"),
+    srcMobile: assetUrl("/assets/portfolio-a3-m.webp"),
+    alt: "Portfolio work A3",
+    width: 1400,
+    height: 912,
+  },
 ];
 
 const rightImages = [
-  { src: assetUrl("/assets/portfolio-b1.png"), alt: "Portfolio work B1" },
-  { src: assetUrl("/assets/portfolio-b2.png"), alt: "Portfolio work B2" },
-  { src: assetUrl("/assets/portfolio-b3.jpg"), alt: "Portfolio work B3" },
+  {
+    src: assetUrl("/assets/portfolio-b1.png"),
+    srcMobile: assetUrl("/assets/portfolio-b1-m.webp"),
+    alt: "Portfolio work B1",
+    width: 966,
+    height: 664,
+  },
+  {
+    src: assetUrl("/assets/portfolio-b2.png"),
+    srcMobile: assetUrl("/assets/portfolio-b2-m.webp"),
+    alt: "Portfolio work B2",
+    width: 1400,
+    height: 700,
+  },
+  {
+    src: assetUrl("/assets/portfolio-b3.jpg"),
+    srcMobile: assetUrl("/assets/portfolio-b3-m.webp"),
+    alt: "Portfolio work B3",
+    width: 1400,
+    height: 1166,
+  },
 ];
 
 function MarqueeColumn({ images, duration, className = "" }) {
@@ -34,9 +70,11 @@ function MarqueeColumn({ images, duration, className = "" }) {
             >
               <img
                 src={img.src}
+                srcSet={`${img.srcMobile} 700w, ${img.src} 1400w`}
+                sizes="(max-width: 640px) 86vw, (max-width: 1024px) 50vw, 600px"
                 alt={img.alt}
-                width={1024}
-                height={720}
+                width={img.width}
+                height={img.height}
                 loading="lazy"
                 decoding="async"
                 className="w-full h-auto block rounded-[16px] sm:rounded-[20px]"
@@ -52,9 +90,11 @@ function MarqueeColumn({ images, duration, className = "" }) {
             >
               <img
                 src={img.src}
+                srcSet={`${img.srcMobile} 700w, ${img.src} 1400w`}
+                sizes="(max-width: 640px) 86vw, (max-width: 1024px) 50vw, 600px"
                 alt={img.alt}
-                width={1024}
-                height={720}
+                width={img.width}
+                height={img.height}
                 loading="lazy"
                 decoding="async"
                 className="w-full h-auto block rounded-[16px] sm:rounded-[20px]"
@@ -148,10 +188,12 @@ export function Collage() {
                 className="h-[210px] w-[86%] shrink-0 snap-center overflow-hidden rounded-[18px]"
               >
                 <img
-                  src={img.src}
+                  src={img.srcMobile || img.src}
+                  srcSet={`${img.srcMobile} 700w, ${img.src} 1400w`}
+                  sizes="(max-width: 640px) 86vw, 600px"
                   alt={img.alt}
-                  width={1024}
-                  height={720}
+                  width={img.width}
+                  height={img.height}
                   loading="lazy"
                   decoding="async"
                   className="size-full object-cover"
