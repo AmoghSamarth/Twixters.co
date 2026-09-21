@@ -3,35 +3,80 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Twixters.Co — Branding & Creative Studio</title>
+    <title>Twixters.Co — Branding, Graphic Design &amp; Digital Marketing</title>
     <meta
       name="description"
-      content="Twixters.Co builds brand identities, design systems and advertising campaigns that actually work. Led by Raj Shegaonkar."
+      content="Twixters.Co is a Central India based design and marketing agency specializing in branding, graphic design and digital marketing."
     />
     <meta name="author" content="Twixters.Co" />
     <meta name="theme-color" content="#d9d9d9" />
+    <link rel="canonical" href="https://twixters.co/" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:site_name" content="Twixters.Co" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Twixters.Co — Branding & Creative Studio" />
+    <meta property="og:url" content="https://twixters.co/" />
+    <meta property="og:title" content="Twixters.Co — Branding, Graphic Design &amp; Digital Marketing" />
     <meta
       property="og:description"
-      content="Twixters.Co builds brand identities, design systems and advertising campaigns that actually work. Led by Raj Shegaonkar."
+      content="Twixters.Co is a Central India based design and marketing agency specializing in branding, graphic design and digital marketing."
     />
-    <meta property="og:image" content="%BASE_URL%assets/og.jpg" />
+    <meta property="og:image" content="https://twixters.co/assets/og.jpg" />
 
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Twixters.Co — Branding & Creative Studio" />
+    <meta name="twitter:title" content="Twixters.Co — Branding, Graphic Design &amp; Digital Marketing" />
     <meta
       name="twitter:description"
-      content="Twixters.Co builds brand identities, design systems and advertising campaigns that actually work. Led by Raj Shegaonkar."
+      content="Twixters.Co is a Central India based design and marketing agency specializing in branding, graphic design and digital marketing."
     />
-    <meta name="twitter:image" content="%BASE_URL%assets/og.jpg" />
+    <meta name="twitter:image" content="https://twixters.co/assets/og.jpg" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="%BASE_URL%favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    <!-- Organization & WebSite JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://twixters.co/#organization",
+          "name": "Twixters.Co",
+          "url": "https://twixters.co/",
+          "logo": "https://twixters.co/assets/twixters-watermark.svg",
+          "image": "https://twixters.co/assets/og.jpg",
+          "description": "Twixters.Co is a Central India based design and marketing agency specializing in branding, graphic design and digital marketing.",
+          "email": "twixters.co@gmail.com",
+          "sameAs": [
+            "https://www.instagram.com/twixters.co",
+            "https://www.linkedin.com/company/twixters-co/",
+            "https://www.instagram.com/raj_shegaonkar/",
+            "https://www.linkedin.com/in/raj-shegaonkar-875999164/",
+            "https://www.behance.net/rajshegaonkar",
+            "https://www.facebook.com/profile.php?id=100006101853561"
+          ],
+          "founder": {
+            "@type": "Person",
+            "name": "Raj Shegaonkar",
+            "jobTitle": "Founder / Creative Director"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://twixters.co/#website",
+          "url": "https://twixters.co/",
+          "name": "Twixters.Co",
+          "description": "Twixters.Co is a Central India based design and marketing agency specializing in branding, graphic design and digital marketing.",
+          "publisher": {
+            "@id": "https://twixters.co/#organization"
+          }
+        }
+      ]
+    }
+    </script>
 
     <!-- Google Fonts: Inter Tight (Display / Hero), Instrument Serif (Editorial / Eyebrow), Poppins & DM Sans (Supporting Text / UI) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -53,7 +98,21 @@
     </style>
   </head>
   <body class="bg-[#d9d9d9] text-[#111111]">
-    <div id="root"></div>
+    <div id="root">
+      <main>
+        <h1>Twixters.Co — Branding, Graphic Design &amp; Digital Marketing</h1>
+        <p>Twixters.Co is a Central India based design and marketing agency specializing in branding, graphic design and digital marketing.</p>
+      </main>
+    </div>
+    <noscript>
+      <header>
+        <p>Twixters.Co</p>
+      </header>
+      <main>
+        <h1>Twixters.Co — Branding, Graphic Design &amp; Digital Marketing</h1>
+        <p>Twixters.Co is a Central India based design and marketing agency specializing in branding, graphic design and digital marketing.</p>
+      </main>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
