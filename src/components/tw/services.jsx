@@ -158,7 +158,10 @@ export function Services() {
 
   // Track scroll position to gradually turn words from grey to black
   useEffect(() => {
-    const updateScroll = () => {
+    let ticking = false;
+    let lastProgress = -1;
+
+    const calculate = () => {
       if (!textRef.current) return;
       const rect = textRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight || document.documentElement.clientHeight;
@@ -166,16 +169,29 @@ export function Services() {
       // Start reveal when the top of the text enters 82% of viewport
       // Complete reveal across a 20% wider scroll distance (20% slower pacing)
       const start = windowHeight * 0.82;
-      const end = windowHeight * 0.239; // 20% longer scroll distance for slower reveal
+      const end = windowHeight * 0.239;
       const current = rect.top;
 
       const progress = Math.min(Math.max((start - current) / (start - end), 0), 1);
-      setScrollProgress(progress);
+      if (Math.abs(progress - lastProgress) > 0.005) {
+        lastProgress = progress;
+        setScrollProgress(progress);
+      }
+    };
+
+    const updateScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          calculate();
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     window.addEventListener("scroll", updateScroll, { passive: true });
     window.addEventListener("resize", updateScroll, { passive: true });
-    updateScroll();
+    calculate();
 
     return () => {
       window.removeEventListener("scroll", updateScroll);

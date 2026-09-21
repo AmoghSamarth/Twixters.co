@@ -9,19 +9,36 @@ export function FloatingDiscovery() {
   const avatarSrc = faqContact.avatar?.src || assetUrl("/assets/raj-faq-avatar.jpg");
 
   useEffect(() => {
-    const checkVisibility = () => {
+    let ticking = false;
+    let currentVisible = true;
+
+    const check = () => {
       const contact = document.getElementById("contact");
       if (!contact) return;
       const rect = contact.getBoundingClientRect();
       const vh = window.innerHeight || 800;
       // When the final contact card starts hovering up into the viewport, hide the floating button
       const inView = rect.top < vh * 0.75;
-      setVisible(!inView);
+      const nextVisible = !inView;
+      if (nextVisible !== currentVisible) {
+        currentVisible = nextVisible;
+        setVisible(nextVisible);
+      }
+    };
+
+    const checkVisibility = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          check();
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     window.addEventListener("scroll", checkVisibility, { passive: true });
     window.addEventListener("resize", checkVisibility, { passive: true });
-    checkVisibility();
+    check();
 
     return () => {
       window.removeEventListener("scroll", checkVisibility);
