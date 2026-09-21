@@ -88,7 +88,7 @@ export function FinalCta() {
             alt=""
             width={1759}
             height={894}
-            loading="eager"
+            loading="lazy"
             decoding="async"
             className="size-full object-cover object-left-top opacity-[0.08] sm:opacity-[0.10] transition-transform duration-700 ease-out group-hover:scale-[1.01]"
           />

@@ -37,7 +37,7 @@ function MarqueeColumn({ images, duration, className = "" }) {
                 alt={img.alt}
                 width={1024}
                 height={720}
-                loading={i < 2 ? "eager" : "lazy"}
+                loading="lazy"
                 decoding="async"
                 className="w-full h-auto block rounded-[16px] sm:rounded-[20px]"
               />
