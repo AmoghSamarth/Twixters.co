@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { hero } from "../../content/site";
 import { InkPill } from "./primitives";
 import { Reveal } from "./reveal";
@@ -91,7 +91,10 @@ function AnimatedHeroChip({
                 <img
                   src={slide.src}
                   alt={slide.alt}
+                  width={400}
+                  height={400}
                   loading="eager"
+                  fetchPriority={i === 0 ? "high" : "low"}
                   decoding="async"
                   className="size-full object-cover"
                 />
@@ -110,17 +113,20 @@ export function Hero() {
     { src: assetUrl("/assets/chip-collage.jpg"), alt: "Twixters branding collateral moodboard" }
   ];
 
-  const [pushY, setPushY] = useState(0);
+  const containerRef = useRef(null);
 
   useEffect(() => {
     let ticking = false;
     const onScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          const sy = window.scrollY;
-          const vh = window.innerHeight || 800;
-          if (sy <= vh * 1.5) {
-            setPushY(sy * 0.16);
+          if (containerRef.current) {
+            const sy = window.scrollY;
+            const vh = window.innerHeight || 800;
+            if (sy <= vh * 1.5) {
+              const push = (sy * 0.16).toFixed(1);
+              containerRef.current.style.transform = `translate3d(0, -${push}px, 0)`;
+            }
           }
           ticking = false;
         });
@@ -147,6 +153,7 @@ export function Hero() {
           width={2560}
           height={1440}
           loading="eager"
+          fetchPriority="high"
           decoding="async"
           className="size-full object-cover object-left-top"
           style={{
@@ -164,8 +171,8 @@ export function Hero() {
       />
 
       <div
-        className="relative z-10 mx-auto w-full max-w-[1280px] flex flex-col items-center text-center transition-transform duration-100 ease-out will-change-transform"
-        style={{ transform: `translate3d(0, -${pushY.toFixed(1)}px, 0)` }}
+        ref={containerRef}
+        className="relative z-10 mx-auto w-full max-w-[1280px] flex flex-col items-center text-center will-change-transform"
       >
         {/* H1 Headline with integrated animated slideshow chips matching Image 2 */}
         <h1 className="tw-display relative mx-auto max-w-[1040px] text-center text-[clamp(2.1rem,5.76vw,5.5rem)] font-normal leading-[1.12] tracking-[-0.04em]">
