@@ -89,14 +89,14 @@ export function Process() {
                 </div>
 
                 {/* Middle: Sequence-wise MP4 video animation in center of box */}
-                <div className="relative my-4 flex-1 flex items-center justify-center overflow-hidden">
+                <div className="relative my-4 flex-1 flex items-center justify-center">
                   <video
                     src={step.video}
                     autoPlay
                     loop
                     muted
                     playsInline
-                    className="w-full h-full max-h-[190px] sm:max-h-[210px] object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105 pointer-events-none"
+                    className="w-full h-full max-h-[190px] sm:max-h-[210px] scale-[1.5] object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-[1.56] pointer-events-none"
                   />
                 </div>
 
