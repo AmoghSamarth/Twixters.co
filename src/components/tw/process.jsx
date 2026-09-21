@@ -1,5 +1,56 @@
+import { useEffect, useRef, useState } from "react";
 import { processSteps } from "../../content/site";
 import { Reveal } from "./reveal";
+
+function LazyProcessVideo({ videoSrc, posterSrc }) {
+  const containerRef = useRef(null);
+  const videoRef = useRef(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setShouldLoad(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          setShouldLoad(true);
+          if (videoRef.current) {
+            videoRef.current.play().catch(() => {});
+          }
+        } else {
+          if (videoRef.current && !videoRef.current.paused) {
+            videoRef.current.pause();
+          }
+        }
+      },
+      { rootMargin: "300px 0px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={containerRef} className="relative my-4 flex-1 flex items-center justify-center">
+      <video
+        ref={videoRef}
+        src={shouldLoad ? videoSrc : undefined}
+        poster={posterSrc}
+        preload="none"
+        autoPlay={shouldLoad}
+        loop
+        muted
+        playsInline
+        className="w-full h-full max-h-[190px] sm:max-h-[210px] scale-[1.5] object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-[1.56] pointer-events-none"
+      />
+    </div>
+  );
+}
 
 function ProcessDoodles() {
   return (
@@ -88,17 +139,8 @@ export function Process() {
                   </p>
                 </div>
 
-                {/* Middle: Sequence-wise MP4 video animation in center of box */}
-                <div className="relative my-4 flex-1 flex items-center justify-center">
-                  <video
-                    src={step.video}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-full max-h-[190px] sm:max-h-[210px] scale-[1.5] object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-[1.56] pointer-events-none"
-                  />
-                </div>
+                {/* Middle: Deferred sequence-wise MP4 video animation in center of box */}
+                <LazyProcessVideo videoSrc={step.video} posterSrc={step.poster} />
 
                 {/* Bottom: Title & Description */}
                 <div className="mt-2">

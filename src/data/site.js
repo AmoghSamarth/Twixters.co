@@ -98,6 +98,7 @@ export const processSteps = [
     title: "Brief Us",
     body: "Tell us about your business, goals, and what you need.",
     video: assetUrl("/assets/01 Brief Us.mov"),
+    poster: assetUrl("/assets/brief-us-poster.webp"),
     rotate: -5.0,
     offsetY: 24
   },
@@ -106,6 +107,7 @@ export const processSteps = [
     title: "We Create",
     body: "Our team gets to work on your design or campaign strategy.",
     video: assetUrl("/assets/we-create.mp4"),
+    poster: assetUrl("/assets/we-create-poster.webp"),
     rotate: 9.0,
     offsetY: -24
   },
@@ -114,6 +116,7 @@ export const processSteps = [
     title: "Launch & Grow",
     body: "You get polished deliverables ready to use and results that follow.",
     video: assetUrl("/assets/launch-grow.mp4"),
+    poster: assetUrl("/assets/launch-grow-poster.webp"),
     rotate: -3.0,
     offsetY: 24
   }
