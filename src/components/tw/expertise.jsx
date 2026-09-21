@@ -1,0 +1,901 @@
+import { useState, useEffect, useRef, useCallback } from "react";
+import { assetUrl } from "../../utils/asset";
+
+const BRANDING_SERVICES = [
+  "Brand Strategy",
+  "Logo Design",
+  "Visual Identity",
+  "Typography & Color Systems",
+  "Stationery",
+  "Packaging",
+  "Brand Assets",
+];
+
+const ADVERTISING_SERVICES = [
+  "Campaign Strategy",
+  "Product Launch Campaigns",
+  "Hoardings",
+  "Posters & Flyers",
+  "Digital Display Ads",
+  "Social Media Creatives",
+  "Festival & Event Promotions",
+];
+
+export function Expertise() {
+  const leftDeckRef = useRef(null);
+  const rightDeckRef = useRef(null);
+  const leftDeckWrapperRef = useRef(null);
+  const rightDeckWrapperRef = useRef(null);
+  const lastWheelLeftRef = useRef(0);
+  const lastWheelRightRef = useRef(0);
+  const touchStartRef = useRef({ left: 0, right: 0 });
+
+  // Active indices: start with reference states (Brand Assets & Hoardings)
+  const [activeLeft, setActiveLeft] = useState(6);
+  const [activeRight, setActiveRight] = useState(2);
+
+  // Manual click handlers
+  const handleSelectLeft = useCallback((i) => {
+    setActiveLeft(i);
+  }, []);
+
+  const handleSelectRight = useCallback((i) => {
+    setActiveRight(i);
+  }, []);
+
+  // ONLY when hovered on the images, scroll animation triggers; scrolling elsewhere scrolls the page normally
+  useEffect(() => {
+    const leftEl = leftDeckRef.current;
+    const rightEl = rightDeckRef.current;
+    const leftWrapEl = leftDeckWrapperRef.current;
+    const rightWrapEl = rightDeckWrapperRef.current;
+
+    const onLeftWheel = (e) => {
+      // Support both vertical scroll and horizontal trackpad swipes
+      const delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      if (Math.abs(delta) < 2) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      const now = performance.now();
+      if (now - lastWheelLeftRef.current < 180) return;
+      lastWheelLeftRef.current = now;
+
+      if (delta > 0) {
+        setActiveLeft((prev) => (prev + 1) % BRANDING_SERVICES.length);
+      } else {
+        setActiveLeft((prev) => (prev - 1 + BRANDING_SERVICES.length) % BRANDING_SERVICES.length);
+      }
+    };
+
+    const onRightWheel = (e) => {
+      // Support both vertical scroll and horizontal trackpad swipes
+      const delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      if (Math.abs(delta) < 2) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      const now = performance.now();
+      if (now - lastWheelRightRef.current < 180) return;
+      lastWheelRightRef.current = now;
+
+      if (delta > 0) {
+        setActiveRight((prev) => (prev + 1) % ADVERTISING_SERVICES.length);
+      } else {
+        setActiveRight((prev) => (prev - 1 + ADVERTISING_SERVICES.length) % ADVERTISING_SERVICES.length);
+      }
+    };
+
+    // Attach to both inner deck and outer wrapper to catch all scroll events over the card area
+    if (leftEl) leftEl.addEventListener("wheel", onLeftWheel, { passive: false });
+    if (leftWrapEl) leftWrapEl.addEventListener("wheel", onLeftWheel, { passive: false });
+
+    if (rightEl) rightEl.addEventListener("wheel", onRightWheel, { passive: false });
+    if (rightWrapEl) rightWrapEl.addEventListener("wheel", onRightWheel, { passive: false });
+
+    return () => {
+      if (leftEl) leftEl.removeEventListener("wheel", onLeftWheel);
+      if (leftWrapEl) leftWrapEl.removeEventListener("wheel", onLeftWheel);
+      if (rightEl) rightEl.removeEventListener("wheel", onRightWheel);
+      if (rightWrapEl) rightWrapEl.removeEventListener("wheel", onRightWheel);
+    };
+  }, []);
+
+  // Helper to calculate 3D deck transform for Left (Branding) cards: ONLY 3 CARDS VISIBLE + ASYMMETRIC OFFSETS
+  const getLeftDeckStyle = (index) => {
+    let diff = index - activeLeft;
+    if (diff > 3) diff -= 7;
+    if (diff < -3) diff += 7;
+
+    const isCenter = diff === 0;
+    const absDiff = Math.abs(diff);
+
+    // Declutter: ONLY 3 cards visible at a time (diff = -1, 0, 1)
+    if (absDiff > 1) {
+      return {
+        transform: `rotateY(${diff > 0 ? -16 : 16}deg) translate3d(${diff > 0 ? 95 : -95}px, 0, -80px) scale(0.65)`,
+        opacity: 0,
+        pointerEvents: "none",
+        zIndex: 0,
+        transition: "transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.35s ease",
+      };
+    }
+
+    let translateX = 0;
+    let translateY = 0;
+    let translateZ = 45;
+    let rotateY = 5;
+    let rotateZ = -0.5;
+    let scale = 0.98;
+    let opacity = 1.0;
+    let zIndex = 30;
+
+    if (diff === 0) {
+      // Front active card: slightly RIGHT + slightly DOWN
+      translateX = 5;
+      translateY = 8;
+      translateZ = 48;
+      rotateY = 4;
+      rotateZ = -0.6;
+      scale = 0.98;
+      opacity = 1.0;
+      zIndex = 30;
+    } else if (diff === -1) {
+      // 1 Card peeking behind on the left: slightly LEFT + slightly UP
+      translateX = -58;
+      translateY = -12;
+      translateZ = -22;
+      rotateY = 10;
+      rotateZ = -1.5;
+      scale = 0.91;
+      opacity = 0.88;
+      zIndex = 20;
+    } else if (diff === 1) {
+      // 1 Card peeking behind on the right: slightly RIGHT
+      translateX = 56;
+      translateY = -4;
+      translateZ = -20;
+      rotateY = -10;
+      rotateZ = 1.2;
+      scale = 0.90;
+      opacity = 0.86;
+      zIndex = 18;
+    }
+
+    return {
+      transform: `rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) translate3d(${translateX}px, ${translateY}px, ${translateZ}px) scale(${scale})`,
+      opacity,
+      zIndex,
+      pointerEvents: "auto",
+      cursor: "pointer",
+      transition: "transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.4s ease, box-shadow 0.4s ease",
+      boxShadow: isCenter
+        ? "-16px 24px 48px -10px rgba(0,0,0,0.32), -6px 12px 24px -6px rgba(0,0,0,0.18)"
+        : "-8px 14px 26px rgba(0,0,0,0.12)",
+    };
+  };
+
+  // Helper to calculate 3D deck transform for Right (Advertising) cards: ONLY 3 CARDS VISIBLE + ASYMMETRIC OFFSETS
+  const getRightDeckStyle = (index) => {
+    let diff = index - activeRight;
+    if (diff > 3) diff -= 7;
+    if (diff < -3) diff += 7;
+
+    const isCenter = diff === 0;
+    const absDiff = Math.abs(diff);
+
+    // Declutter: ONLY 3 cards visible at a time (diff = -1, 0, 1)
+    if (absDiff > 1) {
+      return {
+        transform: `rotateY(${diff > 0 ? -16 : 16}deg) translate3d(${diff > 0 ? 95 : -95}px, 0, -80px) scale(0.65)`,
+        opacity: 0,
+        pointerEvents: "none",
+        zIndex: 0,
+        transition: "transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.35s ease",
+      };
+    }
+
+    let translateX = 0;
+    let translateY = 0;
+    let translateZ = 45;
+    let rotateY = -4;
+    let rotateZ = 0.5;
+    let scale = 0.98;
+    let opacity = 1.0;
+    let zIndex = 30;
+
+    if (diff === 0) {
+      // Front active card: slightly LEFT + slightly DOWN
+      translateX = -5;
+      translateY = 8;
+      translateZ = 48;
+      rotateY = -4;
+      rotateZ = 0.6;
+      scale = 0.98;
+      opacity = 1.0;
+      zIndex = 30;
+    } else if (diff === -1) {
+      // 1 Card peeking behind on the left: slightly LEFT
+      translateX = -56;
+      translateY = -4;
+      translateZ = -20;
+      rotateY = 10;
+      rotateZ = -1.2;
+      scale = 0.90;
+      opacity = 0.86;
+      zIndex = 18;
+    } else if (diff === 1) {
+      // 1 Card peeking behind on the right: slightly RIGHT + slightly UP
+      translateX = 58;
+      translateY = -12;
+      translateZ = -22;
+      rotateY = -10;
+      rotateZ = 1.5;
+      scale = 0.91;
+      opacity = 0.88;
+      zIndex = 20;
+    }
+
+    return {
+      transform: `rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) translate3d(${translateX}px, ${translateY}px, ${translateZ}px) scale(${scale})`,
+      opacity,
+      zIndex,
+      pointerEvents: "auto",
+      cursor: "pointer",
+      transition: "transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.4s ease, box-shadow 0.4s ease",
+      boxShadow: isCenter
+        ? "-18px 24px 50px -10px rgba(0,0,0,0.35), -8px 14px 26px -6px rgba(0,0,0,0.2)"
+        : "-8px 14px 26px rgba(0,0,0,0.12)",
+    };
+  };
+
+  return (
+    <section
+      id="expertise"
+      aria-label="What we design"
+      className="relative w-full min-h-screen flex flex-col justify-between overflow-hidden px-5 sm:px-8 lg:px-14 xl:px-20 2xl:px-24 pt-14 sm:pt-16 lg:pt-12 pb-7 lg:pb-8 select-text"
+    >
+      <div className="mx-auto w-full max-w-[1540px] flex-1 flex flex-col justify-between">
+        {/* ─── 1. TOP HEADER ROW: ────────  What we design  ──────── ─── */}
+        <div className="relative flex items-center justify-center select-none shrink-0 pt-3 pb-8 sm:pb-10 lg:pb-12">
+          <div className="flex items-center justify-center gap-5 sm:gap-7 flex-1 max-w-[480px]">
+            <div className="h-px flex-1 bg-neutral-300/80" />
+            <h2
+              className="text-[23px] sm:text-[27px] lg:text-[29px] text-neutral-800 tracking-[0.015em] select-none whitespace-nowrap"
+              style={{ fontFamily: "var(--font-serif)", fontStyle: "italic" }}
+            >
+              What we design
+            </h2>
+            <div className="h-px flex-1 bg-neutral-300/80" />
+          </div>
+        </div>
+
+        {/* ─── 2. TWO MAIN SERVICE AREAS (LEFT & RIGHT) ─── */}
+        <div className="relative my-auto py-2">
+          {/* Central Vertical Divider Line (Desktop only) */}
+          <div
+            aria-hidden="true"
+            className="hidden lg:block absolute left-1/2 top-0 bottom-2 -translate-x-1/2 w-px bg-neutral-300/60 pointer-events-none"
+          />
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-24 items-center">
+            {/* ────────────────────────────────────────────────
+                LEFT SERVICE AREA: 01 Branding Ecosystem
+                Composition on Desktop: [Text & List (Outer Left)]  [Image Stack (Toward Center)]
+                ──────────────────────────────────────────────── */}
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-x-8 xl:gap-x-12 gap-y-8 lg:items-center">
+              {/* Title + Service List Column (Outer Left) */}
+              <div className="select-none flex flex-col max-w-[340px]">
+                {/* Badge */}
+                <div className="flex items-center gap-3 mb-2.5">
+                  <span className="text-[12px] font-mono tracking-widest text-neutral-400 uppercase">
+                    01
+                  </span>
+                  <div className="w-8 h-px bg-neutral-300/80" />
+                </div>
+
+                {/* Headline */}
+                <h3
+                  className="tw-display font-medium text-ink leading-[1.0] tracking-[-0.035em] mb-8 sm:mb-9 lg:mb-10"
+                  style={{ fontSize: "clamp(2.1rem, 3.0vw, 3.2rem)" }}
+                >
+                  Branding<br />Ecosystem
+                </h3>
+
+                {/* Services with 20% more row breathing room & depth-of-field blur */}
+                <div className="flex flex-col gap-2.5 sm:gap-3 xl:gap-3.5 select-none">
+                  {BRANDING_SERVICES.map((item, i) => {
+                    const isActive = i === activeLeft;
+
+                    return (
+                      <div
+                        key={item}
+                        onClick={() => handleSelectLeft(i)}
+                        className="group flex items-center gap-3 cursor-pointer py-0.5 sm:py-1 transition-all duration-300 ease-out"
+                        style={{
+                          opacity: isActive ? 1 : 0.35,
+                          filter: isActive ? "blur(0px)" : "blur(1.8px)",
+                          transform: isActive ? "translateX(2px)" : "translateX(0px)",
+                        }}
+                      >
+                        {/* Bullet dot */}
+                        <span
+                          className="size-1.5 rounded-full bg-ink transition-opacity duration-200 shrink-0"
+                          style={{ opacity: isActive ? 1 : 0 }}
+                        />
+                        <span
+                          className="tracking-[-0.018em] transition-all duration-300 whitespace-nowrap"
+                          style={{
+                            fontFamily: "var(--font-sans)",
+                            fontSize: "clamp(0.95rem, 1.15vw, 1.12rem)",
+                            fontWeight: isActive ? 550 : 400,
+                            color: isActive ? "#111111" : "#444444",
+                          }}
+                        >
+                          {item}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Horizontal Image Gallery Deck (Moved inward toward center divider, 10% smaller) */}
+              <div
+                ref={leftDeckWrapperRef}
+                onClick={() => setActiveLeft((prev) => (prev + 1) % BRANDING_SERVICES.length)}
+                onTouchStart={(e) => {
+                  touchStartRef.current.left = e.touches[0].clientX;
+                }}
+                onTouchEnd={(e) => {
+                  const diff = touchStartRef.current.left - e.changedTouches[0].clientX;
+                  if (Math.abs(diff) > 25) {
+                    if (diff > 0) {
+                      setActiveLeft((prev) => (prev + 1) % BRANDING_SERVICES.length);
+                    } else {
+                      setActiveLeft((prev) => (prev - 1 + BRANDING_SERVICES.length) % BRANDING_SERVICES.length);
+                    }
+                  }
+                }}
+                className="flex justify-center lg:justify-end py-2 lg:py-0 overflow-visible lg:pr-4 xl:pr-8 cursor-pointer"
+              >
+                <div
+                  ref={leftDeckRef}
+                  className="relative w-[260px] sm:w-[280px] xl:w-[300px] h-[270px] sm:h-[295px] xl:h-[320px] flex items-center justify-center select-none will-change-transform cursor-pointer"
+                  style={{ perspective: "1400px" }}
+                >
+                  {/* Card 0: Brand Strategy */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectLeft(0);
+                    }}
+                    style={getLeftDeckStyle(0)}
+                    className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#161619] p-5 flex flex-col justify-between border border-white/[0.08] select-none"
+                  >
+                    <div className="flex justify-between items-center opacity-40">
+                      <span className="text-[7.5px] font-mono tracking-[0.24em] text-white uppercase">STRATEGY</span>
+                      <span className="text-[7.5px] font-mono tracking-[0.2em] text-white">01</span>
+                    </div>
+                    <div className="my-auto flex flex-col items-center justify-center text-center">
+                      <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center mb-2.5">
+                        <div className="w-8 h-8 rounded-full border border-white/40 flex items-center justify-center">
+                          <div className="w-3 h-3 rounded-full bg-white/70" />
+                        </div>
+                      </div>
+                      <span className="text-[12px] sm:text-[13px] font-medium text-white/90 tracking-tight leading-tight">
+                        Brand Architecture &amp;<br />Market Positioning
+                      </span>
+                    </div>
+                    <div className="text-center opacity-40">
+                      <span className="text-[7px] font-mono tracking-[0.26em] text-white uppercase">Framework 2026</span>
+                    </div>
+                  </div>
+
+                  {/* Card 1: Logo Design */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectLeft(1);
+                    }}
+                    style={getLeftDeckStyle(1)}
+                    className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#141416] p-5 flex flex-col justify-between border border-white/[0.08] select-none"
+                  >
+                    <div className="flex justify-between items-center opacity-35">
+                      <span className="text-[7px] font-mono tracking-[0.24em] text-white uppercase">ID-SYS</span>
+                      <span className="text-[7px] font-mono tracking-[0.2em] text-white">02</span>
+                    </div>
+                    <div className="flex items-center justify-center my-auto">
+                      <svg viewBox="0 0 64 64" fill="none" className="size-16 text-white/85" aria-hidden="true">
+                        <circle cx="32" cy="32" r="28" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.2" />
+                        <circle cx="32" cy="32" r="21" stroke="currentColor" strokeWidth="1.2" strokeOpacity="0.35" />
+                        <circle cx="32" cy="32" r="14" stroke="currentColor" strokeWidth="1.6" strokeOpacity="0.55" />
+                        <path
+                          d="M32 11 A21 21 0 0 0 32 53"
+                          stroke="currentColor"
+                          strokeWidth="3"
+                          strokeLinecap="round"
+                          strokeOpacity="0.9"
+                        />
+                        <circle cx="32" cy="32" r="4.5" fill="currentColor" fillOpacity="0.95" />
+                      </svg>
+                    </div>
+                    <div className="text-center opacity-35">
+                      <span className="text-[6.5px] font-mono tracking-[0.26em] text-white uppercase">Logo &amp; Mark</span>
+                    </div>
+                  </div>
+
+                  {/* Card 2: Visual Identity */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectLeft(2);
+                    }}
+                    style={getLeftDeckStyle(2)}
+                    className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] overflow-hidden border border-black/[0.06] select-none"
+                  >
+                    <img
+                      src={assetUrl("/assets/branding-specimen-blur.jpg")}
+                      alt="Visual Identity Collateral"
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  {/* Card 3: Typography & Color Systems */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectLeft(3);
+                    }}
+                    style={getLeftDeckStyle(3)}
+                    className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#fbf9f5] border border-black/[0.06] p-5 flex flex-col justify-between select-none"
+                  >
+                    <div
+                      aria-hidden="true"
+                      className="absolute top-0 right-0 w-20 h-20 pointer-events-none overflow-hidden rounded-tr-[15px]"
+                    >
+                      <div className="absolute top-0 right-0 w-14 h-14 bg-[#eae7de]/70 rounded-bl-[20px] border-b border-l border-black/[0.04]" />
+                    </div>
+                    <div className="flex justify-between items-center opacity-45">
+                      <span className="text-[7.5px] font-mono tracking-[0.24em] text-neutral-700 uppercase">TYPOGRAPHY</span>
+                      <span className="text-[7.5px] font-mono tracking-[0.2em] text-neutral-700">04</span>
+                    </div>
+                    <div className="my-auto text-center space-y-1">
+                      <span className="text-[58px] sm:text-[68px] font-serif italic text-neutral-900 leading-none block select-none">
+                        Ag
+                      </span>
+                      <span className="text-[8.5px] font-mono tracking-[0.3em] text-neutral-500 uppercase block">
+                        Editorial Serif &amp; Grotesk
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between text-[7px] font-mono text-neutral-400">
+                      <span>PANTONE 2026</span>
+                      <span>WARM NEUTRAL</span>
+                    </div>
+                  </div>
+
+                  {/* Card 4: Stationery */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectLeft(4);
+                    }}
+                    style={getLeftDeckStyle(4)}
+                    className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#faf9f6] p-4.5 flex flex-col justify-between border border-black/[0.07] select-none"
+                  >
+                    <div className="flex justify-between items-center opacity-40">
+                      <span className="text-[7.5px] font-mono tracking-[0.24em] text-neutral-800 uppercase">STATIONERY</span>
+                      <span className="text-[7.5px] font-mono tracking-[0.2em] text-neutral-800">05</span>
+                    </div>
+                    <div className="my-auto p-3 rounded-[8px] bg-white border border-neutral-200/80 shadow-sm flex flex-col justify-between h-[110px]">
+                      <span className="text-[8px] font-mono tracking-[0.26em] text-neutral-900 uppercase font-semibold">TWIXTERS CO.</span>
+                      <div className="space-y-1.5 opacity-30">
+                        <div className="h-1 bg-neutral-800 rounded-full w-3/4" />
+                        <div className="h-1 bg-neutral-800 rounded-full w-1/2" />
+                      </div>
+                      <span className="text-[6.5px] font-mono tracking-[0.18em] text-neutral-400">STUDIO COLLATERAL</span>
+                    </div>
+                    <div className="text-center opacity-40">
+                      <span className="text-[6.5px] font-mono tracking-[0.24em] text-neutral-800 uppercase">Cotton Stock 380gsm</span>
+                    </div>
+                  </div>
+
+                  {/* Card 5: Packaging (Light Identity Card with Fold) */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectLeft(5);
+                    }}
+                    style={getLeftDeckStyle(5)}
+                    className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#f7f5f0] p-4.5 flex flex-col justify-between border border-black/[0.06] overflow-hidden select-none"
+                  >
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-[7px] font-mono tracking-[0.24em] text-neutral-600 uppercase font-semibold">
+                        BRAND
+                      </span>
+                      <span className="text-[7px] font-mono tracking-[0.24em] text-neutral-600 uppercase font-semibold">
+                        IDENTITY
+                      </span>
+                      <span className="text-[7px] font-mono tracking-[0.24em] text-neutral-400 uppercase">
+                        SYSTEM
+                      </span>
+                      <div className="w-4 h-px bg-neutral-300 mt-1" />
+                    </div>
+
+                    {/* Curved diagonal folded shadow corner in bottom left */}
+                    <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-[#eae5dc] rounded-tr-[28px] shadow-md -rotate-12 border-t border-r border-black/[0.06]" />
+
+                    <div className="z-10 text-right">
+                      <span className="text-[6.5px] font-mono tracking-[0.22em] text-neutral-400 uppercase">
+                        SPECIMEN NO. 06
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Card 6: Brand Assets (HERO MATTE DARK "Aa" CARD) */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectLeft(6);
+                    }}
+                    style={getLeftDeckStyle(6)}
+                    className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#141416] p-5 flex flex-col justify-between border border-white/[0.08] select-none"
+                  >
+                    {/* Top labels */}
+                    <div className="flex justify-between items-center">
+                      <span className="text-[7.5px] font-mono tracking-[0.24em] text-white/50 uppercase">
+                        TWIXTERS
+                      </span>
+                      <span className="text-[7.5px] font-mono tracking-[0.2em] text-white/50">
+                        07
+                      </span>
+                    </div>
+
+                    {/* Large Elegant Serif "Aa" in center */}
+                    <div className="my-auto text-center">
+                      <span
+                        className="text-[74px] sm:text-[84px] xl:text-[94px] text-white/70 leading-none tracking-tight font-normal block select-none"
+                        style={{
+                          fontFamily: "var(--font-serif), Playfair Display, Georgia, serif",
+                        }}
+                      >
+                        Aa
+                      </span>
+                    </div>
+
+                    {/* Bottom labels */}
+                    <div className="text-center flex flex-col gap-1 pb-0.5">
+                      <span className="text-[7.5px] sm:text-[8px] font-mono tracking-[0.28em] text-white/80 uppercase font-medium">
+                        BRAND ASSETS
+                      </span>
+                      <span className="text-[6.5px] sm:text-[7px] font-mono tracking-[0.28em] text-white/40 uppercase">
+                        FOR BOLDER BRANDS
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* ────────────────────────────────────────────────
+                RIGHT SERVICE AREA: 02 Advertising Campaigns
+                Composition on Desktop: [Text & List]  [Image Stack (Right Side)]
+                ──────────────────────────────────────────────── */}
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-x-8 xl:gap-x-12 gap-y-8 lg:items-center">
+              {/* Title + Service List Column */}
+              <div className="select-none flex flex-col max-w-[340px]">
+                {/* Badge */}
+                <div className="flex items-center gap-3 mb-2.5">
+                  <span className="text-[12px] font-mono tracking-widest text-neutral-400 uppercase">
+                    02
+                  </span>
+                  <div className="w-8 h-px bg-neutral-300/80" />
+                </div>
+
+                {/* Headline */}
+                <h3
+                  className="tw-display font-medium text-ink leading-[1.0] tracking-[-0.035em] mb-8 sm:mb-9 lg:mb-10"
+                  style={{ fontSize: "clamp(2.1rem, 3.0vw, 3.2rem)" }}
+                >
+                  Advertising<br />Campaigns
+                </h3>
+
+                {/* Services with 20% more row breathing room & depth-of-field blur */}
+                <div className="flex flex-col gap-2.5 sm:gap-3 xl:gap-3.5 select-none">
+                  {ADVERTISING_SERVICES.map((item, i) => {
+                    const isActive = i === activeRight;
+
+                    return (
+                      <div
+                        key={item}
+                        onClick={() => handleSelectRight(i)}
+                        className="group flex items-center gap-3 cursor-pointer py-0.5 sm:py-1 transition-all duration-300 ease-out"
+                        style={{
+                          opacity: isActive ? 1 : 0.35,
+                          filter: isActive ? "blur(0px)" : "blur(1.8px)",
+                          transform: isActive ? "translateX(2px)" : "translateX(0px)",
+                        }}
+                      >
+                        {/* Bullet dot */}
+                        <span
+                          className="size-1.5 rounded-full bg-ink transition-opacity duration-200 shrink-0"
+                          style={{ opacity: isActive ? 1 : 0 }}
+                        />
+                        <span
+                          className="tracking-[-0.018em] transition-all duration-300 whitespace-nowrap"
+                          style={{
+                            fontFamily: "var(--font-sans)",
+                            fontSize: "clamp(0.95rem, 1.15vw, 1.12rem)",
+                            fontWeight: isActive ? 550 : 400,
+                            color: isActive ? "#111111" : "#444444",
+                          }}
+                        >
+                          {item}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Horizontal Image Gallery Deck (Moved to right side) */}
+              <div
+                ref={rightDeckWrapperRef}
+                onClick={() => setActiveRight((prev) => (prev + 1) % ADVERTISING_SERVICES.length)}
+                onTouchStart={(e) => {
+                  touchStartRef.current.right = e.touches[0].clientX;
+                }}
+                onTouchEnd={(e) => {
+                  const diff = touchStartRef.current.right - e.changedTouches[0].clientX;
+                  if (Math.abs(diff) > 25) {
+                    if (diff > 0) {
+                      setActiveRight((prev) => (prev + 1) % ADVERTISING_SERVICES.length);
+                    } else {
+                      setActiveRight((prev) => (prev - 1 + ADVERTISING_SERVICES.length) % ADVERTISING_SERVICES.length);
+                    }
+                  }
+                }}
+                className="flex justify-center lg:justify-end py-2 lg:py-0 overflow-visible lg:pr-4 xl:pr-8 cursor-pointer"
+              >
+                <div
+                  ref={rightDeckRef}
+                  className="relative w-[260px] sm:w-[280px] xl:w-[300px] h-[270px] sm:h-[295px] xl:h-[320px] flex items-center justify-center select-none will-change-transform cursor-pointer"
+                  style={{ perspective: "1400px" }}
+                >
+                  {/* Card 0: Campaign Strategy */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectRight(0);
+                    }}
+                    style={getRightDeckStyle(0)}
+                    className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#161619] p-5 flex flex-col justify-between border border-white/[0.08] select-none"
+                  >
+                    <div className="flex justify-between items-center opacity-35">
+                      <span className="text-[7px] font-mono tracking-[0.24em] text-white uppercase">STRATEGY</span>
+                      <span className="text-[7px] font-mono tracking-[0.2em] text-white">01</span>
+                    </div>
+                    <div className="my-auto py-2">
+                      <span className="tw-display text-[17px] sm:text-[19px] font-bold text-white leading-[0.95] tracking-tight block uppercase">
+                        Audience Reach &amp;<br />Market Dominance
+                      </span>
+                    </div>
+                    <div className="opacity-35">
+                      <span className="text-[6.5px] font-mono tracking-[0.24em] text-white uppercase">Framework 2026</span>
+                    </div>
+                  </div>
+
+                  {/* Card 1: Product Launch Campaigns */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectRight(1);
+                    }}
+                    style={getRightDeckStyle(1)}
+                    className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#141416] p-5 flex flex-col justify-between border border-white/10 select-none"
+                  >
+                    <div className="flex justify-between items-center opacity-35">
+                      <span className="text-[7px] font-mono tracking-[0.24em] text-white uppercase">LAUNCH</span>
+                      <span className="text-[7px] font-mono tracking-[0.2em] text-white">02</span>
+                    </div>
+                    <div className="my-auto py-2">
+                      <span className="tw-display text-[18px] sm:text-[20px] font-bold text-white leading-[0.92] tracking-tight block uppercase">
+                        Product<br />Launch<br />Worldwide.
+                      </span>
+                    </div>
+                    <div className="opacity-35">
+                      <span className="text-[6.5px] font-mono tracking-[0.24em] text-white uppercase">Go-to-market 2026</span>
+                    </div>
+                  </div>
+
+                  {/* Card 2: Hoardings (HERO BILLBOARD WITH SPOTLIGHTS & LEAF SHADOW) */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectRight(2);
+                    }}
+                    style={getRightDeckStyle(2)}
+                    className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[6px] bg-[#161618] p-2 flex flex-col border-[2.5px] border-[#252528] select-none"
+                  >
+                    {/* Top Rim with 3 Spotlights */}
+                    <div className="absolute -top-4.5 inset-x-0 flex items-center justify-around px-4 pointer-events-none">
+                      {[0, 1, 2].map((spot) => (
+                        <div key={spot} className="flex flex-col items-center">
+                          <div className="w-3 h-1.5 bg-[#404046] rounded-t-xs shadow-xs" />
+                          <div className="w-[1.5px] h-3 bg-[#4a4a52]" />
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Billboard Canvas Face */}
+                    <div className="relative flex-1 rounded-[4px] bg-[#faf9f6] p-3.5 sm:p-4 flex flex-col justify-between overflow-hidden shadow-inner border border-black/[0.06]">
+                      {/* Soft branch/leaf ambient shadow overlay */}
+                      <div
+                        aria-hidden="true"
+                        className="absolute -top-4 -right-4 w-40 h-40 pointer-events-none opacity-20"
+                        style={{
+                          background:
+                            "radial-gradient(ellipse at 70% 30%, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.15) 45%, transparent 70%)",
+                          filter: "blur(8px)",
+                        }}
+                      />
+
+                      {/* Spotlight downlight wash reflection */}
+                      <div
+                        aria-hidden="true"
+                        className="absolute inset-x-0 top-0 h-20 pointer-events-none rounded-t-[4px]"
+                        style={{
+                          background:
+                            "radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 70%)",
+                        }}
+                      />
+
+                      {/* Bold Hoarding Typography: Ideas Move People. */}
+                      <div className="pt-1.5 pl-0.5 flex flex-col z-10 select-none">
+                        <span
+                          className="text-[28px] sm:text-[31px] xl:text-[34px] leading-[0.92] tracking-[-0.035em] text-[#111111] font-serif font-medium"
+                          style={{ fontFamily: "var(--font-serif), Playfair Display, Georgia, serif" }}
+                        >
+                          Ideas
+                        </span>
+                        <span
+                          className="text-[28px] sm:text-[31px] xl:text-[34px] leading-[0.92] tracking-[-0.035em] text-[#111111] font-serif font-medium"
+                          style={{ fontFamily: "var(--font-serif), Playfair Display, Georgia, serif" }}
+                        >
+                          Move
+                        </span>
+                        <span
+                          className="text-[28px] sm:text-[31px] xl:text-[34px] leading-[0.92] tracking-[-0.035em] text-[#111111] font-serif font-medium"
+                          style={{ fontFamily: "var(--font-serif), Playfair Display, Georgia, serif" }}
+                        >
+                          People.
+                        </span>
+                      </div>
+
+                      {/* Small bottom brand imprint */}
+                      <div className="z-10 text-center pb-0.5">
+                        <span className="text-[7px] sm:text-[7.5px] font-mono tracking-[0.26em] text-neutral-400 uppercase select-none">
+                          TWIXTERS
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Card 3: Posters & Flyers (Urban Street Photography Card) */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectRight(3);
+                    }}
+                    style={getRightDeckStyle(3)}
+                    className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] overflow-hidden border border-black/[0.08] select-none"
+                  >
+                    <img
+                      src={assetUrl("/assets/ad-street-blur.jpg")}
+                      alt="Outdoor Campaign Environment"
+                      className="w-full h-full object-cover grayscale contrast-125"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  {/* Card 4: Digital Display Ads */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectRight(4);
+                    }}
+                    style={getRightDeckStyle(4)}
+                    className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#151518] p-4.5 flex flex-col justify-between border border-white/10 select-none"
+                  >
+                    <div className="flex justify-between items-center opacity-35">
+                      <span className="text-[7px] font-mono tracking-[0.24em] text-white uppercase">DIGITAL DISPLAY</span>
+                      <span className="text-[7px] font-mono tracking-[0.2em] text-white">05</span>
+                    </div>
+                    <div className="my-auto p-2.5 rounded-[10px] bg-neutral-900 border border-neutral-700/60 shadow-inner flex flex-col justify-center gap-1.5">
+                      <div className="h-1 bg-neutral-600 rounded-full w-2/3" />
+                      <span className="text-[12px] font-bold text-white tracking-tight uppercase leading-tight">
+                        Dynamic Motion &amp; Display Units
+                      </span>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        <span className="text-[7.5px] font-mono text-neutral-400">Live Campaign</span>
+                      </div>
+                    </div>
+                    <div className="opacity-35">
+                      <span className="text-[6.5px] font-mono tracking-[0.24em] text-white uppercase">Interactive Ad Units</span>
+                    </div>
+                  </div>
+
+                  {/* Card 5: Social Media Creatives */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectRight(5);
+                    }}
+                    style={getRightDeckStyle(5)}
+                    className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#fbf9f5] p-4.5 flex flex-col justify-between border border-black/[0.08] select-none"
+                  >
+                    <div className="flex justify-between items-center opacity-40">
+                      <span className="text-[7px] font-mono tracking-[0.24em] text-neutral-800 uppercase">SOCIAL</span>
+                      <span className="text-[7px] font-mono tracking-[0.2em] text-neutral-800">06</span>
+                    </div>
+                    <div className="my-auto text-center space-y-1.5">
+                      <div className="mx-auto w-10 h-10 rounded-[10px] bg-neutral-900 text-white flex items-center justify-center font-bold text-xs">
+                        9:16
+                      </div>
+                      <span className="text-[12px] font-semibold text-neutral-900 block tracking-tight">
+                        Content Series &amp;<br />Viral Formats
+                      </span>
+                    </div>
+                    <div className="text-center opacity-40">
+                      <span className="text-[6.5px] font-mono tracking-[0.24em] text-neutral-800 uppercase">High-Engagement Media</span>
+                    </div>
+                  </div>
+
+                  {/* Card 6: Festival & Event Promotions */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSelectRight(6);
+                    }}
+                    style={getRightDeckStyle(6)}
+                    className="absolute w-[185px] sm:w-[205px] xl:w-[225px] h-[258px] sm:h-[282px] xl:h-[308px] rounded-[15px] bg-[#0d0d0f] p-4.5 flex flex-col justify-between border border-white/10 select-none"
+                  >
+                    <div className="flex justify-between items-center opacity-35">
+                      <span className="text-[7px] font-mono tracking-[0.24em] text-white uppercase">EVENTS</span>
+                      <span className="text-[7px] font-mono tracking-[0.2em] text-white">07</span>
+                    </div>
+                    <div className="my-auto py-1 text-center">
+                      <span className="text-[8.5px] font-mono tracking-[0.3em] text-neutral-400 block mb-0.5">ANNUAL SUMMIT</span>
+                      <span className="tw-display text-[18px] font-black text-white leading-[0.9] tracking-tighter uppercase block">
+                        Experience<br />In Motion
+                      </span>
+                    </div>
+                    <div className="text-center opacity-35">
+                      <span className="text-[6.5px] font-mono tracking-[0.24em] text-white uppercase">Festival &amp; Stage Design</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ─── 3. FOOTER ROW: Minimalist Mouse Scroll Indicator ─── */}
+        <div className="relative flex items-center justify-center select-none shrink-0 pt-8 sm:pt-10 pb-2">
+          <div className="flex flex-col items-center gap-1.5 mx-auto">
+            <div className="w-[16px] h-[25px] rounded-full border border-neutral-400/90 flex items-start justify-center pt-1">
+              <div className="w-1 h-1.5 rounded-full bg-neutral-600 animate-pulse" />
+            </div>
+            <span className="text-[8.5px] font-mono tracking-[0.26em] text-neutral-400 uppercase">
+              SCROLL TO EXPLORE
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
