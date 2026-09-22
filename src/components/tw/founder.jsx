@@ -65,8 +65,7 @@ export function Founder() {
     <section
       id="about"
       aria-labelledby="about-heading"
-      className="sticky z-10 px-5 pt-12 pb-[30px] sm:px-8 sm:pt-16 sm:pb-[30px] border-b border-hair"
-      style={{ top: "min(0px, calc(100vh - 100%))" }}
+      className="relative z-10 px-5 pt-12 pb-[30px] sm:px-8 sm:pt-16 sm:pb-[30px] border-b border-hair"
     >
       <Reveal className="mx-auto max-w-[1200px]">
         <Eyebrow>{founder.eyebrow}</Eyebrow>

@@ -43,10 +43,8 @@ export default function App() {
         <Expertise />
         <Process />
         <CaseStudies />
-        <div className="relative">
-          <Founder />
-          <FinalCta />
-        </div>
+        <Founder />
+        <FinalCta />
       </main>
       <FloatingDiscovery />
     </>
