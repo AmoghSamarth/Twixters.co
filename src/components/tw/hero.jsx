@@ -167,9 +167,8 @@ export function Hero() {
         />
       </div>
 
-      {/* Script wordmark watermark — centered, scaled gracefully on mobile, generous room on desktop */}
       <TwixtersWatermark
-        className="pointer-events-none absolute z-[2] top-[74px] sm:top-[82px] md:top-[90px] lg:top-[110px] left-1/2 w-[clamp(210px,62vw,270px)] sm:w-[clamp(300px,30vw,480px)] -translate-x-1/2 text-ink/[0.06] select-none"
+        className="pointer-events-none absolute z-[2] top-[38px] sm:top-[82px] md:top-[90px] lg:top-[110px] left-1/2 w-[clamp(175px,40vw,225px)] max-h-[66px] sm:max-h-none sm:w-[clamp(300px,30vw,480px)] -translate-x-1/2 text-ink/[0.06] select-none"
       />
 
       <div
