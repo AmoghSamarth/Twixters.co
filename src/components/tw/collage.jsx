@@ -161,6 +161,113 @@ export function Collage() {
     return () => cancelAnimationFrame(rafId);
   }, []);
 
+  const railRef = useRef(null);
+  const isInteractingRef = useRef(false);
+  const currentIndexRef = useRef(0);
+
+  // Auto-scroll right images one by one like a swipe on mobile & tablet
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion) return;
+
+    let timer = null;
+    let resetTimer = null;
+    const totalOriginal = leftImages.length + rightImages.length; // 6
+
+    const startTimer = () => {
+      if (timer) clearInterval(timer);
+      timer = setInterval(() => {
+        if (isInteractingRef.current || !railRef.current) return;
+        const container = railRef.current;
+        const items = container.children;
+        if (!items || items.length === 0) return;
+
+        const nextIdx = currentIndexRef.current + 1;
+        currentIndexRef.current = nextIdx;
+
+        const targetEl = items[nextIdx];
+        if (targetEl) {
+          const targetLeft =
+            targetEl.offsetLeft -
+            container.offsetLeft -
+            (container.clientWidth - targetEl.clientWidth) / 2;
+          container.scrollTo({
+            left: Math.max(0, targetLeft),
+            behavior: "smooth",
+          });
+        }
+
+        // When reaching the duplicated set, smoothly settle then reset invisibly to start
+        if (nextIdx >= totalOriginal) {
+          if (resetTimer) clearTimeout(resetTimer);
+          resetTimer = setTimeout(() => {
+            if (isInteractingRef.current || !railRef.current) return;
+            const c = railRef.current;
+            const first = c.children[0];
+            if (first) {
+              const resetLeft =
+                first.offsetLeft -
+                c.offsetLeft -
+                (c.clientWidth - first.clientWidth) / 2;
+              c.scrollTo({
+                left: Math.max(0, resetLeft),
+                behavior: "auto",
+              });
+              currentIndexRef.current = 0;
+            }
+          }, 650);
+        }
+      }, 2800);
+    };
+
+    const onPointerDown = () => {
+      isInteractingRef.current = true;
+      if (resetTimer) clearTimeout(resetTimer);
+    };
+
+    const onPointerUp = () => {
+      setTimeout(() => {
+        isInteractingRef.current = false;
+        if (railRef.current) {
+          const c = railRef.current;
+          const center = c.scrollLeft + c.clientWidth / 2;
+          let closestIdx = 0;
+          let closestDist = Infinity;
+          for (let i = 0; i < c.children.length; i++) {
+            const child = c.children[i];
+            const childCenter = child.offsetLeft + child.clientWidth / 2;
+            const dist = Math.abs(childCenter - center);
+            if (dist < closestDist) {
+              closestDist = dist;
+              closestIdx = i;
+            }
+          }
+          currentIndexRef.current = closestIdx % totalOriginal;
+        }
+      }, 400);
+    };
+
+    rail.addEventListener("pointerdown", onPointerDown, { passive: true });
+    window.addEventListener("pointerup", onPointerUp, { passive: true });
+    window.addEventListener("pointercancel", onPointerUp, { passive: true });
+
+    startTimer();
+
+    return () => {
+      if (timer) clearInterval(timer);
+      if (resetTimer) clearTimeout(resetTimer);
+      rail.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("pointerup", onPointerUp);
+      window.removeEventListener("pointercancel", onPointerUp);
+    };
+  }, []);
+
   return (
     <section
       ref={sectionRef}
@@ -171,8 +278,8 @@ export function Collage() {
         {/* Dark showroom container */}
         <div className="relative overflow-hidden rounded-[24px] border-[4px] sm:border-[5px] border-white/30 bg-[#191919] px-3 py-3 sm:rounded-[32px] md:rounded-[36px] sm:px-[28px] lg:px-[36px] sm:py-4">
 
-          {/* ── Desktop: two auto-scrolling marquee columns ── */}
-          <div className="tw-collage hidden sm:grid">
+          {/* ── Desktop: two auto-scrolling marquee columns (lg: >= 1024px) ── */}
+          <div className="tw-collage hidden lg:grid">
             {/* Left column — slower speed */}
             <MarqueeColumn images={leftImages} duration={32} />
 
@@ -180,23 +287,26 @@ export function Collage() {
             <MarqueeColumn images={rightImages} duration={25} />
           </div>
 
-          {/* ── Mobile: horizontal snap rail ── */}
-          <ul className="-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-1 sm:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {[...leftImages, ...rightImages].map((img, i) => (
+          {/* ── Mobile & Tablet: auto-scrolling horizontal snap rail (< 1024px) ── */}
+          <ul
+            ref={railRef}
+            className="-mx-1 flex snap-x snap-mandatory gap-3 sm:gap-4 overflow-x-auto px-1 pb-1 lg:hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {[...leftImages, ...rightImages, ...leftImages, ...rightImages].map((img, i) => (
               <li
                 key={`m-${img.src}-${i}`}
-                className="h-[210px] w-[86%] shrink-0 snap-center overflow-hidden rounded-[18px]"
+                className="h-[210px] sm:h-[280px] md:h-[340px] w-[86%] sm:w-[60%] md:w-[48%] shrink-0 snap-center overflow-hidden rounded-[18px] sm:rounded-[24px]"
               >
                 <img
                   src={img.srcMobile || img.src}
                   srcSet={`${img.srcMobile} 700w, ${img.src} 1400w`}
-                  sizes="(max-width: 640px) 86vw, 600px"
+                  sizes="(max-width: 640px) 86vw, (max-width: 1024px) 60vw, 600px"
                   alt={img.alt}
                   width={img.width}
                   height={img.height}
-                  loading="lazy"
+                  loading={i < 3 ? "eager" : "lazy"}
                   decoding="async"
-                  className="size-full object-cover"
+                  className="size-full object-cover select-none pointer-events-none"
                 />
               </li>
             ))}
