@@ -6,7 +6,7 @@ export function LogoMarquee() {
   return (
     <section
       aria-label="Partner and client logos"
-      className="relative w-full overflow-hidden py-10 sm:py-14 select-none"
+      className="relative w-full overflow-hidden pt-4 pb-14 sm:py-14 select-none mt-2 sm:mt-0"
       style={{
         maskImage:
           "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
@@ -14,20 +14,20 @@ export function LogoMarquee() {
           "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
       }}
     >
-      <div className="flex w-max animate-marquee-left items-center gap-12 sm:gap-16 md:gap-20 hover:[animation-play-state:paused]">
+      <div className="flex w-max animate-marquee-left items-center gap-10 sm:gap-16 md:gap-20 hover:[animation-play-state:paused]">
         {/* Track 1 */}
-        <div className="flex items-center gap-12 sm:gap-16 md:gap-20 shrink-0">
+        <div className="flex items-center gap-10 sm:gap-16 md:gap-20 shrink-0">
           {LOGO_IDS.map((num) => (
             <div
               key={`logo-a-${num}`}
-              className="flex h-10 sm:h-12 md:h-14 w-28 sm:w-36 md:w-40 items-center justify-center shrink-0"
+              className="flex h-9 sm:h-12 md:h-14 w-24 sm:w-36 md:w-40 items-center justify-center shrink-0"
             >
               <img
                 src={assetUrl(`/assets/Logo (${num}).svg`)}
                 alt={`Partner logo ${num}`}
                 loading="lazy"
                 decoding="async"
-                className="max-h-8 sm:max-h-10 md:max-h-11 w-auto max-w-full object-contain brightness-0 opacity-40 hover:opacity-90 transition-opacity duration-300"
+                className="max-h-7 sm:max-h-10 md:max-h-11 w-auto max-w-full object-contain brightness-0 opacity-40 hover:opacity-90 transition-opacity duration-300"
               />
             </div>
           ))}
@@ -35,20 +35,20 @@ export function LogoMarquee() {
 
         {/* Track 2 (Duplicate for infinite seamless loop) */}
         <div
-          className="flex items-center gap-12 sm:gap-16 md:gap-20 shrink-0"
+          className="flex items-center gap-10 sm:gap-16 md:gap-20 shrink-0"
           aria-hidden="true"
         >
           {LOGO_IDS.map((num) => (
             <div
               key={`logo-b-${num}`}
-              className="flex h-10 sm:h-12 md:h-14 w-28 sm:w-36 md:w-40 items-center justify-center shrink-0"
+              className="flex h-9 sm:h-12 md:h-14 w-24 sm:w-36 md:w-40 items-center justify-center shrink-0"
             >
               <img
                 src={assetUrl(`/assets/Logo (${num}).svg`)}
                 alt=""
                 loading="lazy"
                 decoding="async"
-                className="max-h-8 sm:max-h-10 md:max-h-11 w-auto max-w-full object-contain brightness-0 opacity-40 hover:opacity-90 transition-opacity duration-300"
+                className="max-h-7 sm:max-h-10 md:max-h-11 w-auto max-w-full object-contain brightness-0 opacity-40 hover:opacity-90 transition-opacity duration-300"
               />
             </div>
           ))}

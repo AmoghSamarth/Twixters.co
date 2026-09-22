@@ -54,7 +54,16 @@ function ChipIcon({ type }) {
   }
 }
 
-function ChipItem({ chip }) {
+const MOBILE_CHIP_TRANSFORMS = [
+  { translateY: -2, rotate: -3 }, // chip 1: Design systems
+  { translateY: 2, rotate: 2 },   // chip 2: Advertising
+  { translateY: 3, rotate: -4 },  // chip 3: Research
+  { translateY: -2, rotate: 3 },  // chip 4: Branding
+  { translateY: 2, rotate: -2 },  // chip 5: Ads Planning
+  { translateY: -3, rotate: 4 },  // chip 6: Strategy
+];
+
+function ChipItem({ chip, mobileTransform = null, isMobile = false }) {
   const [isDragging, setIsDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const dragStartRef = useRef({ x: 0, y: 0 });
@@ -96,16 +105,18 @@ function ChipItem({ chip }) {
     };
   }, [isDragging]);
 
+  const baseRotate = isMobile && mobileTransform ? mobileTransform.rotate : (chip.rotate || 0);
+  const baseOffsetX = isMobile ? 0 : (chip.offsetX || 0);
+  const baseOffsetY = isMobile && mobileTransform ? mobileTransform.translateY : 0;
+
   return (
     <div
       onPointerDown={handlePointerDown}
-      className={`tw-service-chip tw-float-${chip.floatDir || "tl"} relative inline-block select-none touch-none ${
+      className={`tw-service-chip ${isMobile ? "" : `tw-float-${chip.floatDir || "tl"}`} relative inline-block select-none touch-none ${
         isDragging ? "cursor-grabbing z-50 scale-105" : "cursor-grab z-10 hover:scale-[1.03]"
       }`}
       style={{
-        ["--base-rotate"]: `${chip.rotate || 0}deg`,
-        ["--base-x"]: `${chip.offsetX || 0}px`,
-        transform: `translate(calc(var(--base-x) + ${offset.x}px), ${offset.y}px) rotate(var(--base-rotate))`,
+        transform: `translate(${baseOffsetX + offset.x}px, ${baseOffsetY + offset.y}px) rotate(${baseRotate}deg)`,
         transition: isDragging
           ? "none"
           : "transform 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease",
@@ -113,23 +124,23 @@ function ChipItem({ chip }) {
     >
       {/* Frosted translucent outer bubble capsule (the "bg bubble around them") with soft neutral shadow */}
       <div
-        className={`absolute -inset-[5px] sm:-inset-[6px] rounded-full bg-white/60 backdrop-blur-[6px] border border-white/80 pointer-events-none transition-shadow duration-300 ${
+        className={`absolute -inset-[4px] sm:-inset-[6px] rounded-full bg-white/60 backdrop-blur-[6px] border border-white/80 pointer-events-none transition-shadow duration-300 ${
           isDragging
-            ? "shadow-[0_24px_48px_rgba(0,0,0,0.18),0_8px_16px_rgba(0,0,0,0.08)]"
-            : "shadow-[0_16px_32px_rgba(0,0,0,0.1),0_4px_12px_rgba(0,0,0,0.04)]"
+            ? "shadow-[0_20px_40px_rgba(0,0,0,0.18),0_6px_14px_rgba(0,0,0,0.08)]"
+            : "shadow-[0_12px_24px_rgba(0,0,0,0.09),0_3px_10px_rgba(0,0,0,0.04)]"
         }`}
         aria-hidden="true"
       />
 
       {/* Solid white inner pill */}
-      <div className="relative z-10 inline-flex items-center gap-2.5 sm:gap-3 rounded-full bg-white py-[6px] pl-[6px] pr-[16px] sm:pr-[18px] shadow-[0_2px_6px_rgba(0,0,0,0.03)] border border-black/[0.04]">
+      <div className="relative z-10 inline-flex items-center gap-2 sm:gap-2.5 rounded-full bg-white py-[5px] sm:py-[6px] pl-[5px] sm:pl-[6px] pr-[12px] min-[390px]:pr-[14px] sm:pr-[18px] shadow-[0_2px_6px_rgba(0,0,0,0.03)] border border-black/[0.04]">
         <span
-          className="size-[28px] sm:size-[30px] rounded-full flex items-center justify-center shrink-0 shadow-sm"
+          className="size-[24px] min-[390px]:size-[26px] sm:size-[30px] rounded-full flex items-center justify-center shrink-0 shadow-sm"
           style={{ backgroundColor: chip.color }}
         >
           <ChipIcon type={chip.icon} />
         </span>
-        <span className="text-[13.5px] sm:text-[14px] font-medium tracking-tight text-[#1a1a1a] whitespace-nowrap">
+        <span className="text-[12.5px] min-[390px]:text-[13.5px] sm:text-[14px] font-medium tracking-tight text-[#1a1a1a] whitespace-nowrap">
           {chip.label}
         </span>
       </div>
@@ -155,6 +166,16 @@ export function Services() {
   const { eyebrow, statementLines, leftChips, rightChips } = services;
   const textRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+
+  // Order requested for mobile: Row 1 (Design systems, Advertising), Row 2 (Research, Branding), Row 3 (Ads Planning, Strategy)
+  const mobileChips = [
+    leftChips[0],  // Design systems
+    leftChips[1],  // Advertising
+    leftChips[2],  // Research
+    rightChips[0], // Branding
+    rightChips[1], // Ads Planning
+    rightChips[2], // Strategy
+  ];
 
   // Track scroll position to gradually turn words from grey to black
   useEffect(() => {
@@ -206,20 +227,20 @@ export function Services() {
     <section
       id="services"
       aria-labelledby="services-statement"
-      className="px-5 pt-16 pb-24 sm:px-8 sm:pt-20 sm:pb-32 overflow-hidden"
+      className="px-4 pt-10 pb-4 sm:px-8 sm:pt-20 sm:pb-32 overflow-hidden"
     >
       {/* Eyebrow with refined editorial serif font matching reference */}
       <Reveal className="mx-auto max-w-[1200px]">
-        <div className="flex items-center justify-center gap-4 text-ink-muted">
-          <span aria-hidden="true" className="tw-hair w-12 sm:w-16 max-w-[60px]" />
-          <span className="tw-serif-italic shrink-0 text-[20px] sm:text-[23px] text-neutral-600 tracking-[0.02em] select-none">
+        <div className="flex items-center justify-center gap-3 sm:gap-4 text-ink-muted">
+          <span aria-hidden="true" className="tw-hair w-10 min-[400px]:w-14 sm:w-16 max-w-[60px]" />
+          <span className="tw-serif-italic shrink-0 text-[19px] sm:text-[23px] text-neutral-600 tracking-[0.02em] select-none">
             {eyebrow}
           </span>
-          <span aria-hidden="true" className="tw-hair w-12 sm:w-16 max-w-[60px]" />
+          <span aria-hidden="true" className="tw-hair w-10 min-[400px]:w-14 sm:w-16 max-w-[60px]" />
         </div>
       </Reveal>
 
-      <div className="relative mx-auto mt-12 sm:mt-16 max-w-[1360px] px-4">
+      <div className="relative mx-auto mt-8 sm:mt-16 max-w-[1360px] px-2 sm:px-4">
         {/* Desktop 3-column composition (matching expected design) */}
         <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-10 xl:gap-16">
           
@@ -233,14 +254,14 @@ export function Services() {
           </div>
 
           {/* Central Statement with scroll-driven word-by-word reveal */}
-          <Reveal delay={60} className="relative z-10 shrink-0 max-w-[720px] xl:max-w-[780px]">
+          <Reveal delay={60} className="relative z-10 shrink-0 w-full max-w-[340px] min-[460px]:max-w-[420px] lg:max-w-[780px] mx-auto">
             <p
               id="services-statement"
               ref={textRef}
-              className="text-center font-heading text-[clamp(1.5rem,2.4vw,2.35rem)] font-normal leading-[1.26] tracking-[-0.022em]"
+              className="text-center font-heading text-[20px] min-[390px]:text-[21.5px] min-[460px]:text-[23px] sm:text-[25px] lg:text-[clamp(1.5rem,2.4vw,2.35rem)] font-normal leading-[1.22] lg:leading-[1.26] tracking-[-0.025em]"
             >
               {statementLines.map((lineWords, lineIndex) => (
-                <span key={lineIndex} className="block lg:whitespace-nowrap">
+                <span key={lineIndex} className="block min-[460px]:whitespace-nowrap">
                   {lineWords.map((word) => {
                     const wordIndex = globalWordIndex++;
                     const color = getWordColor(wordIndex, totalWords, scrollProgress);
@@ -272,20 +293,23 @@ export function Services() {
             ))}
           </div>
 
-          {/* Mobile / Tablet Chips (< lg) */}
-          <div className="flex lg:hidden flex-wrap items-center justify-center gap-4 max-w-[560px] mt-6">
-            {[...leftChips, ...rightChips].map((chip, i) => {
-              const isRight = i >= leftChips.length;
-              return (
+          {/* Mobile / Tablet Chips (< lg) — 2-column grid matching requested arrangement */}
+          <div className="lg:hidden w-full max-w-[335px] min-[400px]:max-w-[360px] min-[480px]:max-w-[390px] sm:max-w-[420px] mx-auto mt-6 sm:mt-8">
+            <div className="grid grid-cols-2 gap-x-2 min-[380px]:gap-x-3 sm:gap-x-4 gap-y-2.5 min-[380px]:gap-y-3 sm:gap-y-4">
+              {mobileChips.map((chip, i) => (
                 <Reveal
-                  key={chip.label}
-                  delay={120 + i * 60}
-                  className={isRight ? "tw-reveal-fly-right" : ""}
+                  key={`m-${chip.label}`}
+                  delay={100 + i * 50}
+                  className="flex items-center justify-center"
                 >
-                  <ChipItem chip={{ ...chip, offsetX: 0 }} />
+                  <ChipItem
+                    chip={chip}
+                    mobileTransform={MOBILE_CHIP_TRANSFORMS[i]}
+                    isMobile
+                  />
                 </Reveal>
-              );
-            })}
+              ))}
+            </div>
           </div>
 
         </div>
