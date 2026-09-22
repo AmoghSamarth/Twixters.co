@@ -49,7 +49,7 @@ export function FloatingDiscovery() {
   return (
     <aside
       aria-label="Book a discovery call"
-      className={`fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 select-none transition-all duration-300 ease-out ${
+      className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 select-none max-w-[calc(100vw-32px)] transition-all duration-300 ease-out ${
         visible
           ? "opacity-100 translate-y-0 pointer-events-auto"
           : "opacity-0 translate-y-4 pointer-events-none"

@@ -122,14 +122,14 @@ export function FinalCta() {
           {/* Heading matching video: "Let's" in pure white, "Connect" in muted silver */}
           <h2
             id="contact-heading"
-            className="mt-6 sm:mt-7 text-[clamp(3.5rem,9vw,7.15rem)] font-normal leading-[1.06] tracking-[-0.035em]"
+            className="mt-6 sm:mt-7 text-[clamp(2.75rem,10vw,7.15rem)] font-normal leading-[1.06] tracking-[-0.035em]"
           >
             <span className="text-white">{finalCta.heading.plain}</span>
             <span className="text-[#8e8e93]">{finalCta.heading.muted}</span>
           </h2>
 
           {/* Body copy matching reference video */}
-          <p className="mx-auto mt-5 sm:mt-6 max-w-[44rem] text-[19.8px] sm:text-[21.8px] leading-[1.62] text-white/70 font-normal">
+          <p className="mx-auto mt-4 sm:mt-6 max-w-[44rem] text-[16px] sm:text-[19.8px] md:text-[21.8px] leading-[1.62] text-white/70 font-normal px-2">
             Feel free to contact me if having any questions.
             <br className="hidden sm:block" /> I'm available for new projects or just for chatting.
           </p>

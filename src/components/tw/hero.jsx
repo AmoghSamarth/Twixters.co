@@ -4,17 +4,19 @@ import { InkPill } from "./primitives";
 import { Reveal } from "./reveal";
 import { assetUrl } from "../../utils/asset";
 import { HeroMarqueePanel } from "./hero-marquee";
+
 function TwixtersWatermark({ className = "" }) {
-  return <svg
-    id="Layer_2"
-    data-name="Layer 2"
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 328.12 107.85"
-    fill="currentColor"
-    aria-hidden="true"
-    className={className}
-    preserveAspectRatio="xMidYMid meet"
-  >
+  return (
+    <svg
+      id="Layer_2"
+      data-name="Layer 2"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 328.12 107.85"
+      fill="currentColor"
+      aria-hidden="true"
+      className={className}
+      preserveAspectRatio="xMidYMid meet"
+    >
       <g id="Layer_1-2" data-name="Layer 1">
         <g>
           <path d="M58.54,93.12c-.78.02-1.47,1.03-1.41,2.86.11,3.93-3.06,7.5-6.84,7.61-3.99.11-6.38-3.75-6.57-10.44-.61-21.29,21.16-65.26,35.02-79.03.62-.61.76-.81.83-1.01,5.47-.75,10.44-1.22,14.36-1.33,10.89-.31,17.51,1.86,17.65,6.51.04,1.24.48,1.76,1.19,1.74,2.92.05,7.1-8.53,6.98-12.46-.15-5.31-8.21-7.9-20.81-7.54-6.91.2-15.93,1.31-25.63,3.29-1.82-1.39-3.56-2.32-4.84-2.29-1.64.05-3.87,1.82-6.35,4.84C31.89,13.55-.6,28.71,0,49.94c.25,8.65,5.83,14.39,13.66,14.17,2.99-.09,4.46-.98,4.44-1.83-.02-.72-1.11-1.35-3.17-1.29-4.84.14-8.01-3.31-8.17-8.95-.44-15.53,22.89-26.88,46.86-33.47-11.4,19.93-23.81,52.02-23.31,69.58.32,11.27,6.06,20.02,17.95,19.68,8.33-.24,12.48-4.82,12.31-10.58-.08-2.82-1.12-4.16-2.04-4.14Z" />
@@ -23,8 +25,10 @@ function TwixtersWatermark({ className = "" }) {
           <path d="M328.12,24.79c0-10.14-4.05-17.08-9.91-17.08-2.34,0-3.3,1.09-3.3,2.11s.91,1.64,2.29,1.64c3.46,0,5.91,3.9,5.91,8.97,0,10.53-10.23,24.57-27.23,37.06-1.76-3.9-3.04-7.33-3.04-9.36,0-4.99,8.26-15.68,11.67-15.68,1.07,0,2.24,1.09,2.24,2.42,0,.78.37,1.33.8,1.33.59,0,1.28-.86,1.28-3.2,0-6.79-6.02-12.4-9.64-12.4-5.75,0-16.15,14.2-16.15,22.55,0,1.92.56,4.18,1.43,6.57-3.2,3.14-7.33,6.94-7.86,6.94-.11,0-.17-.17-.17-.62,0-3.24,2.78-9.82,4.77-9.82.62,0,1.19-.68,1.19-1.36,0-2.55-8.06-6.24-9.99-6.24-3.24,0-12.03,11.07-17.99,21,2.89-7.78,6.64-15.55,7.78-15.55.17,0,.4-.28.4-.62,0-2.1-7.49-4.82-10.1-4.82-1.23,0-3.67,4.85-6.07,10.73-5.02,7.43-14.71,20.01-21.17,20.01-2.55,0-4.14-1.99-4.14-5.28,0-7.83,8.85-18.62,15.04-19.3-1.02,6.98-8.29,11.81-11.98,11.81-.74,0-1.14.17-1.14.4,0,.74,3.35,2.38,5.62,2.38,4.43,0,13.11-6.58,13.11-14.42,0-4.6-5.79-8.91-10.84-8.91-5.84,0-12.57,5.75-16.64,12.58-1.85-5.08-5.49-8.22-10.55-8.22-2.68,0-3.89.89-3.89,1.72,0,.64.89,1.34,2.61,1.34,4.46,0,7.27,4.65,7.27,8.86,0,10.46-17.02,29.78-27.99,29.78-2.87,0-4.97-1.28-4.97-5.16,0-5.04,7.59-25.5,13.96-39.28,2.1.19,4.27.25,6.38.25,16.83,0,27.48-5.1,27.48-13.07,0-2.17-.76-3.57-1.98-3.57-1.02,0-1.72,1.08-1.72,2.68,0,5.23-7.78,8.93-19.13,8.93-2.93,0-5.74-.25-8.35-.64,2.3-4.59,4.27-7.59,5.23-7.59.45,0,1.15-.7,1.15-1.34,0-2.23-9.56-6.18-11.09-6.18-1.72,0-4.78,4.78-8.1,11.6-3.89-1.47-7.52-3.12-10.97-4.72-7.14-3.38-13.52-6.31-19.83-6.31-10.9,0-16.83,8.86-16.83,13.07,0,1.28.57,2.1,1.72,2.1,2.81,0-.06-4.97,7.08-4.97,4.08,0,9.88,1.47,16.2,3.25,6.25,1.79,12.56,3.44,19.32,4.72-6.5,14.67-13.01,33.35-13.01,37.75,0,8.86,7.91,13.9,19.45,13.9,14.12,0,25.3-7.51,29.8-18.78,2.52,3.34,6.33,5.45,10.03,5.45,6.25,0,12.97-5.98,18.39-12.41-1.13,3.6-1.88,6.51-1.88,7.66,0,3.86,8.17,7.26,10.27,7.26.62,0,1.02-.28,1.02-1.19,0-3.86,7.49-16.8,14.93-26.22-.62,1.7-.96,3.52-.96,5.16,0,2.38,7.09,6.19,11.58,6.19,1.14,0,5.33-3.67,9-7.44,1.28,2.86,2.81,5.74,4.18,8.29-6.18,3.98-13.48,9.36-13.48,14.28,0,7.1,5.86,12.64,9.38,12.64,4.37,0,14.23-8.82,14.23-16.69,0-2.26-.8-5.15-1.92-8.11,18.28-6.48,29.84-21.53,29.84-38.77ZM281.23,78.15c-1.07,0-1.81-.7-1.81-1.95,0-3.04,5.12-7.1,12.15-10.22.05.39.05.62.05.94,0,4.99-7.3,11.23-10.39,11.23Z" />
         </g>
       </g>
-    </svg>;
+    </svg>
+  );
 }
+
 function AnimatedHeroChip({
   slides,
   children,
@@ -52,26 +56,22 @@ function AnimatedHeroChip({
     }
   };
 
-  const shadowStyle =
-    tone === "dark"
-      ? "0 26px 54px -6px rgba(0, 0, 0, 0.46), 0 14px 28px -4px rgba(0, 0, 0, 0.32), 0 4px 10px rgba(0, 0, 0, 0.18)"
-      : "0 22px 48px -8px rgba(0, 0, 0, 0.25), 0 11px 22px -4px rgba(0, 0, 0, 0.14), 0 3px 7px rgba(0, 0, 0, 0.07)";
-
   const trackItems = slides && slides.length > 1 ? [...slides, slides[0]] : (slides || []);
 
   return (
     <Reveal
       as="span"
       delay={delay}
-      className="relative mx-[0.18em] inline-block align-middle"
+      className="relative mx-[0.14em] sm:mx-[0.18em] inline-block align-middle"
     >
       <span
         style={{
           transform: `rotate(${tilt}deg)`,
-          boxShadow: shadowStyle,
           backgroundColor: bgColor || (tone === "dark" ? "#212124" : "#ffffff")
         }}
-        className="relative block h-[1.06em] w-[1.62em] translate-y-[-0.045em] overflow-hidden rounded-[0.33em] border-2 border-black"
+        className={`relative block h-[1.04em] sm:h-[1.06em] w-[1.58em] sm:w-[1.62em] translate-y-[-0.045em] overflow-hidden rounded-[0.32em] border-2 border-black ${
+          tone === "dark" ? "tw-hero-chip-dark" : "tw-hero-chip-light"
+        }`}
       >
         {children ? (
           children
@@ -106,6 +106,7 @@ function AnimatedHeroChip({
     </Reveal>
   );
 }
+
 export function Hero() {
   const chipASlides = [
     { src: assetUrl("/assets/chip-highland.jpg"), alt: "Highland's Water Front branding collateral" },
@@ -120,7 +121,8 @@ export function Hero() {
     const onScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          if (containerRef.current) {
+          // Parallax push applied on desktop viewports
+          if (containerRef.current && window.innerWidth >= 640) {
             const sy = window.scrollY;
             const vh = window.innerHeight || 800;
             if (sy <= vh * 1.5) {
@@ -140,7 +142,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="sticky top-0 z-10 flex min-h-screen w-full flex-col justify-start items-center overflow-hidden px-4 pt-[150px] pb-24 sm:px-8 sm:pt-[175px] sm:pb-28 md:pt-[195px] md:pb-32 lg:pt-[286px] lg:pb-36 xl:pt-[297px]"
+      className="relative sm:sticky sm:top-0 z-10 flex w-full flex-col justify-start items-center overflow-hidden px-4 pt-[108px] pb-10 sm:px-8 sm:min-h-screen sm:pt-[175px] sm:pb-28 md:pt-[195px] md:pb-32 lg:pt-[286px] lg:pb-36 xl:pt-[297px]"
     >
       {/* Photorealistic Hero lighting effect matching reference (diagonal window shadows & sunlight shafts) */}
       <div
@@ -165,35 +167,57 @@ export function Hero() {
         />
       </div>
 
-      {/* Script wordmark watermark — generous space above and below matching reference */}
+      {/* Script wordmark watermark — centered, scaled gracefully on mobile, generous room on desktop */}
       <TwixtersWatermark
-        className="pointer-events-none absolute z-[2] top-[72px] sm:top-[82px] md:top-[90px] lg:top-[110px] left-1/2 w-[clamp(300px,30vw,480px)] -translate-x-1/2 text-ink/[0.06] select-none"
+        className="pointer-events-none absolute z-[2] top-[74px] sm:top-[82px] md:top-[90px] lg:top-[110px] left-1/2 w-[clamp(210px,62vw,270px)] sm:w-[clamp(300px,30vw,480px)] -translate-x-1/2 text-ink/[0.06] select-none"
       />
 
       <div
         ref={containerRef}
         className="relative z-10 mx-auto w-full max-w-[1280px] flex flex-col items-center text-center will-change-transform"
       >
-        {/* H1 Headline with integrated animated slideshow chips matching Image 2 — immediately visible on first paint for instant LCP */}
-        <h1 className="tw-display relative mx-auto max-w-[1040px] text-center text-[clamp(2.1rem,5.76vw,5.5rem)] font-normal leading-[1.12] tracking-[-0.04em]">
+        {/* H1 Headline with integrated animated slideshow chips — 85-92% mobile width, responsive clamp */}
+        <h1 className="tw-display relative mx-auto w-[92%] sm:w-auto max-w-[1040px] text-center text-[clamp(2.45rem,10.6vw,3.15rem)] sm:text-[clamp(2.1rem,5.76vw,5.5rem)] font-normal leading-[1.0] sm:leading-[1.12] tracking-[-0.035em] sm:tracking-[-0.04em]">
           <span className="block">
             <span className="font-medium text-ink">{hero.lineOneBefore}</span>
             <AnimatedHeroChip slides={chipASlides} tone="light" delay={420} tilt={-3.5} />
             <span className="font-normal text-ink-muted">{hero.lineOneAfter}</span>
           </span>
-          <span className="block whitespace-normal sm:whitespace-nowrap mt-2 sm:mt-3 md:mt-3.5">
-            <span className="font-normal text-ink-muted">{hero.lineTwoBefore}</span>
-            <AnimatedHeroChip tone="dark" delay={520} tilt={2.5} bgColor="#212124">
-              <HeroMarqueePanel />
-            </AnimatedHeroChip>
-            <span className="font-medium text-ink">{hero.lineTwoAfter}</span>
+          <span className="block whitespace-normal sm:whitespace-nowrap mt-1.5 sm:mt-3 md:mt-3.5">
+            <span className="inline-block whitespace-nowrap">
+              <span className="font-normal text-ink-muted">{hero.lineTwoBefore}</span>
+              <AnimatedHeroChip tone="dark" delay={520} tilt={2.5} bgColor="#212124">
+                <HeroMarqueePanel />
+              </AnimatedHeroChip>
+            </span>
+            <span className="inline-block font-medium text-ink ml-[0.16em] sm:ml-[0.18em]">{hero.lineTwoAfter}</span>
           </span>
         </h1>
-        {/* Hero subtitle — rendered below the headline matching Image 1 reference */}
-        <Reveal as="p" delay={260} className="mt-5 sm:mt-6 md:mt-7 max-w-[340px] sm:max-w-[420px] text-center text-[13px] sm:text-[14px] leading-[1.6] text-ink-faint font-normal tracking-[0.005em]">
+
+        {/* Hero subtitle — responsive font-size, centered, comfortable line-height and max-width */}
+        <Reveal as="p" delay={260} className="mt-3.5 sm:mt-6 md:mt-7 max-w-[320px] sm:max-w-[420px] text-center text-[15px] sm:text-[14px] leading-[1.58] sm:leading-[1.6] text-ink-faint font-normal tracking-[0.005em] px-2">
           {hero.sub}
         </Reveal>
       </div>
+
+      <style>{`
+        .tw-hero-chip-dark {
+          box-shadow: 0 10px 22px -4px rgba(0, 0, 0, 0.35), 0 4px 8px rgba(0, 0, 0, 0.18);
+        }
+        @media (min-width: 640px) {
+          .tw-hero-chip-dark {
+            box-shadow: 0 26px 54px -6px rgba(0, 0, 0, 0.46), 0 14px 28px -4px rgba(0, 0, 0, 0.32), 0 4px 10px rgba(0, 0, 0, 0.18);
+          }
+        }
+        .tw-hero-chip-light {
+          box-shadow: 0 8px 18px -4px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.08);
+        }
+        @media (min-width: 640px) {
+          .tw-hero-chip-light {
+            box-shadow: 0 22px 48px -8px rgba(0, 0, 0, 0.25), 0 11px 22px -4px rgba(0, 0, 0, 0.14), 0 3px 7px rgba(0, 0, 0, 0.07);
+          }
+        }
+      `}</style>
     </section>
   );
 }

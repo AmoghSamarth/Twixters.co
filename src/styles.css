@@ -171,8 +171,14 @@
 
   .tw-reveal.tw-reveal-fly-right[data-reveal="pending"] {
     opacity: 0;
-    transform: translate3d(min(450px, 70vw), 0, 0) scale(0.88);
+    transform: translate3d(0, 18px, 0) scale(0.95);
     pointer-events: none;
+  }
+
+  @media (min-width: 1024px) {
+    .tw-reveal.tw-reveal-fly-right[data-reveal="pending"] {
+      transform: translate3d(min(450px, 70vw), 0, 0) scale(0.88);
+    }
   }
 
   .tw-reveal.tw-reveal-fly-right[data-reveal="in"] {
