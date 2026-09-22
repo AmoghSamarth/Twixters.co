@@ -107,11 +107,284 @@
         width: 0 !important;
         height: 0 !important;
       }
+
+      /* Hidden fallback SEO content so plain unstyled text never flashes */
+      .tw-sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+
+      /* Minimalist Editorial "Lazy Cards" Loader */
+      #tw-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        background-color: #f2f2f2;
+        background-image: url("/assets/micro-texture.png");
+        background-repeat: repeat;
+        background-size: 50px 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        pointer-events: auto;
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.38s cubic-bezier(0.22, 1, 0.36, 1), transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.38s;
+      }
+
+      .app-ready #tw-loader {
+        opacity: 0;
+        transform: translateY(-8px);
+        pointer-events: none;
+        visibility: hidden;
+      }
+
+      /* Central Brand Pill */
+      .tw-l-brand {
+        margin-bottom: 32px;
+        opacity: 0;
+        transform: translateY(-8px);
+        animation: tw-l-fade 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        animation-delay: 20ms;
+      }
+
+      .tw-l-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        padding: 7px 18px;
+        border-radius: 999px;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+
+      .tw-l-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background-color: #ff5520;
+      }
+
+      .tw-l-name {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: -0.015em;
+        color: #111111;
+        user-select: none;
+      }
+
+      /* Cards Stage Composition */
+      .tw-l-stage {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        max-width: 840px;
+        width: 90%;
+        position: relative;
+      }
+
+      .tw-l-col {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .tw-l-card {
+        position: relative;
+        background-color: #e3e3df;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.65);
+        box-shadow: 0 10px 28px -8px rgba(0, 0, 0, 0.05), 0 2px 8px rgba(0, 0, 0, 0.02);
+        opacity: 0;
+        transform: translateY(20px) scale(0.97);
+        animation: tw-l-card-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+
+      /* Subtle diagonal shimmer moving across skeleton cards */
+      .tw-l-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        transform: translateX(-100%);
+        background: linear-gradient(
+          120deg,
+          transparent 35%,
+          rgba(255, 255, 255, 0.42) 50%,
+          transparent 65%
+        );
+        animation: tw-l-shimmer 2.4s infinite ease-in-out;
+      }
+
+      /* Card dimensions matching portfolio aesthetic */
+      .tw-l-c1 {
+        width: 190px;
+        height: 140px;
+        animation-delay: 50ms;
+      }
+      .tw-l-c1::after { animation-delay: 0.15s; }
+
+      .tw-l-c4 {
+        width: 215px;
+        height: 180px;
+        transform: translateX(10px);
+        animation-delay: 290ms;
+      }
+      .tw-l-c4::after { animation-delay: 0.6s; }
+
+      .tw-l-col-center {
+        z-index: 2;
+        margin: 0 -12px;
+      }
+
+      .tw-l-c3 {
+        width: 250px;
+        height: 330px;
+        border-radius: 24px;
+        box-shadow: 0 18px 44px -10px rgba(0, 0, 0, 0.08), 0 4px 14px rgba(0, 0, 0, 0.03);
+        animation-delay: 130ms;
+      }
+      .tw-l-c3::after { animation-delay: 0.3s; }
+
+      .tw-l-c2 {
+        width: 210px;
+        height: 170px;
+        animation-delay: 210ms;
+      }
+      .tw-l-c2::after { animation-delay: 0.45s; }
+
+      .tw-l-c5 {
+        width: 190px;
+        height: 145px;
+        transform: translateX(-10px);
+        animation-delay: 370ms;
+      }
+      .tw-l-c5::after { animation-delay: 0.75s; }
+
+      @keyframes tw-l-card-in {
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @keyframes tw-l-fade {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes tw-l-shimmer {
+        0% { transform: translateX(-100%); }
+        50%, 100% { transform: translateX(100%); }
+      }
+
+      /* Responsive: Tablet */
+      @media (max-width: 768px) {
+        .tw-l-stage {
+          gap: 12px;
+        }
+        .tw-l-c1 { width: 140px; height: 105px; }
+        .tw-l-c4 { width: 155px; height: 130px; }
+        .tw-l-c3 { width: 180px; height: 240px; border-radius: 20px; }
+        .tw-l-c2 { width: 155px; height: 125px; }
+        .tw-l-c5 { width: 140px; height: 110px; }
+        .tw-l-col-center { margin: 0 -8px; }
+      }
+
+      /* Responsive: Mobile (3-card balanced composition, no overflow) */
+      @media (max-width: 480px) {
+        .tw-l-stage {
+          gap: 8px;
+          width: 100%;
+          padding: 0 16px;
+        }
+        .tw-l-c4, .tw-l-c5 {
+          display: none;
+        }
+        .tw-l-col {
+          gap: 0;
+        }
+        .tw-l-c1 {
+          width: 105px;
+          height: 140px;
+          border-radius: 16px;
+          transform: rotate(-2deg);
+        }
+        .tw-l-c3 {
+          width: 135px;
+          height: 190px;
+          border-radius: 18px;
+          transform: scale(1.04);
+        }
+        .tw-l-c2 {
+          width: 105px;
+          height: 140px;
+          border-radius: 16px;
+          transform: rotate(2deg);
+        }
+        .tw-l-col-center {
+          margin: 0 -10px;
+        }
+      }
+
+      /* Accessibility: Reduced Motion */
+      @media (prefers-reduced-motion: reduce) {
+        .tw-l-card, .tw-l-brand {
+          animation: none !important;
+          opacity: 1 !important;
+          transform: none !important;
+        }
+        .tw-l-card::after {
+          display: none !important;
+        }
+        #tw-loader {
+          transition: opacity 0.15s linear !important;
+        }
+      }
     </style>
   </head>
   <body class="bg-[#d9d9d9] text-[#111111]">
+    <!-- Minimalist Editorial "Lazy Cards" Loader (renders immediately before React & CSS bundle) -->
+    <div id="tw-loader" aria-label="Loading Twixters.Co" role="status">
+      <div class="tw-l-brand">
+        <div class="tw-l-pill">
+          <span class="tw-l-dot" aria-hidden="true"></span>
+          <span class="tw-l-name">Twixters.Co</span>
+        </div>
+      </div>
+      <div class="tw-l-stage" aria-hidden="true">
+        <div class="tw-l-col tw-l-col-left">
+          <div class="tw-l-card tw-l-c1"></div>
+          <div class="tw-l-card tw-l-c4"></div>
+        </div>
+        <div class="tw-l-col tw-l-col-center">
+          <div class="tw-l-card tw-l-c3"></div>
+        </div>
+        <div class="tw-l-col tw-l-col-right">
+          <div class="tw-l-card tw-l-c2"></div>
+          <div class="tw-l-card tw-l-c5"></div>
+        </div>
+      </div>
+    </div>
+
     <div id="root">
-      <main>
+      <main class="tw-sr-only">
         <h1>Twixters.Co — Branding, Graphic Design &amp; Digital Marketing</h1>
         <p>Twixters.Co is a Central India based design and marketing agency specializing in branding, graphic design and digital marketing.</p>
       </main>
@@ -126,5 +399,17 @@
       </main>
     </noscript>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      (function() {
+        var loader = document.getElementById('tw-loader');
+        if (loader) {
+          loader.addEventListener('transitionend', function(e) {
+            if (e.target === loader && document.documentElement.classList.contains('app-ready')) {
+              loader.remove();
+            }
+          });
+        }
+      })();
+    </script>
   </body>
 </html>

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Nav } from "./components/tw/nav";
 import { Hero } from "./components/tw/hero";
 import { Collage } from "./components/tw/collage";
@@ -14,6 +15,10 @@ import { StructuredData } from "./components/tw/structured-data";
 import { assetUrl } from "./utils/asset";
 
 export default function App() {
+  useEffect(() => {
+    document.documentElement.classList.add("app-ready");
+  }, []);
+
   return (
     <>
       <StructuredData />
