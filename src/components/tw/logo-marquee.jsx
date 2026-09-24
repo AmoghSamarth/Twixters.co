@@ -6,7 +6,7 @@ export function LogoMarquee() {
   return (
     <section
       aria-label="Partner and client logos"
-      className="relative w-full overflow-hidden pt-4 pb-14 sm:py-14 select-none mt-2 sm:mt-0"
+      className="hidden lg:block relative w-full overflow-hidden py-10 sm:py-14 select-none"
       style={{
         maskImage:
           "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",

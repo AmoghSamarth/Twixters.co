@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { services } from "../../content/site";
 import { Reveal } from "./reveal";
+import { assetUrl } from "../../utils/asset";
 
 function ChipIcon({ type }) {
   switch (type) {
@@ -54,13 +55,67 @@ function ChipIcon({ type }) {
   }
 }
 
+/* Hand-drawn pencil doodle accents */
+function PencilRays({ className = "", rotate = 0 }) {
+  return (
+    <svg
+      viewBox="0 0 40 40"
+      className={`size-7 sm:size-8 text-black/35 select-none pointer-events-none ${className}`}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      style={{ transform: `rotate(${rotate}deg)` }}
+      aria-hidden="true"
+    >
+      <path d="M20 5 L20 15" />
+      <path d="M10 9 L17 17" />
+      <path d="M30 9 L23 17" />
+    </svg>
+  );
+}
+
+function PencilScribble({ className = "" }) {
+  return (
+    <svg
+      viewBox="0 0 50 30"
+      className={`w-10 h-6 text-black/35 select-none pointer-events-none ${className}`}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M4 18 C14 8, 28 6, 46 12 M20 22 C30 16, 38 18, 44 24" />
+    </svg>
+  );
+}
+
+function PencilArc({ className = "" }) {
+  return (
+    <svg
+      viewBox="0 0 120 40"
+      className={`w-36 h-10 text-black/20 select-none pointer-events-none ${className}`}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.4"
+      strokeLinecap="round"
+      strokeDasharray="2 4"
+      aria-hidden="true"
+    >
+      <path d="M8 36 C35 6, 85 6, 112 34" />
+    </svg>
+  );
+}
+
 const MOBILE_CHIP_TRANSFORMS = [
-  { translateY: -2, rotate: -3 }, // chip 1: Design systems
-  { translateY: 2, rotate: 2 },   // chip 2: Advertising
-  { translateY: 3, rotate: -4 },  // chip 3: Research
-  { translateY: -2, rotate: 3 },  // chip 4: Branding
-  { translateY: 2, rotate: -2 },  // chip 5: Ads Planning
-  { translateY: -3, rotate: 4 },  // chip 6: Strategy
+  { translateY: -1.5, rotate: -1.5 }, // chip 1: Design systems
+  { translateY: 1, rotate: 1 },       // chip 2: Advertising
+  { translateY: -1, rotate: -1 },     // chip 3: Research
+  { translateY: 0.5, rotate: 0.5 },   // chip 4: Branding
+  { translateY: -1, rotate: -1 },     // chip 5: Ads Planning
+  { translateY: 1.5, rotate: 1.5 },   // chip 6: Strategy
 ];
 
 function ChipItem({ chip, mobileTransform = null, isMobile = false }) {
@@ -124,7 +179,7 @@ function ChipItem({ chip, mobileTransform = null, isMobile = false }) {
     >
       {/* Frosted translucent outer bubble capsule (the "bg bubble around them") with soft neutral shadow */}
       <div
-        className={`absolute -inset-[4px] sm:-inset-[6px] rounded-full bg-white/60 backdrop-blur-[6px] border border-white/80 pointer-events-none transition-shadow duration-300 ${
+        className={`absolute -inset-[4px] sm:-inset-[5px] rounded-full bg-white/60 backdrop-blur-[6px] border border-white/80 pointer-events-none transition-shadow duration-300 ${
           isDragging
             ? "shadow-[0_20px_40px_rgba(0,0,0,0.18),0_6px_14px_rgba(0,0,0,0.08)]"
             : "shadow-[0_12px_24px_rgba(0,0,0,0.09),0_3px_10px_rgba(0,0,0,0.04)]"
@@ -149,13 +204,11 @@ function ChipItem({ chip, mobileTransform = null, isMobile = false }) {
 }
 
 function getWordColor(index, totalWords, progress) {
-  // Transition window for each individual word
   const step = 1 / totalWords;
   const wordStart = index * step;
   const wordEnd = (index + 1) * step;
   const wordProgress = Math.min(Math.max((progress - wordStart) / (wordEnd - wordStart), 0), 1);
 
-  // Interpolate from unrevealed grey rgb(156, 156, 156) to active black rgb(17, 17, 17)
   const r = Math.round(156 - wordProgress * (156 - 17));
   const g = Math.round(156 - wordProgress * (156 - 17));
   const b = Math.round(156 - wordProgress * (156 - 17));
@@ -167,7 +220,7 @@ export function Services() {
   const textRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
-  // Order requested for mobile: Row 1 (Design systems, Advertising), Row 2 (Research, Branding), Row 3 (Ads Planning, Strategy)
+  // 6 chips in 2 columns: Column 1 (Design systems, Research, Ads Planning), Column 2 (Advertising, Branding, Strategy)
   const mobileChips = [
     leftChips[0],  // Design systems
     leftChips[1],  // Advertising
@@ -177,7 +230,6 @@ export function Services() {
     rightChips[2], // Strategy
   ];
 
-  // Track scroll position to gradually turn words from grey to black
   useEffect(() => {
     let ticking = false;
     let lastProgress = -1;
@@ -187,8 +239,6 @@ export function Services() {
       const rect = textRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight || document.documentElement.clientHeight;
 
-      // Start reveal when the top of the text enters 82% of viewport
-      // Complete reveal across a 20% wider scroll distance (20% slower pacing)
       const start = windowHeight * 0.82;
       const end = windowHeight * 0.239;
       const current = rect.top;
@@ -227,7 +277,7 @@ export function Services() {
     <section
       id="services"
       aria-labelledby="services-statement"
-      className="px-4 pt-10 pb-4 sm:px-8 sm:pt-20 sm:pb-32 overflow-hidden"
+      className="px-4 pt-10 pb-6 sm:px-8 sm:pt-16 sm:pb-12 lg:pt-20 lg:pb-32 overflow-hidden"
     >
       {/* Eyebrow with refined editorial serif font matching reference */}
       <Reveal className="mx-auto max-w-[1200px]">
@@ -240,8 +290,8 @@ export function Services() {
         </div>
       </Reveal>
 
-      <div className="relative mx-auto mt-8 sm:mt-16 max-w-[1360px] px-2 sm:px-4">
-        {/* Desktop 3-column composition (matching expected design) */}
+      <div className="relative mx-auto mt-6 sm:mt-10 lg:mt-16 max-w-[1360px] px-2 sm:px-4">
+        {/* Desktop 3-column composition (matching expected design for lg: >= 1024px) */}
         <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-10 xl:gap-16">
           
           {/* Left Column (Desktop) */}
@@ -253,25 +303,71 @@ export function Services() {
             ))}
           </div>
 
-          {/* Central Statement with scroll-driven word-by-word reveal */}
-          <Reveal delay={60} className="relative z-10 shrink-0 w-full max-w-[340px] min-[460px]:max-w-[420px] lg:max-w-[780px] mx-auto">
+          {/* Central Statement with rich editorial typography matching mockup */}
+          <Reveal delay={60} className="relative z-10 shrink-0 w-full max-w-[340px] min-[420px]:max-w-[365px] sm:max-w-[660px] lg:max-w-[780px] mx-auto">
+            {/* Mobile View Statement (< 640px) — 6 lines with terracotta serif italic & bold accents */}
+            <p className="sm:hidden text-center font-heading text-[22px] min-[390px]:text-[23.5px] min-[440px]:text-[25px] font-normal leading-[1.28] tracking-[-0.022em] text-[#1c1c1c]">
+              <span className="block">We help startups and</span>
+              <span className="block">enterprise to establish</span>
+              <span className="block">
+                an{" "}
+                <span className="tw-serif-italic text-[#8e684e] text-[25px] min-[390px]:text-[27px] min-[440px]:text-[29px] tracking-[0.01em]">
+                  emotional connection
+                </span>
+              </span>
+              <span className="block">between their products</span>
+              <span className="block">
+                and{" "}
+                <strong className="font-bold text-[#111111]">
+                  happy engaged
+                </strong>
+              </span>
+              <span className="block">
+                <strong className="font-bold text-[#111111]">
+                  customers.
+                </strong>
+              </span>
+            </p>
+
+            {/* Tablet View Statement (640px - 1023px) — 4 lines matching tablet frame */}
+            <p className="hidden sm:block lg:hidden text-center font-heading text-[29px] md:text-[33px] font-normal leading-[1.24] tracking-[-0.022em] text-[#1c1c1c]">
+              <span className="block">We help startups and enterprise to</span>
+              <span className="block">
+                establish an{" "}
+                <span className="tw-serif-italic text-[#8e684e] text-[34px] md:text-[38px] tracking-[0.01em]">
+                  emotional connection
+                </span>
+              </span>
+              <span className="block">between their products and</span>
+              <span className="block">
+                <strong className="font-bold text-[#111111]">
+                  happy engaged customers.
+                </strong>
+              </span>
+            </p>
+
+            {/* Desktop View Statement (>= 1024px) with word-by-word reveal */}
             <p
               id="services-statement"
               ref={textRef}
-              className="text-center font-heading text-[20px] min-[390px]:text-[21.5px] min-[460px]:text-[23px] sm:text-[25px] lg:text-[clamp(1.5rem,2.4vw,2.35rem)] font-normal leading-[1.22] lg:leading-[1.26] tracking-[-0.025em]"
+              className="hidden lg:block text-center font-heading text-[clamp(1.5rem,2.4vw,2.35rem)] font-normal leading-[1.26] tracking-[-0.022em]"
             >
               {statementLines.map((lineWords, lineIndex) => (
-                <span key={lineIndex} className="block min-[460px]:whitespace-nowrap">
+                <span key={lineIndex} className="block whitespace-nowrap">
                   {lineWords.map((word) => {
                     const wordIndex = globalWordIndex++;
                     const color = getWordColor(wordIndex, totalWords, scrollProgress);
+                    const isAccent = word === "emotional" || word === "connection";
+                    const isBold = word === "happy" || word === "engaged" || word === "customers" || word === "customers.";
                     return (
                       <span
                         key={wordIndex}
-                        style={{ color, transition: "color 0.17s ease-out" }}
-                        className="inline-block mx-[0.14em]"
+                        style={{ color: isAccent && scrollProgress > 0.4 ? "#8e684e" : color, transition: "color 0.17s ease-out" }}
+                        className={`inline-block mx-[0.14em] ${
+                          isAccent ? "tw-serif-italic text-[1.12em]" : isBold ? "font-bold" : ""
+                        }`}
                       >
-                        {word}
+                        {word === "customers" ? "customers." : word}
                       </span>
                     );
                   })}
@@ -280,7 +376,7 @@ export function Services() {
             </p>
           </Reveal>
 
-          {/* Right Column (Desktop) — Circled contents fly in from outside */}
+          {/* Right Column (Desktop) */}
           <div className="hidden lg:flex flex-col justify-between h-[205px] xl:h-[220px] items-start shrink-0 w-[190px] xl:w-[210px] overflow-visible">
             {rightChips.map((chip, i) => (
               <Reveal
@@ -293,26 +389,127 @@ export function Services() {
             ))}
           </div>
 
-          {/* Mobile / Tablet Chips (< lg) — 2-column grid matching requested arrangement */}
-          <div className="lg:hidden w-full max-w-[335px] min-[400px]:max-w-[360px] min-[480px]:max-w-[390px] sm:max-w-[420px] mx-auto mt-6 sm:mt-8">
-            <div className="grid grid-cols-2 gap-x-2 min-[380px]:gap-x-3 sm:gap-x-4 gap-y-2.5 min-[380px]:gap-y-3 sm:gap-y-4">
-              {mobileChips.map((chip, i) => (
-                <Reveal
-                  key={`m-${chip.label}`}
-                  delay={100 + i * 50}
-                  className="flex items-center justify-center"
-                >
-                  <ChipItem
-                    chip={chip}
-                    mobileTransform={MOBILE_CHIP_TRANSFORMS[i]}
-                    isMobile
-                  />
-                </Reveal>
-              ))}
+          {/* ── MOBILE VIEW CHIPS (< 640px): 2-Column Grid with hand-drawn pencil scribble ── */}
+          <div className="sm:hidden w-full max-w-[335px] min-[400px]:max-w-[360px] mx-auto mt-6">
+            <div className="grid grid-cols-2 gap-x-2.5 min-[390px]:gap-x-3.5 gap-y-2.5 min-[390px]:gap-y-3">
+              {/* Row 1 */}
+              <div className="flex items-center justify-center">
+                <ChipItem chip={mobileChips[0]} mobileTransform={MOBILE_CHIP_TRANSFORMS[0]} isMobile />
+              </div>
+              <div className="flex items-center justify-center relative">
+                <PencilScribble className="absolute -top-5 right-1 opacity-70" />
+                <ChipItem chip={mobileChips[1]} mobileTransform={MOBILE_CHIP_TRANSFORMS[1]} isMobile />
+              </div>
+
+              {/* Row 2 */}
+              <div className="flex items-center justify-center">
+                <ChipItem chip={mobileChips[2]} mobileTransform={MOBILE_CHIP_TRANSFORMS[2]} isMobile />
+              </div>
+              <div className="flex items-center justify-center">
+                <ChipItem chip={mobileChips[3]} mobileTransform={MOBILE_CHIP_TRANSFORMS[3]} isMobile />
+              </div>
+
+              {/* Row 3 */}
+              <div className="flex items-center justify-center">
+                <ChipItem chip={mobileChips[4]} mobileTransform={MOBILE_CHIP_TRANSFORMS[4]} isMobile />
+              </div>
+              <div className="flex items-center justify-center">
+                <ChipItem chip={mobileChips[5]} mobileTransform={MOBILE_CHIP_TRANSFORMS[5]} isMobile />
+              </div>
+            </div>
+          </div>
+
+          {/* ── TABLET VIEW CHIPS (640px - 1023px): Organic staggered cluster with pencil accents ── */}
+          <div className="hidden sm:block lg:hidden relative w-full max-w-[620px] mx-auto mt-8 sm:mt-10 px-4">
+            {/* Pencil Arc above top chips */}
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 pointer-events-none opacity-40">
+              <PencilArc />
+            </div>
+
+            {/* Row 1: Design systems & Advertising */}
+            <div className="flex items-center justify-center gap-10 md:gap-14 relative z-10">
+              <div className="relative">
+                <ChipItem chip={leftChips[0]} mobileTransform={{ translateY: -4, rotate: -4 }} isMobile />
+              </div>
+              <div className="relative">
+                <PencilRays className="absolute -top-6 right-2 opacity-80" rotate={12} />
+                <ChipItem chip={leftChips[1]} mobileTransform={{ translateY: 4, rotate: 3 }} isMobile />
+              </div>
+            </div>
+
+            {/* Row 2: Research & Branding */}
+            <div className="flex items-center justify-center gap-12 md:gap-16 mt-3.5 sm:mt-4 relative z-10">
+              <div className="relative -ml-6 sm:-ml-10">
+                <PencilRays className="absolute top-1 -left-8 opacity-80" rotate={-80} />
+                <ChipItem chip={leftChips[2]} mobileTransform={{ translateY: 2, rotate: -6 }} isMobile />
+              </div>
+              <div className="relative ml-2 sm:ml-4">
+                <ChipItem chip={rightChips[0]} mobileTransform={{ translateY: 0, rotate: 0 }} isMobile />
+              </div>
+            </div>
+
+            {/* Row 3: Ads Planning & Strategy */}
+            <div className="flex items-center justify-center gap-8 md:gap-12 mt-3.5 sm:mt-4 relative z-10">
+              <div className="relative ml-4 sm:ml-6">
+                <ChipItem chip={rightChips[1]} mobileTransform={{ translateY: -2, rotate: 3 }} isMobile />
+              </div>
+              <div className="relative">
+                <ChipItem chip={rightChips[2]} mobileTransform={{ translateY: 2, rotate: 4 }} isMobile />
+                <PencilRays className="absolute -top-1 -right-8 opacity-80" rotate={75} />
+              </div>
             </div>
           </div>
 
         </div>
+
+        {/* ── CLIENT LOGOS SECTION FOR MOBILE & TABLET (< lg): Matches reference mockup ── */}
+        <div className="lg:hidden mt-10 sm:mt-14 mb-2">
+          {/* Divider: —— TRUSTED BY FORWARD-THINKING BRANDS —— */}
+          <div className="flex items-center justify-center gap-3 sm:gap-4 my-4 sm:my-6 px-4">
+            <span className="h-[1px] bg-black/15 flex-1 max-w-[80px] sm:max-w-[140px]" />
+            <span className="text-[9.5px] min-[380px]:text-[10px] sm:text-[11px] font-semibold tracking-[0.2em] uppercase whitespace-nowrap text-black/40 select-none">
+              TRUSTED BY FORWARD-THINKING BRANDS
+            </span>
+            <span className="h-[1px] bg-black/15 flex-1 max-w-[80px] sm:max-w-[140px]" />
+          </div>
+
+          {/* 3 Client Logos: Flau In Style, Parekh Brothers, Saloni Fashion */}
+          <div className="flex items-center justify-center gap-7 sm:gap-14 md:gap-20 px-4 pt-2 pb-4">
+            {/* Flau In Style */}
+            <div className="flex items-center justify-center h-9 sm:h-12 w-20 sm:w-28 shrink-0">
+              <img
+                src={assetUrl("/assets/Logo (23).svg")}
+                alt="Flau In Style"
+                loading="lazy"
+                decoding="async"
+                className="max-h-8 sm:max-h-11 w-auto max-w-full object-contain brightness-0 opacity-40 hover:opacity-75 transition-opacity duration-300"
+              />
+            </div>
+
+            {/* Parekh Brothers Jewellers */}
+            <div className="flex items-center justify-center h-9 sm:h-12 w-24 sm:w-32 shrink-0">
+              <img
+                src={assetUrl("/assets/Logo (24).svg")}
+                alt="Parekh Brothers Jewellers"
+                loading="lazy"
+                decoding="async"
+                className="max-h-8 sm:max-h-11 w-auto max-w-full object-contain brightness-0 opacity-40 hover:opacity-75 transition-opacity duration-300"
+              />
+            </div>
+
+            {/* Saloni S&P Fashion */}
+            <div className="flex items-center justify-center h-9 sm:h-12 w-24 sm:w-32 shrink-0">
+              <img
+                src={assetUrl("/assets/Logo (25).svg")}
+                alt="Saloni S&P Fashion"
+                loading="lazy"
+                decoding="async"
+                className="max-h-7 sm:max-h-10 w-auto max-w-full object-contain brightness-0 opacity-40 hover:opacity-75 transition-opacity duration-300"
+              />
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <style>{`
