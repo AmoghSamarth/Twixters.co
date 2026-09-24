@@ -303,71 +303,25 @@ export function Services() {
             ))}
           </div>
 
-          {/* Central Statement with rich editorial typography matching mockup */}
-          <Reveal delay={60} className="relative z-10 shrink-0 w-full max-w-[340px] min-[420px]:max-w-[365px] sm:max-w-[660px] lg:max-w-[780px] mx-auto">
-            {/* Mobile View Statement (< 640px) — 6 lines with terracotta serif italic & bold accents */}
-            <p className="sm:hidden text-center font-heading text-[22px] min-[390px]:text-[23.5px] min-[440px]:text-[25px] font-normal leading-[1.28] tracking-[-0.022em] text-[#1c1c1c]">
-              <span className="block">We help startups and</span>
-              <span className="block">enterprise to establish</span>
-              <span className="block">
-                an{" "}
-                <span className="tw-serif-italic text-[#8e684e] text-[25px] min-[390px]:text-[27px] min-[440px]:text-[29px] tracking-[0.01em]">
-                  emotional connection
-                </span>
-              </span>
-              <span className="block">between their products</span>
-              <span className="block">
-                and{" "}
-                <strong className="font-bold text-[#111111]">
-                  happy engaged
-                </strong>
-              </span>
-              <span className="block">
-                <strong className="font-bold text-[#111111]">
-                  customers.
-                </strong>
-              </span>
-            </p>
-
-            {/* Tablet View Statement (640px - 1023px) — 4 lines matching tablet frame */}
-            <p className="hidden sm:block lg:hidden text-center font-heading text-[29px] md:text-[33px] font-normal leading-[1.24] tracking-[-0.022em] text-[#1c1c1c]">
-              <span className="block">We help startups and enterprise to</span>
-              <span className="block">
-                establish an{" "}
-                <span className="tw-serif-italic text-[#8e684e] text-[34px] md:text-[38px] tracking-[0.01em]">
-                  emotional connection
-                </span>
-              </span>
-              <span className="block">between their products and</span>
-              <span className="block">
-                <strong className="font-bold text-[#111111]">
-                  happy engaged customers.
-                </strong>
-              </span>
-            </p>
-
-            {/* Desktop View Statement (>= 1024px) with word-by-word reveal */}
+          {/* Central Statement with scroll-driven word-by-word reveal */}
+          <Reveal delay={60} className="relative z-10 shrink-0 w-full max-w-[340px] min-[460px]:max-w-[420px] lg:max-w-[780px] mx-auto">
             <p
               id="services-statement"
               ref={textRef}
-              className="hidden lg:block text-center font-heading text-[clamp(1.5rem,2.4vw,2.35rem)] font-normal leading-[1.26] tracking-[-0.022em]"
+              className="text-center font-heading text-[20px] min-[390px]:text-[21.5px] min-[460px]:text-[23px] sm:text-[25px] lg:text-[clamp(1.5rem,2.4vw,2.35rem)] font-normal leading-[1.22] lg:leading-[1.26] tracking-[-0.025em]"
             >
               {statementLines.map((lineWords, lineIndex) => (
-                <span key={lineIndex} className="block whitespace-nowrap">
+                <span key={lineIndex} className="block min-[460px]:whitespace-nowrap">
                   {lineWords.map((word) => {
                     const wordIndex = globalWordIndex++;
                     const color = getWordColor(wordIndex, totalWords, scrollProgress);
-                    const isAccent = word === "emotional" || word === "connection";
-                    const isBold = word === "happy" || word === "engaged" || word === "customers" || word === "customers.";
                     return (
                       <span
                         key={wordIndex}
-                        style={{ color: isAccent && scrollProgress > 0.4 ? "#8e684e" : color, transition: "color 0.17s ease-out" }}
-                        className={`inline-block mx-[0.14em] ${
-                          isAccent ? "tw-serif-italic text-[1.12em]" : isBold ? "font-bold" : ""
-                        }`}
+                        style={{ color, transition: "color 0.17s ease-out" }}
+                        className="inline-block mx-[0.14em]"
                       >
-                        {word === "customers" ? "customers." : word}
+                        {word}
                       </span>
                     );
                   })}
