@@ -63,7 +63,7 @@ export function Nav() {
           aria-expanded={open}
           aria-controls="tw-menu"
           onClick={() => setOpen((v) => !v)}
-          className={`flex size-12 items-center justify-center rounded-full bg-surface text-ink transition-[transform,box-shadow] duration-300 hover:scale-105 ${lifted ? "shadow-float" : "shadow-pill"}`}
+          className={`flex size-[32px] sm:size-[38px] lg:size-12 items-center justify-center rounded-full bg-surface text-ink transition-[transform,box-shadow] duration-300 hover:scale-105 ${lifted ? "shadow-float" : "shadow-pill"}`}
         >
           {open ? (
             <svg
@@ -72,7 +72,7 @@ export function Nav() {
               stroke="currentColor"
               strokeWidth={2}
               strokeLinecap="round"
-              className="size-5"
+              className="size-3.5 sm:size-4 lg:size-5"
               aria-hidden="true"
             >
               <path d="M18 6 6 18" />
@@ -85,7 +85,7 @@ export function Nav() {
               stroke="currentColor"
               strokeWidth={2}
               strokeLinecap="round"
-              className="size-5"
+              className="size-3.5 sm:size-4 lg:size-5"
               aria-hidden="true"
             >
               <path d="M4 8h16" />

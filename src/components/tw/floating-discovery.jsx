@@ -49,7 +49,7 @@ export function FloatingDiscovery() {
   return (
     <aside
       aria-label="Book a discovery call"
-      className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 select-none max-w-[calc(100vw-32px)] transition-all duration-300 ease-out ${
+      className={`fixed bottom-3 right-3 sm:bottom-5 sm:right-5 md:bottom-6 md:right-6 z-50 select-none max-w-[calc(100vw-24px)] sm:max-w-[calc(100vw-32px)] transition-all duration-300 ease-out ${
         visible
           ? "opacity-100 translate-y-0 pointer-events-auto"
           : "opacity-0 translate-y-4 pointer-events-none"
@@ -59,10 +59,10 @@ export function FloatingDiscovery() {
         href={bookingUrl}
         target="_blank"
         rel="noreferrer"
-        className="group flex items-center gap-2.5 sm:gap-3 rounded-full border border-black/[0.08] bg-white/95 pl-1.5 pr-3.5 py-1.5 shadow-[0_12px_32px_rgba(0,0,0,0.14),0_2px_8px_rgba(0,0,0,0.06)] backdrop-blur-md transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-white hover:shadow-[0_18px_42px_rgba(0,0,0,0.2)] active:scale-[0.98]"
+        className="group flex items-center gap-2 sm:gap-2.5 md:gap-3 rounded-full border border-black/[0.08] bg-white/95 pl-1 pr-2.5 py-1 sm:pl-1.5 sm:pr-3.5 sm:py-1.5 shadow-[0_8px_24px_rgba(0,0,0,0.12),0_2px_8px_rgba(0,0,0,0.06)] md:shadow-[0_12px_32px_rgba(0,0,0,0.14),0_2px_8px_rgba(0,0,0,0.06)] backdrop-blur-md transition-all duration-300 ease-out hover:-translate-y-1 hover:bg-white hover:shadow-[0_18px_42px_rgba(0,0,0,0.2)] active:scale-[0.98]"
       >
         {/* Round avatar with live active status indicator */}
-        <div className="relative size-9 sm:size-10 shrink-0 overflow-hidden rounded-full border border-white/80 bg-neutral-900 shadow-sm">
+        <div className="relative size-7 sm:size-[34px] md:size-10 shrink-0 overflow-hidden rounded-full border border-white/80 bg-neutral-900 shadow-sm">
           <img
             src={avatarSrc}
             alt="Raj Shegaonkar"
@@ -75,20 +75,20 @@ export function FloatingDiscovery() {
           {/* Pulsing online indicator */}
           <span
             aria-hidden="true"
-            className="absolute bottom-0 right-0 size-2.5 rounded-full bg-emerald-500 ring-2 ring-white"
+            className="absolute bottom-0 right-0 size-2 sm:size-2.5 rounded-full bg-emerald-500 ring-1.5 sm:ring-2 ring-white"
           />
           <span
             aria-hidden="true"
-            className="absolute bottom-0 right-0 size-2.5 rounded-full bg-emerald-400 opacity-75 ring-2 ring-white animate-ping"
+            className="absolute bottom-0 right-0 size-2 sm:size-2.5 rounded-full bg-emerald-400 opacity-75 ring-1.5 sm:ring-2 ring-white animate-ping"
           />
         </div>
 
         {/* Text copy */}
         <div className="flex flex-col text-left">
-          <span className="text-[13px] sm:text-[13.5px] font-semibold tracking-tight text-ink leading-tight">
+          <span className="text-[11.5px] sm:text-[12.5px] md:text-[13.5px] font-semibold tracking-tight text-ink leading-tight">
             Book a Discovery Call
           </span>
-          <span className="text-[10.5px] sm:text-[11px] font-medium text-ink-muted leading-tight hidden sm:block">
+          <span className="text-[9.5px] sm:text-[10.5px] md:text-[11px] font-medium text-ink-muted leading-tight hidden sm:block">
             Free 15-min chat
           </span>
         </div>
@@ -96,9 +96,9 @@ export function FloatingDiscovery() {
         {/* Round dark icon badge with micro-interaction */}
         <div
           aria-hidden="true"
-          className="size-6 sm:size-7 rounded-full bg-ink text-white flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:bg-black"
+          className="size-5 sm:size-6 md:size-7 rounded-full bg-ink text-white flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:bg-black"
         >
-          <ArrowUpRight className="size-3.5 sm:size-4" />
+          <ArrowUpRight className="size-2.5 sm:size-3 md:size-4" />
         </div>
       </a>
     </aside>
