@@ -52,7 +52,7 @@ export function Nav() {
       <div className="mx-auto flex max-w-[1200px] items-center justify-between">
         <a
           href="#top"
-          className={`rounded-pill bg-surface px-5 py-3 text-[14px] font-semibold tracking-tight text-ink transition-shadow duration-300 ${lifted ? "shadow-float" : "shadow-pill"}`}
+          className={`rounded-pill bg-surface px-3.5 py-1.5 text-[12px] sm:px-4 sm:py-2 sm:text-[13px] lg:px-5 lg:py-3 lg:text-[14px] font-semibold tracking-tight text-ink transition-shadow duration-300 ${lifted ? "shadow-float" : "shadow-pill"}`}
         >
           {site.name}
         </a>
