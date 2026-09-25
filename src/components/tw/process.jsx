@@ -36,7 +36,7 @@ function LazyProcessVideo({ videoSrc, posterSrc }) {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative my-4 flex-1 flex items-center justify-center">
+    <div ref={containerRef} className="relative my-2 sm:my-3 lg:my-4 flex-1 flex items-center justify-center">
       <video
         ref={videoRef}
         src={shouldLoad ? videoSrc : undefined}
@@ -46,7 +46,7 @@ function LazyProcessVideo({ videoSrc, posterSrc }) {
         loop
         muted
         playsInline
-        className="w-full h-full max-h-[190px] sm:max-h-[210px] scale-[1.5] object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-[1.56] pointer-events-none"
+        className="w-full h-full max-h-[125px] sm:max-h-[150px] lg:max-h-[190px] xl:max-h-[210px] scale-[1.18] sm:scale-[1.32] lg:scale-[1.5] object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-[1.26] sm:group-hover:scale-[1.4] lg:group-hover:scale-[1.56] pointer-events-none"
       />
     </div>
   );
@@ -92,7 +92,7 @@ function ProcessDoodles() {
 
 export function Process() {
   return (
-    <section id="process" aria-labelledby="process-heading" className="px-5 py-24 sm:px-8 sm:py-32 overflow-hidden">
+    <section id="process" aria-labelledby="process-heading" className="px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-32 overflow-hidden">
       {/* Editorial Eyebrow matching reference */}
       <Reveal className="mx-auto max-w-[1200px]">
         <div className="flex items-center justify-center gap-4 text-ink-muted">
@@ -104,17 +104,17 @@ export function Process() {
         </div>
         <h2
           id="process-heading"
-          className="mt-5 text-center font-heading text-[clamp(2.1rem,5vw,3.5rem)] font-medium tracking-tight text-[#111111]"
+          className="mt-4 sm:mt-5 text-center font-heading text-[clamp(2.0rem,5vw,3.5rem)] font-medium tracking-tight text-[#111111]"
         >
           Here&rsquo;s how it works
         </h2>
       </Reveal>
 
-      <div className="relative mx-auto mt-16 max-w-[1200px] md:mt-24">
+      <div className="relative mx-auto mt-10 sm:mt-16 lg:mt-24 max-w-[1200px]">
         {/* Playful orange lines & rings connecting the cards */}
         <ProcessDoodles />
 
-        <ol className="relative z-10 grid gap-8 lg:grid-cols-3 lg:gap-3">
+        <ol className="relative z-10 grid gap-4 sm:gap-6 lg:grid-cols-3 lg:gap-3">
           {processSteps.map((step, i) => (
             <Reveal
               as="li"
@@ -127,13 +127,13 @@ export function Process() {
               }}
             >
               <article
-                className="tw-step-card group relative flex h-full min-h-[420px] sm:min-h-[460px] flex-col justify-between overflow-hidden rounded-[28px] sm:rounded-[32px] bg-white bg-clip-padding p-7 sm:p-8 border-[4px] border-white/60 shadow-[0_20px_50px_rgba(0,0,0,0.08),0_4px_16px_rgba(0,0,0,0.03)] transition-all duration-300 hover:scale-[1.02]"
+                className="tw-step-card group relative flex h-full min-h-[280px] sm:min-h-[340px] lg:min-h-[420px] xl:min-h-[460px] max-w-[380px] sm:max-w-[460px] lg:max-w-none mx-auto w-full flex-col justify-between overflow-hidden rounded-[20px] sm:rounded-[26px] lg:rounded-[32px] bg-white bg-clip-padding p-5 sm:p-6 lg:p-7 xl:p-8 border-[3px] sm:border-[4px] border-white/60 shadow-[0_12px_36px_rgba(0,0,0,0.06),0_3px_12px_rgba(0,0,0,0.03)] lg:shadow-[0_20px_50px_rgba(0,0,0,0.08),0_4px_16px_rgba(0,0,0,0.03)] transition-all duration-300 hover:scale-[1.02]"
               >
                 {/* Top Row: Big Number */}
                 <div className="flex items-start justify-between">
                   <p
                     aria-hidden="true"
-                    className="text-[64px] sm:text-[74px] font-normal leading-none tracking-[-0.04em] text-[#111111] select-none"
+                    className="text-[40px] sm:text-[52px] lg:text-[64px] xl:text-[74px] font-normal leading-none tracking-[-0.04em] text-[#111111] select-none"
                   >
                     {step.n}
                   </p>
@@ -143,11 +143,11 @@ export function Process() {
                 <LazyProcessVideo videoSrc={step.video} posterSrc={step.poster} />
 
                 {/* Bottom: Title & Description */}
-                <div className="mt-2">
-                  <h3 className="text-[21px] sm:text-[23px] font-medium tracking-[-0.02em] text-[#111111]">
+                <div className="mt-1 sm:mt-1.5 lg:mt-2">
+                  <h3 className="text-[17px] sm:text-[19px] lg:text-[21px] xl:text-[23px] font-medium tracking-[-0.02em] text-[#111111]">
                     {step.title}
                   </h3>
-                  <p className="mt-2 text-[13.5px] sm:text-[14.5px] leading-[1.5] text-neutral-500 font-normal">
+                  <p className="mt-1 sm:mt-1.5 lg:mt-2 text-[12.5px] sm:text-[13.5px] lg:text-[13.5px] xl:text-[14.5px] leading-[1.45] sm:leading-[1.5] text-neutral-500 font-normal">
                     {step.body}
                   </p>
                 </div>
