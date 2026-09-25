@@ -255,7 +255,7 @@ export function Expertise() {
     <section
       id="expertise"
       aria-label="What we design"
-      className="relative w-full min-h-screen flex flex-col justify-between overflow-hidden px-5 sm:px-8 lg:px-14 xl:px-20 2xl:px-24 pt-14 sm:pt-16 lg:pt-12 pb-7 lg:pb-8 select-text"
+      className="relative w-full min-h-screen flex flex-col justify-between overflow-hidden px-4 xs:px-5 sm:px-8 lg:px-14 xl:px-20 2xl:px-24 pt-14 sm:pt-16 lg:pt-12 pb-7 lg:pb-8 select-text"
     >
       <div className="mx-auto w-full max-w-[1540px] flex-1 flex flex-col justify-between">
         {/* ─── 1. TOP HEADER ROW: ────────  What we design  ──────── ─── */}
@@ -283,13 +283,13 @@ export function Expertise() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-24 items-center">
             {/* ────────────────────────────────────────────────
                 LEFT SERVICE AREA: 01 Branding Ecosystem
-                Composition on Desktop: [Text & List (Outer Left)]  [Image Stack (Toward Center)]
+                Composition: [Text & List (Left)]  [Image Stack (Right side on mobile, tab, and desktop)]
                 ──────────────────────────────────────────────── */}
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-x-8 xl:gap-x-12 gap-y-8 lg:items-center">
+            <div className="grid grid-cols-[1fr_auto] gap-x-2.5 sm:gap-x-6 lg:gap-x-8 xl:gap-x-12 gap-y-8 items-center">
               {/* Title + Service List Column (Outer Left) */}
-              <div className="select-none flex flex-col max-w-[340px]">
+              <div className="select-none flex flex-col max-w-[340px] min-w-0">
                 {/* Badge */}
-                <div className="flex items-center gap-3 mb-2.5">
+                <div className="flex items-center gap-3 mb-2 sm:mb-2.5">
                   <span className="text-[12px] font-mono tracking-widest text-neutral-400 uppercase">
                     01
                   </span>
@@ -298,14 +298,14 @@ export function Expertise() {
 
                 {/* Headline */}
                 <h3
-                  className="tw-display font-medium text-ink leading-[1.0] tracking-[-0.035em] mb-8 sm:mb-9 lg:mb-10"
-                  style={{ fontSize: "clamp(2.1rem, 3.0vw, 3.2rem)" }}
+                  className="tw-display font-medium text-ink leading-[1.0] tracking-[-0.035em] mb-4 sm:mb-7 lg:mb-10"
+                  style={{ fontSize: "clamp(1.65rem, 3.0vw, 3.2rem)" }}
                 >
                   Branding<br />Ecosystem
                 </h3>
 
-                {/* Services with 20% more row breathing room & depth-of-field blur */}
-                <div className="flex flex-col gap-2.5 sm:gap-3 xl:gap-3.5 select-none">
+                {/* Services with row breathing room & depth-of-field blur */}
+                <div className="flex flex-col gap-2 sm:gap-3 xl:gap-3.5 select-none">
                   {BRANDING_SERVICES.map((item, i) => {
                     const isActive = i === activeLeft;
 
@@ -313,7 +313,7 @@ export function Expertise() {
                       <div
                         key={item}
                         onClick={() => handleSelectLeft(i)}
-                        className="group flex items-center gap-3 cursor-pointer py-0.5 sm:py-1 transition-all duration-300 ease-out"
+                        className="group flex items-center gap-2 sm:gap-3 cursor-pointer py-0.5 sm:py-1 transition-all duration-300 ease-out"
                         style={{
                           opacity: isActive ? 1 : 0.35,
                           filter: isActive ? "blur(0px)" : "blur(1.8px)",
@@ -329,7 +329,7 @@ export function Expertise() {
                           className="tracking-[-0.018em] transition-all duration-300 whitespace-nowrap"
                           style={{
                             fontFamily: "var(--font-sans)",
-                            fontSize: "clamp(0.95rem, 1.15vw, 1.12rem)",
+                            fontSize: "clamp(0.82rem, 1.15vw, 1.12rem)",
                             fontWeight: isActive ? 550 : 400,
                             color: isActive ? "#111111" : "#444444",
                           }}
@@ -342,7 +342,7 @@ export function Expertise() {
                 </div>
               </div>
 
-              {/* Horizontal Image Gallery Deck (Moved inward toward center divider, 10% smaller) */}
+              {/* Horizontal Image Gallery Deck (Right side on mobile, tab, and desktop) */}
               <div
                 ref={leftDeckWrapperRef}
                 onClick={() => setActiveLeft((prev) => (prev + 1) % BRANDING_SERVICES.length)}
@@ -359,13 +359,14 @@ export function Expertise() {
                     }
                   }
                 }}
-                className="flex justify-center lg:justify-end py-2 lg:py-0 overflow-visible lg:pr-4 xl:pr-8 cursor-pointer"
+                className="flex justify-end py-1 lg:py-0 overflow-visible lg:pr-4 xl:pr-8 cursor-pointer shrink-0"
               >
-                <div
-                  ref={leftDeckRef}
-                  className="relative w-[260px] sm:w-[280px] xl:w-[300px] h-[270px] sm:h-[295px] xl:h-[320px] flex items-center justify-center select-none will-change-transform cursor-pointer"
-                  style={{ perspective: "1400px" }}
-                >
+                <div className="relative w-[150px] min-[400px]:w-[170px] min-[450px]:w-[195px] sm:w-[240px] md:w-[260px] xl:w-[300px] h-[210px] min-[400px]:h-[230px] min-[450px]:h-[255px] sm:h-[285px] md:h-[295px] xl:h-[320px] flex items-center justify-center select-none">
+                  <div
+                    ref={leftDeckRef}
+                    className="relative w-[260px] sm:w-[280px] xl:w-[300px] h-[270px] sm:h-[295px] xl:h-[320px] flex items-center justify-center select-none will-change-transform cursor-pointer scale-[0.58] min-[400px]:scale-[0.66] min-[450px]:scale-[0.74] sm:scale-[0.88] md:scale-100 lg:scale-100 origin-center"
+                    style={{ perspective: "1400px" }}
+                  >
                   {/* Card 0: Brand Strategy */}
                   <div
                     onClick={(e) => {
@@ -579,16 +580,17 @@ export function Expertise() {
                 </div>
               </div>
             </div>
+          </div>
 
             {/* ────────────────────────────────────────────────
                 RIGHT SERVICE AREA: 02 Advertising Campaigns
-                Composition on Desktop: [Text & List]  [Image Stack (Right Side)]
+                Composition: [Text & List (Left)]  [Image Stack (Right side on mobile, tab, and desktop)]
                 ──────────────────────────────────────────────── */}
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-x-8 xl:gap-x-12 gap-y-8 lg:items-center">
+            <div className="grid grid-cols-[1fr_auto] gap-x-2.5 sm:gap-x-6 lg:gap-x-8 xl:gap-x-12 gap-y-8 items-center">
               {/* Title + Service List Column */}
-              <div className="select-none flex flex-col max-w-[340px]">
+              <div className="select-none flex flex-col max-w-[340px] min-w-0">
                 {/* Badge */}
-                <div className="flex items-center gap-3 mb-2.5">
+                <div className="flex items-center gap-3 mb-2 sm:mb-2.5">
                   <span className="text-[12px] font-mono tracking-widest text-neutral-400 uppercase">
                     02
                   </span>
@@ -597,14 +599,14 @@ export function Expertise() {
 
                 {/* Headline */}
                 <h3
-                  className="tw-display font-medium text-ink leading-[1.0] tracking-[-0.035em] mb-8 sm:mb-9 lg:mb-10"
-                  style={{ fontSize: "clamp(2.1rem, 3.0vw, 3.2rem)" }}
+                  className="tw-display font-medium text-ink leading-[1.0] tracking-[-0.035em] mb-4 sm:mb-7 lg:mb-10"
+                  style={{ fontSize: "clamp(1.65rem, 3.0vw, 3.2rem)" }}
                 >
                   Advertising<br />Campaigns
                 </h3>
 
-                {/* Services with 20% more row breathing room & depth-of-field blur */}
-                <div className="flex flex-col gap-2.5 sm:gap-3 xl:gap-3.5 select-none">
+                {/* Services with row breathing room & depth-of-field blur */}
+                <div className="flex flex-col gap-2 sm:gap-3 xl:gap-3.5 select-none">
                   {ADVERTISING_SERVICES.map((item, i) => {
                     const isActive = i === activeRight;
 
@@ -612,7 +614,7 @@ export function Expertise() {
                       <div
                         key={item}
                         onClick={() => handleSelectRight(i)}
-                        className="group flex items-center gap-3 cursor-pointer py-0.5 sm:py-1 transition-all duration-300 ease-out"
+                        className="group flex items-center gap-2 sm:gap-3 cursor-pointer py-0.5 sm:py-1 transition-all duration-300 ease-out"
                         style={{
                           opacity: isActive ? 1 : 0.35,
                           filter: isActive ? "blur(0px)" : "blur(1.8px)",
@@ -628,7 +630,7 @@ export function Expertise() {
                           className="tracking-[-0.018em] transition-all duration-300 whitespace-nowrap"
                           style={{
                             fontFamily: "var(--font-sans)",
-                            fontSize: "clamp(0.95rem, 1.15vw, 1.12rem)",
+                            fontSize: "clamp(0.82rem, 1.15vw, 1.12rem)",
                             fontWeight: isActive ? 550 : 400,
                             color: isActive ? "#111111" : "#444444",
                           }}
@@ -641,7 +643,7 @@ export function Expertise() {
                 </div>
               </div>
 
-              {/* Horizontal Image Gallery Deck (Moved to right side) */}
+              {/* Horizontal Image Gallery Deck (Right side on mobile, tab, and desktop) */}
               <div
                 ref={rightDeckWrapperRef}
                 onClick={() => setActiveRight((prev) => (prev + 1) % ADVERTISING_SERVICES.length)}
@@ -658,13 +660,14 @@ export function Expertise() {
                     }
                   }
                 }}
-                className="flex justify-center lg:justify-end py-2 lg:py-0 overflow-visible lg:pr-4 xl:pr-8 cursor-pointer"
+                className="flex justify-end py-1 lg:py-0 overflow-visible lg:pr-4 xl:pr-8 cursor-pointer shrink-0"
               >
-                <div
-                  ref={rightDeckRef}
-                  className="relative w-[260px] sm:w-[280px] xl:w-[300px] h-[270px] sm:h-[295px] xl:h-[320px] flex items-center justify-center select-none will-change-transform cursor-pointer"
-                  style={{ perspective: "1400px" }}
-                >
+                <div className="relative w-[150px] min-[400px]:w-[170px] min-[450px]:w-[195px] sm:w-[240px] md:w-[260px] xl:w-[300px] h-[210px] min-[400px]:h-[230px] min-[450px]:h-[255px] sm:h-[285px] md:h-[295px] xl:h-[320px] flex items-center justify-center select-none">
+                  <div
+                    ref={rightDeckRef}
+                    className="relative w-[260px] sm:w-[280px] xl:w-[300px] h-[270px] sm:h-[295px] xl:h-[320px] flex items-center justify-center select-none will-change-transform cursor-pointer scale-[0.58] min-[400px]:scale-[0.66] min-[450px]:scale-[0.74] sm:scale-[0.88] md:scale-100 lg:scale-100 origin-center"
+                    style={{ perspective: "1400px" }}
+                  >
                   {/* Card 0: Campaign Strategy */}
                   <div
                     onClick={(e) => {
@@ -882,6 +885,7 @@ export function Expertise() {
               </div>
             </div>
           </div>
+        </div>
         </div>
 
         {/* ─── 3. FOOTER ROW: Minimalist Mouse Scroll Indicator ─── */}
