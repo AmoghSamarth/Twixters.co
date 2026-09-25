@@ -22,6 +22,7 @@ const ADVERTISING_SERVICES = [
 ];
 
 export function Expertise() {
+  const sectionRef = useRef(null);
   const leftDeckRef = useRef(null);
   const rightDeckRef = useRef(null);
   const leftDeckWrapperRef = useRef(null);
@@ -29,19 +30,82 @@ export function Expertise() {
   const lastWheelLeftRef = useRef(0);
   const lastWheelRightRef = useRef(0);
   const touchStartRef = useRef({ left: 0, right: 0 });
+  const isVisibleRef = useRef(true);
+  const resumeTimeoutLeftRef = useRef(null);
+  const resumeTimeoutRightRef = useRef(null);
 
   // Active indices: start with reference states (Brand Assets & Hoardings)
   const [activeLeft, setActiveLeft] = useState(6);
   const [activeRight, setActiveRight] = useState(2);
+  const [isPausedLeft, setIsPausedLeft] = useState(false);
+  const [isPausedRight, setIsPausedRight] = useState(false);
 
   // Manual click handlers
   const handleSelectLeft = useCallback((i) => {
     setActiveLeft(i);
+    setIsPausedLeft(true);
+    if (resumeTimeoutLeftRef.current) clearTimeout(resumeTimeoutLeftRef.current);
+    resumeTimeoutLeftRef.current = setTimeout(() => setIsPausedLeft(false), 4500);
   }, []);
 
   const handleSelectRight = useCallback((i) => {
     setActiveRight(i);
+    setIsPausedRight(true);
+    if (resumeTimeoutRightRef.current) clearTimeout(resumeTimeoutRightRef.current);
+    resumeTimeoutRightRef.current = setTimeout(() => setIsPausedRight(false), 4500);
   }, []);
+
+  // Track section visibility so auto-scroll only runs when in view
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      isVisibleRef.current = true;
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        isVisibleRef.current = entries[0].isIntersecting;
+      },
+      { rootMargin: "150px 0px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Auto-scroll Left (Branding Ecosystem) cards across all views
+  useEffect(() => {
+    if (isPausedLeft) return;
+
+    const interval = setInterval(() => {
+      if (!isVisibleRef.current) return;
+      setActiveLeft((prev) => (prev + 1) % BRANDING_SERVICES.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [isPausedLeft]);
+
+  // Auto-scroll Right (Advertising Campaigns) cards across all views (offset by 1.5s)
+  useEffect(() => {
+    if (isPausedRight) return;
+
+    let interval;
+    const timeout = setTimeout(() => {
+      if (isVisibleRef.current) {
+        setActiveRight((prev) => (prev + 1) % ADVERTISING_SERVICES.length);
+      }
+      interval = setInterval(() => {
+        if (!isVisibleRef.current) return;
+        setActiveRight((prev) => (prev + 1) % ADVERTISING_SERVICES.length);
+      }, 3000);
+    }, 1500);
+
+    return () => {
+      clearTimeout(timeout);
+      if (interval) clearInterval(interval);
+    };
+  }, [isPausedRight]);
 
   // ONLY when hovered on the images, scroll animation triggers; scrolling elsewhere scrolls the page normally
   useEffect(() => {
@@ -62,6 +126,10 @@ export function Expertise() {
       if (now - lastWheelLeftRef.current < 180) return;
       lastWheelLeftRef.current = now;
 
+      setIsPausedLeft(true);
+      if (resumeTimeoutLeftRef.current) clearTimeout(resumeTimeoutLeftRef.current);
+      resumeTimeoutLeftRef.current = setTimeout(() => setIsPausedLeft(false), 4500);
+
       if (delta > 0) {
         setActiveLeft((prev) => (prev + 1) % BRANDING_SERVICES.length);
       } else {
@@ -80,6 +148,10 @@ export function Expertise() {
       const now = performance.now();
       if (now - lastWheelRightRef.current < 180) return;
       lastWheelRightRef.current = now;
+
+      setIsPausedRight(true);
+      if (resumeTimeoutRightRef.current) clearTimeout(resumeTimeoutRightRef.current);
+      resumeTimeoutRightRef.current = setTimeout(() => setIsPausedRight(false), 4500);
 
       if (delta > 0) {
         setActiveRight((prev) => (prev + 1) % ADVERTISING_SERVICES.length);
@@ -254,6 +326,7 @@ export function Expertise() {
   return (
     <section
       id="expertise"
+      ref={sectionRef}
       aria-label="What we design"
       className="relative w-full min-h-screen flex flex-col justify-between overflow-hidden px-4 xs:px-5 sm:px-8 lg:px-14 xl:px-20 2xl:px-24 pt-14 sm:pt-16 lg:pt-12 pb-7 lg:pb-8 select-text"
     >
@@ -345,9 +418,17 @@ export function Expertise() {
               {/* Horizontal Image Gallery Deck (Right side on mobile, tab, and desktop) */}
               <div
                 ref={leftDeckWrapperRef}
-                onClick={() => setActiveLeft((prev) => (prev + 1) % BRANDING_SERVICES.length)}
+                onClick={() => {
+                  setActiveLeft((prev) => (prev + 1) % BRANDING_SERVICES.length);
+                  setIsPausedLeft(true);
+                  if (resumeTimeoutLeftRef.current) clearTimeout(resumeTimeoutLeftRef.current);
+                  resumeTimeoutLeftRef.current = setTimeout(() => setIsPausedLeft(false), 4500);
+                }}
+                onMouseEnter={() => setIsPausedLeft(true)}
+                onMouseLeave={() => setIsPausedLeft(false)}
                 onTouchStart={(e) => {
                   touchStartRef.current.left = e.touches[0].clientX;
+                  setIsPausedLeft(true);
                 }}
                 onTouchEnd={(e) => {
                   const diff = touchStartRef.current.left - e.changedTouches[0].clientX;
@@ -358,6 +439,8 @@ export function Expertise() {
                       setActiveLeft((prev) => (prev - 1 + BRANDING_SERVICES.length) % BRANDING_SERVICES.length);
                     }
                   }
+                  if (resumeTimeoutLeftRef.current) clearTimeout(resumeTimeoutLeftRef.current);
+                  resumeTimeoutLeftRef.current = setTimeout(() => setIsPausedLeft(false), 4500);
                 }}
                 className="flex justify-end py-1 lg:py-0 overflow-visible lg:pr-4 xl:pr-8 cursor-pointer shrink-0"
               >
@@ -646,9 +729,17 @@ export function Expertise() {
               {/* Horizontal Image Gallery Deck (Right side on mobile, tab, and desktop) */}
               <div
                 ref={rightDeckWrapperRef}
-                onClick={() => setActiveRight((prev) => (prev + 1) % ADVERTISING_SERVICES.length)}
+                onClick={() => {
+                  setActiveRight((prev) => (prev + 1) % ADVERTISING_SERVICES.length);
+                  setIsPausedRight(true);
+                  if (resumeTimeoutRightRef.current) clearTimeout(resumeTimeoutRightRef.current);
+                  resumeTimeoutRightRef.current = setTimeout(() => setIsPausedRight(false), 4500);
+                }}
+                onMouseEnter={() => setIsPausedRight(true)}
+                onMouseLeave={() => setIsPausedRight(false)}
                 onTouchStart={(e) => {
                   touchStartRef.current.right = e.touches[0].clientX;
+                  setIsPausedRight(true);
                 }}
                 onTouchEnd={(e) => {
                   const diff = touchStartRef.current.right - e.changedTouches[0].clientX;
@@ -659,6 +750,8 @@ export function Expertise() {
                       setActiveRight((prev) => (prev - 1 + ADVERTISING_SERVICES.length) % ADVERTISING_SERVICES.length);
                     }
                   }
+                  if (resumeTimeoutRightRef.current) clearTimeout(resumeTimeoutRightRef.current);
+                  resumeTimeoutRightRef.current = setTimeout(() => setIsPausedRight(false), 4500);
                 }}
                 className="flex justify-end py-1 lg:py-0 overflow-visible lg:pr-4 xl:pr-8 cursor-pointer shrink-0"
               >
