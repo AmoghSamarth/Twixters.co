@@ -109,6 +109,8 @@ function PencilArc({ className = "" }) {
   );
 }
 
+const FEATURED_LOGO_IDS = [23, 24, 25, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
+
 const MOBILE_CHIP_TRANSFORMS = [
   { translateY: -1.5, rotate: -1.5 }, // chip 1: Design systems
   { translateY: 1, rotate: 1 },       // chip 2: Advertising
@@ -427,39 +429,55 @@ export function Services() {
             <span className="h-[1px] bg-black/15 flex-1 max-w-[80px] sm:max-w-[140px]" />
           </div>
 
-          {/* 3 Client Logos: Flau In Style, Parekh Brothers, Saloni Fashion */}
-          <div className="flex items-center justify-center gap-7 sm:gap-14 md:gap-20 px-4 pt-2 pb-4">
-            {/* Flau In Style */}
-            <div className="flex items-center justify-center h-9 sm:h-12 w-20 sm:w-28 shrink-0">
-              <img
-                src={assetUrl("/assets/Logo (23).svg")}
-                alt="Flau In Style"
-                loading="lazy"
-                decoding="async"
-                className="max-h-8 sm:max-h-11 w-auto max-w-full object-contain brightness-0 opacity-40 hover:opacity-75 transition-opacity duration-300"
-              />
-            </div>
+          {/* Moving Marquee Logos for Mobile & Tablet (< lg): moving just like desktop view */}
+          <div
+            className="relative w-full overflow-hidden select-none pt-2 pb-4"
+            style={{
+              maskImage:
+                "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+              WebkitMaskImage:
+                "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+            }}
+          >
+            <div className="flex w-max animate-marquee-left items-center hover:[animation-play-state:paused]">
+              {/* Track 1 */}
+              <div className="flex items-center gap-8 sm:gap-14 pr-8 sm:pr-14 shrink-0">
+                {FEATURED_LOGO_IDS.map((num) => (
+                  <div
+                    key={`m-logo-a-${num}`}
+                    className="flex h-9 sm:h-12 w-20 sm:w-28 items-center justify-center shrink-0"
+                  >
+                    <img
+                      src={assetUrl(`/assets/Logo (${num}).svg`)}
+                      alt={`Partner logo ${num}`}
+                      loading="lazy"
+                      decoding="async"
+                      className="max-h-7 sm:max-h-10 w-auto max-w-full object-contain brightness-0 opacity-40 hover:opacity-75 transition-opacity duration-300"
+                    />
+                  </div>
+                ))}
+              </div>
 
-            {/* Parekh Brothers Jewellers */}
-            <div className="flex items-center justify-center h-9 sm:h-12 w-24 sm:w-32 shrink-0">
-              <img
-                src={assetUrl("/assets/Logo (24).svg")}
-                alt="Parekh Brothers Jewellers"
-                loading="lazy"
-                decoding="async"
-                className="max-h-8 sm:max-h-11 w-auto max-w-full object-contain brightness-0 opacity-40 hover:opacity-75 transition-opacity duration-300"
-              />
-            </div>
-
-            {/* Saloni S&P Fashion */}
-            <div className="flex items-center justify-center h-9 sm:h-12 w-24 sm:w-32 shrink-0">
-              <img
-                src={assetUrl("/assets/Logo (25).svg")}
-                alt="Saloni S&P Fashion"
-                loading="lazy"
-                decoding="async"
-                className="max-h-7 sm:max-h-10 w-auto max-w-full object-contain brightness-0 opacity-40 hover:opacity-75 transition-opacity duration-300"
-              />
+              {/* Track 2 (Duplicate for seamless infinite loop) */}
+              <div
+                className="flex items-center gap-8 sm:gap-14 pr-8 sm:pr-14 shrink-0"
+                aria-hidden="true"
+              >
+                {FEATURED_LOGO_IDS.map((num) => (
+                  <div
+                    key={`m-logo-b-${num}`}
+                    className="flex h-9 sm:h-12 w-20 sm:w-28 items-center justify-center shrink-0"
+                  >
+                    <img
+                      src={assetUrl(`/assets/Logo (${num}).svg`)}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      className="max-h-7 sm:max-h-10 w-auto max-w-full object-contain brightness-0 opacity-40 hover:opacity-75 transition-opacity duration-300"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -471,6 +489,18 @@ export function Services() {
           font-family: var(--font-serif);
           font-style: italic;
           font-weight: 400;
+        }
+
+        @keyframes marquee-drift-left {
+          0% {
+            transform: translate3d(0, 0, 0);
+          }
+          100% {
+            transform: translate3d(-50%, 0, 0);
+          }
+        }
+        .animate-marquee-left {
+          animation: marquee-drift-left 35s linear infinite;
         }
 
         /* Directional idle float animations along the reference arrows */

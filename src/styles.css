@@ -278,6 +278,23 @@
     will-change: transform;
     animation: tw-hero-marquee-rtl 30s linear infinite;
   }
+
+  /* ---------------------------------------------------------------------------
+   * Global logo marquee — seamless right-to-left scrolling
+   * ------------------------------------------------------------------------- */
+  @keyframes marquee-drift-left {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  .animate-marquee-left {
+    animation: marquee-drift-left 35s linear infinite;
+    will-change: transform;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
