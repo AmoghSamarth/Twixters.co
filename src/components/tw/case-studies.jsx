@@ -1,10 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { caseStudies } from "../../content/site";
 import { ArrowUpRight, Eyebrow, TagPill } from "./primitives";
 import { Reveal } from "./reveal";
 
 export function CaseStudies() {
   const [hoveredIdx, setHoveredIdx] = useState(null);
+  const [expandedIdx, setExpandedIdx] = useState(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (!e.target.closest(".case-study-li")) {
+        setExpandedIdx(null);
+      }
+    };
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setExpandedIdx(null);
+      }
+    };
+    document.addEventListener("click", handleOutsideClick);
+    window.addEventListener("resize", handleResize);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const handleCardClick = (e, i) => {
+    if (typeof window !== "undefined" && window.innerWidth < 1024) {
+      if (expandedIdx !== i) {
+        e.preventDefault();
+        setExpandedIdx(i);
+      }
+    }
+  };
+
+  const activeIdx = hoveredIdx !== null ? hoveredIdx : expandedIdx;
 
   return (
     <section id="work" aria-labelledby="work-heading" className="case-studies-section px-5 py-24 sm:px-8 sm:py-32">
@@ -16,18 +47,32 @@ export function CaseStudies() {
       </Reveal>
 
       <ul
-        data-hovered={hoveredIdx !== null ? hoveredIdx : undefined}
+        data-hovered={activeIdx !== null ? activeIdx : undefined}
         className="case-studies-grid mx-auto mt-14 grid max-w-[1200px] gap-8 sm:mt-16 md:grid-cols-2 md:gap-10"
       >
         {caseStudies.map((project, i) => (
-          <Reveal as="li" key={project.title} delay={i * 90} className="case-study-li relative hover:z-30">
+          <Reveal
+            as="li"
+            key={project.title}
+            delay={i * 90}
+            className={`case-study-li relative hover:z-30 ${activeIdx === i ? "z-30" : "z-10"}`}
+          >
             <div className="case-study-card-shift">
               <a
                 href={project.href}
                 target="_blank"
                 rel="noreferrer"
-                onMouseEnter={() => setHoveredIdx(i)}
-                onMouseLeave={() => setHoveredIdx(null)}
+                onClick={(e) => handleCardClick(e, i)}
+                onMouseEnter={() => {
+                  if (typeof window !== "undefined" && window.innerWidth >= 1024) {
+                    setHoveredIdx(i);
+                  }
+                }}
+                onMouseLeave={() => {
+                  if (typeof window !== "undefined" && window.innerWidth >= 1024) {
+                    setHoveredIdx(null);
+                  }
+                }}
                 className="group relative block focus-visible:outline-none"
               >
                 <div className="relative overflow-hidden rounded-[28px] bg-[#cfcfcf] shadow-float transition-[transform,box-shadow] duration-500 group-hover:-translate-y-1.5 group-hover:shadow-lift sm:rounded-[36px]">
@@ -46,7 +91,11 @@ export function CaseStudies() {
                 {project.expandSrc && (
                   <div
                     aria-hidden="true"
-                    className="absolute inset-x-0 top-0 w-full z-30 opacity-0 scale-[0.99] transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:scale-100"
+                    className={`absolute inset-x-0 top-0 w-full z-30 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                      activeIdx === i
+                        ? "opacity-100 scale-100 pointer-events-auto"
+                        : "opacity-0 scale-[0.99] pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto"
+                    }`}
                   >
                     <div className="overflow-hidden rounded-[28px] sm:rounded-[36px] shadow-[0_28px_65px_rgba(0,0,0,0.32)]">
                       <img
