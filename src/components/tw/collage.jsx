@@ -138,11 +138,12 @@ export function Collage() {
         }
 
         if (hasEnteredRef.current) {
-          // Scroll-driven vertical parallax for the floating CTA
+          // Scroll-driven vertical parallax for the floating CTA (desktop only)
+          const isDesktop = window.innerWidth >= 1024;
           const totalTravel = rect.height + vh;
           const traveled = vh - rect.top;
           const progress = Math.max(0, Math.min(1, traveled / totalTravel));
-          const targetY = (0.5 - progress) * 60;
+          const targetY = isDesktop ? (0.5 - progress) * 60 : 0;
           smoothY += (targetY - smoothY) * 0.08;
 
           // Idle float
@@ -312,14 +313,9 @@ export function Collage() {
             ))}
           </ul>
 
-          {/* ── Floating "See Recent Work" CTA centered in showroom ── */}
+          {/* ── Floating "See Recent Work" CTA: bottom-right on mobile & tablet, centered on desktop ── */}
           <div
-            className="pointer-events-none absolute z-30 block"
-            style={{
-              left: "50%",
-              top: "50%",
-              transform: "translateX(-50%) translateY(-50%)",
-            }}
+            className="pointer-events-none absolute z-30 block right-4 bottom-3 sm:right-6 sm:bottom-5 md:right-8 md:bottom-6 lg:right-auto lg:bottom-auto lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2"
           >
             <div
               className={`transition-[opacity,transform] duration-700 ease-out ${hasEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
