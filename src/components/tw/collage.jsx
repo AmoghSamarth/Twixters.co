@@ -321,15 +321,16 @@ export function Collage() {
               className={`transition-[opacity,transform] duration-700 ease-out ${hasEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
                 }`}
             >
-              <a
-                href={collageCta?.href || "#work"}
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
-                }}
-                aria-label={collageCta?.label || "See Recent Work"}
-                className="group pointer-events-auto block cursor-pointer select-none transition-transform duration-300 ease-out hover:scale-[1.04]"
-              >
+              <div className="origin-bottom-right lg:origin-center scale-[0.70] sm:scale-[0.80] md:scale-[0.88] lg:scale-100">
+                <a
+                  href={collageCta?.href || "#work"}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  aria-label={collageCta?.label || "See Recent Work"}
+                  className="group pointer-events-auto block cursor-pointer select-none transition-transform duration-300 ease-out hover:scale-[1.04]"
+                >
                 <div ref={floatRef} className="relative">
                   {/* 1. Translucent black rotated pill */}
                   <div
@@ -386,6 +387,7 @@ export function Collage() {
                   </div>
                 </div>
               </a>
+              </div>
             </div>
           </div>
 
