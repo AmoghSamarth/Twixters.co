@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { processSteps } from "../../content/site";
 import { Reveal } from "./reveal";
 
-function LazyProcessVideo({ videoSrc, posterSrc }) {
+function LazyProcessVideo({ videoSrc, posterSrc, rotateAngle = 0 }) {
   const containerRef = useRef(null);
   const videoRef = useRef(null);
   const [shouldLoad, setShouldLoad] = useState(false);
@@ -36,7 +36,11 @@ function LazyProcessVideo({ videoSrc, posterSrc }) {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative my-2 sm:my-3 lg:my-4 flex-1 flex items-center justify-center">
+    <div
+      ref={containerRef}
+      className="relative my-2 sm:my-3 lg:my-4 flex-1 flex items-center justify-center"
+      style={rotateAngle ? { transform: `rotate(${rotateAngle}deg)` } : undefined}
+    >
       <video
         ref={videoRef}
         src={shouldLoad ? videoSrc : undefined}
@@ -205,10 +209,14 @@ export function Process() {
                 </div>
 
                 {/* Middle: Deferred sequence-wise MP4 video animation in center of box */}
-                <LazyProcessVideo videoSrc={step.video} posterSrc={step.poster} />
+                <LazyProcessVideo
+                  videoSrc={step.video}
+                  posterSrc={step.poster}
+                  rotateAngle={i === 1 ? -7 : i === 2 ? 4 : 0}
+                />
 
                 {/* Bottom: Title & Description */}
-                <div className="mt-1 sm:mt-1.5 lg:mt-2">
+                <div className="mt-1 sm:mt-1.5 lg:mt-2 relative z-10">
                   <h3 className="text-[17px] sm:text-[19px] lg:text-[21px] xl:text-[23px] font-medium tracking-[-0.02em] text-[#111111]">
                     {step.title}
                   </h3>
