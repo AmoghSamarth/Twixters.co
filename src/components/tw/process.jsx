@@ -50,7 +50,7 @@ function LazyProcessVideo({ videoSrc, posterSrc, rotateAngle = 0 }) {
         loop
         muted
         playsInline
-        className="w-full h-full max-h-[125px] sm:max-h-[150px] lg:max-h-[190px] xl:max-h-[210px] scale-[1.18] sm:scale-[1.32] lg:scale-[1.5] object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-[1.26] sm:group-hover:scale-[1.4] lg:group-hover:scale-[1.56] pointer-events-none"
+        className="w-full h-full max-h-[120px] sm:max-h-[145px] lg:max-h-[180px] xl:max-h-[195px] scale-[1.12] sm:scale-[1.22] lg:scale-[1.32] object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-[1.18] sm:group-hover:scale-[1.28] lg:group-hover:scale-[1.38] pointer-events-none"
       />
     </div>
   );
@@ -199,7 +199,7 @@ export function Process() {
                 className="tw-step-card group relative flex h-full min-h-[300px] sm:min-h-[360px] lg:min-h-[420px] xl:min-h-[460px] w-full flex-col justify-between overflow-hidden rounded-[20px] sm:rounded-[26px] lg:rounded-[32px] bg-white bg-clip-padding p-5 sm:p-6 lg:p-7 xl:p-8 border-[3px] sm:border-[4px] border-white/60 shadow-[0_12px_36px_rgba(0,0,0,0.06),0_3px_12px_rgba(0,0,0,0.03)] lg:shadow-[0_20px_50px_rgba(0,0,0,0.08),0_4px_16px_rgba(0,0,0,0.03)] transition-all duration-300 hover:scale-[1.02]"
               >
                 {/* Top Row: Big Number */}
-                <div className="flex items-start justify-between">
+                <div className="flex items-start justify-between relative z-10">
                   <p
                     aria-hidden="true"
                     className="text-[40px] sm:text-[52px] lg:text-[64px] xl:text-[74px] font-normal leading-none tracking-[-0.04em] text-[#111111] select-none"
