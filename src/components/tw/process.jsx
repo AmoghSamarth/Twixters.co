@@ -52,6 +52,70 @@ function LazyProcessVideo({ videoSrc, posterSrc }) {
   );
 }
 
+function MobileProcessConnectors() {
+  return (
+    <>
+      {/* Connector 1: Arch connecting Card 1 to Card 2 (mobile & tablet) */}
+      <div className="pointer-events-none absolute top-0 left-0 z-30 lg:hidden overflow-visible" aria-hidden="true">
+        {/* Mobile (<640px) */}
+        <svg className="block sm:hidden overflow-visible pointer-events-none" width="1" height="1" viewBox="0 0 1 1">
+          <path
+            d="M -44 78 C -38 8, -2 -16, 28 14"
+            stroke="#ff5520"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            fill="none"
+          />
+          <circle cx="-44" cy="78" r="4.5" stroke="#ff5520" strokeWidth="2" fill="white" />
+          <circle cx="28" cy="14" r="4.5" stroke="#ff5520" strokeWidth="2" fill="white" />
+        </svg>
+        {/* Tablet (640px - 1023px) */}
+        <svg className="hidden sm:block overflow-visible pointer-events-none" width="1" height="1" viewBox="0 0 1 1">
+          <path
+            d="M -58 92 C -50 10, -6 -20, 32 16"
+            stroke="#ff5520"
+            strokeWidth="2.8"
+            strokeLinecap="round"
+            fill="none"
+          />
+          <circle cx="-58" cy="92" r="5" stroke="#ff5520" strokeWidth="2.2" fill="white" />
+          <circle cx="32" cy="16" r="5" stroke="#ff5520" strokeWidth="2.2" fill="white" />
+        </svg>
+      </div>
+
+      {/* Connector 2: Loop-de-loop connecting Card 2 to Card 3 (mobile & tablet) */}
+      <div className="pointer-events-none absolute top-0 right-0 z-30 lg:hidden overflow-visible" aria-hidden="true">
+        {/* Mobile (<640px) */}
+        <svg className="block sm:hidden overflow-visible pointer-events-none" width="1" height="1" viewBox="0 0 1 1">
+          <path
+            d="M -26 125 C -25.1 147.8, -16.3 167.2, -1.8 175.7 C 8.3 180.2, 20.6 175.7, 25.0 167.9 C 26.8 164.0, 25.0 157.5, 18.9 156.2 C 11.0 154.9, 1.3 161.4, -6.2 173.8 C -16.3 186.8, -23.8 206.2, -21.6 229.0 C -19.4 251.8, -4.0 258.2, 13.6 251.8 C 29.0 245.2, 39.1 222.5, 44 190"
+            stroke="#ff5520"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            fill="none"
+          />
+          <circle cx="-26" cy="125" r="4.5" stroke="#ff5520" strokeWidth="2" fill="white" />
+          <circle cx="44" cy="190" r="4.5" stroke="#ff5520" strokeWidth="2" fill="white" />
+        </svg>
+        {/* Tablet (640px - 1023px) */}
+        <svg className="hidden sm:block overflow-visible pointer-events-none" width="1" height="1" viewBox="0 0 1 1">
+          <path
+            d="M -32 145 C -31.0 172.3, -20.6 195.7, -3.4 205.8 C 8.6 211.3, 23.1 205.8, 28.3 196.5 C 30.4 191.8, 28.3 184.0, 21.0 182.4 C 11.7 180.9, 0.2 188.7, -8.6 203.5 C -20.6 219.1, -29.4 242.5, -26.8 269.8 C -24.2 297.1, -6.0 304.9, 14.8 297.1 C 33.0 289.3, 45.0 262.0, 56 223"
+            stroke="#ff5520"
+            strokeWidth="2.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            fill="none"
+          />
+          <circle cx="-32" cy="145" r="5" stroke="#ff5520" strokeWidth="2.2" fill="white" />
+          <circle cx="56" cy="223" r="5" stroke="#ff5520" strokeWidth="2.2" fill="white" />
+        </svg>
+      </div>
+    </>
+  );
+}
+
 function ProcessDoodles() {
   return (
     <div className="pointer-events-none absolute inset-0 z-30 hidden lg:block" aria-hidden="true">
@@ -111,11 +175,11 @@ export function Process() {
       </Reveal>
 
       <div className="relative mx-auto mt-10 sm:mt-16 lg:mt-24 max-w-[1200px]">
-        {/* Playful orange lines & rings connecting the cards (desktop only) */}
+        {/* Playful orange lines & rings connecting the cards (desktop overlay) */}
         <ProcessDoodles />
 
         {/* Horizontal scrollable rail on mobile & tablet; 3-column grid on desktop */}
-        <ol className="relative z-10 flex overflow-x-auto snap-x snap-mandatory gap-4 sm:gap-6 pb-6 pt-2 px-4 sm:px-6 -mx-4 sm:-mx-6 lg:mx-0 lg:px-0 lg:pb-0 lg:pt-0 lg:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:grid lg:grid-cols-3 lg:gap-3">
+        <ol className="relative z-10 flex overflow-x-auto snap-x snap-mandatory gap-4 sm:gap-6 pb-6 pt-7 sm:pt-9 -mt-5 sm:-mt-7 px-4 sm:px-6 -mx-4 sm:-mx-6 lg:mx-0 lg:px-0 lg:pb-0 lg:pt-0 lg:mt-0 lg:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:grid lg:grid-cols-3 lg:gap-3">
           {processSteps.map((step, i) => (
             <Reveal
               as="li"
@@ -153,6 +217,9 @@ export function Process() {
                   </p>
                 </div>
               </article>
+
+              {/* Inter-card doodle connectors for mobile & tablet (anchored to card 2) */}
+              {i === 1 && <MobileProcessConnectors />}
             </Reveal>
           ))}
         </ol>
