@@ -111,23 +111,24 @@ export function Process() {
       </Reveal>
 
       <div className="relative mx-auto mt-10 sm:mt-16 lg:mt-24 max-w-[1200px]">
-        {/* Playful orange lines & rings connecting the cards */}
+        {/* Playful orange lines & rings connecting the cards (desktop only) */}
         <ProcessDoodles />
 
-        <ol className="relative z-10 grid gap-4 sm:gap-6 lg:grid-cols-3 lg:gap-3">
+        {/* Horizontal scrollable rail on mobile & tablet; 3-column grid on desktop */}
+        <ol className="relative z-10 flex overflow-x-auto snap-x snap-mandatory gap-4 sm:gap-6 pb-6 pt-2 px-4 sm:px-6 -mx-4 sm:-mx-6 lg:mx-0 lg:px-0 lg:pb-0 lg:pt-0 lg:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:grid lg:grid-cols-3 lg:gap-3">
           {processSteps.map((step, i) => (
             <Reveal
               as="li"
               key={step.n}
               delay={i * 110}
-              className={`tw-step relative ${i === 1 ? "z-20" : "z-10"}`}
+              className={`tw-step relative shrink-0 snap-center w-[84vw] max-w-[340px] sm:w-[380px] sm:max-w-none lg:w-auto lg:shrink lg:snap-align-none ${i === 1 ? "z-20" : "z-10"}`}
               style={{
                 ["--r"]: `${step.rotate}deg`,
                 ["--y"]: `${step.offsetY}px`
               }}
             >
               <article
-                className="tw-step-card group relative flex h-full min-h-[280px] sm:min-h-[340px] lg:min-h-[420px] xl:min-h-[460px] max-w-[380px] sm:max-w-[460px] lg:max-w-none mx-auto w-full flex-col justify-between overflow-hidden rounded-[20px] sm:rounded-[26px] lg:rounded-[32px] bg-white bg-clip-padding p-5 sm:p-6 lg:p-7 xl:p-8 border-[3px] sm:border-[4px] border-white/60 shadow-[0_12px_36px_rgba(0,0,0,0.06),0_3px_12px_rgba(0,0,0,0.03)] lg:shadow-[0_20px_50px_rgba(0,0,0,0.08),0_4px_16px_rgba(0,0,0,0.03)] transition-all duration-300 hover:scale-[1.02]"
+                className="tw-step-card group relative flex h-full min-h-[300px] sm:min-h-[360px] lg:min-h-[420px] xl:min-h-[460px] w-full flex-col justify-between overflow-hidden rounded-[20px] sm:rounded-[26px] lg:rounded-[32px] bg-white bg-clip-padding p-5 sm:p-6 lg:p-7 xl:p-8 border-[3px] sm:border-[4px] border-white/60 shadow-[0_12px_36px_rgba(0,0,0,0.06),0_3px_12px_rgba(0,0,0,0.03)] lg:shadow-[0_20px_50px_rgba(0,0,0,0.08),0_4px_16px_rgba(0,0,0,0.03)] transition-all duration-300 hover:scale-[1.02]"
               >
                 {/* Top Row: Big Number */}
                 <div className="flex items-start justify-between">
@@ -163,8 +164,8 @@ export function Process() {
           font-style: italic;
           font-weight: 400;
         }
-        @media (min-width: 640px) and (max-width: 1023px) {
-          .tw-step-card { transform: rotate(calc(var(--r) * 0.5)); }
+        @media (max-width: 1023px) {
+          .tw-step-card { transform: none !important; }
         }
         @media (min-width: 1024px) {
           .tw-step { transform: translateY(var(--y)); }
