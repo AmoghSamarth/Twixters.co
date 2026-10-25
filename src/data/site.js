@@ -180,20 +180,20 @@ export const caseStudies = [
     href: "https://www.behance.net/gallery/257451129/Darte-Furniture-Content-Design"
   },
   {
-    title: "Solarwatt Energy",
-    tags: ["Company Profile", "Solar Energy"],
-    src: assetUrl("/assets/6.png"),
-    expandSrc: assetUrl("/assets/Layer 6.jpg.jpeg"),
-    alt: "Solarwatt Energy — Company Profile",
-    href: "https://www.behance.net/gallery/257451925/Solarwatt-Energy-Company-Profile"
-  },
-  {
     title: "Batukbhai Jewellers",
     tags: ["Coffee Table Magazine", "Jewellery"],
     src: assetUrl("/assets/7.png"),
     expandSrc: assetUrl("/assets/Layer 7.jpg.jpeg"),
     alt: "Batukbhai Jewellers — Coffee Table Magazine",
     href: "https://www.behance.net/gallery/257452129/Batukbhai-Coffee-Table-Magazin"
+  },
+  {
+    title: "Solarwatt Energy",
+    tags: ["Company Profile", "Solar Energy"],
+    src: assetUrl("/assets/6.png"),
+    expandSrc: assetUrl("/assets/Layer 6.jpg.jpeg"),
+    alt: "Solarwatt Energy — Company Profile",
+    href: "https://www.behance.net/gallery/257451925/Solarwatt-Energy-Company-Profile"
   },
   {
     title: "VV Modular",
