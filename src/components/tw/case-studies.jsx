@@ -162,7 +162,11 @@ export function CaseStudies() {
         .case-studies-grid[data-hovered="0"] .case-study-li:nth-child(1) .case-study-meta,
         .case-studies-grid[data-hovered="1"] .case-study-li:nth-child(2) .case-study-meta,
         .case-studies-grid[data-hovered="2"] .case-study-li:nth-child(3) .case-study-meta,
-        .case-studies-grid[data-hovered="3"] .case-study-li:nth-child(4) .case-study-meta {
+        .case-studies-grid[data-hovered="3"] .case-study-li:nth-child(4) .case-study-meta,
+        .case-studies-grid[data-hovered="4"] .case-study-li:nth-child(5) .case-study-meta,
+        .case-studies-grid[data-hovered="5"] .case-study-li:nth-child(6) .case-study-meta,
+        .case-studies-grid[data-hovered="6"] .case-study-li:nth-child(7) .case-study-meta,
+        .case-studies-grid[data-hovered="7"] .case-study-li:nth-child(8) .case-study-meta {
           transform: translateY(calc(68.78cqi));
         }
 
@@ -172,9 +176,10 @@ export function CaseStudies() {
         }
 
         /* 2-Column layout in every view (mobile, tablet, desktop):
-           - Hovering card 0 (col 1, row 1) moves card 2 (col 1, row 2) down
-           - Hovering card 1 (col 2, row 1) moves card 3 (col 2, row 2) down
-           - Column 2 items remain unaffected when column 1 is hovered, and vice versa */
+           - Column 1: cards 0, 2, 4, 6 (nth-child 1, 3, 5, 7)
+           - Column 2: cards 1, 3, 5, 7 (nth-child 2, 4, 6, 8)
+           - Hovering any card in column 1 moves all subsequent column 1 cards down
+           - Hovering any card in column 2 moves all subsequent column 2 cards down */
         .case-studies-grid[data-hovered] {
           margin-bottom: calc((100% - 0.75rem) * 0.3439);
         }
@@ -188,10 +193,22 @@ export function CaseStudies() {
             margin-bottom: calc((100% - 2.5rem) * 0.3439);
           }
         }
-        .case-studies-grid[data-hovered="0"] .case-study-li:nth-child(3) .case-study-card-shift {
-          transform: translateY(calc(68.78cqi));
-        }
-        .case-studies-grid[data-hovered="1"] .case-study-li:nth-child(4) .case-study-card-shift {
+
+        /* Column 1 shifts */
+        .case-studies-grid[data-hovered="0"] .case-study-li:nth-child(3) .case-study-card-shift,
+        .case-studies-grid[data-hovered="0"] .case-study-li:nth-child(5) .case-study-card-shift,
+        .case-studies-grid[data-hovered="0"] .case-study-li:nth-child(7) .case-study-card-shift,
+        .case-studies-grid[data-hovered="2"] .case-study-li:nth-child(5) .case-study-card-shift,
+        .case-studies-grid[data-hovered="2"] .case-study-li:nth-child(7) .case-study-card-shift,
+        .case-studies-grid[data-hovered="4"] .case-study-li:nth-child(7) .case-study-card-shift,
+
+        /* Column 2 shifts */
+        .case-studies-grid[data-hovered="1"] .case-study-li:nth-child(4) .case-study-card-shift,
+        .case-studies-grid[data-hovered="1"] .case-study-li:nth-child(6) .case-study-card-shift,
+        .case-studies-grid[data-hovered="1"] .case-study-li:nth-child(8) .case-study-card-shift,
+        .case-studies-grid[data-hovered="3"] .case-study-li:nth-child(6) .case-study-card-shift,
+        .case-studies-grid[data-hovered="3"] .case-study-li:nth-child(8) .case-study-card-shift,
+        .case-studies-grid[data-hovered="5"] .case-study-li:nth-child(8) .case-study-card-shift {
           transform: translateY(calc(68.78cqi));
         }
       `}</style>

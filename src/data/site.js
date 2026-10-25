@@ -170,6 +170,38 @@ export const caseStudies = [
     expandSrc: assetUrl("/assets/Layer 3.png"),
     alt: "The Biryani Story — Visual Identity & Systems",
     href: "https://www.behance.net/gallery/248506041/The-Biryani-Story-Modern-Food-Brand"
+  },
+  {
+    title: "D'arte Furniture",
+    tags: ["Content Design", "Furniture"],
+    src: assetUrl("/assets/5.png"),
+    expandSrc: assetUrl("/assets/Layer 5.jpg.jpeg"),
+    alt: "D'arte Furniture — Content Design",
+    href: "https://www.behance.net/gallery/257451129/Darte-Furniture-Content-Design"
+  },
+  {
+    title: "Solarwatt Energy",
+    tags: ["Company Profile", "Solar Energy"],
+    src: assetUrl("/assets/6.png"),
+    expandSrc: assetUrl("/assets/Layer 6.jpg.jpeg"),
+    alt: "Solarwatt Energy — Company Profile",
+    href: "https://www.behance.net/gallery/257451925/Solarwatt-Energy-Company-Profile"
+  },
+  {
+    title: "Batukbhai Jewellers",
+    tags: ["Coffee Table Magazine", "Jewellery"],
+    src: assetUrl("/assets/7.png"),
+    expandSrc: assetUrl("/assets/Layer 7.jpg.jpeg"),
+    alt: "Batukbhai Jewellers — Coffee Table Magazine",
+    href: "https://www.behance.net/gallery/257452129/Batukbhai-Coffee-Table-Magazin"
+  },
+  {
+    title: "VV Modular",
+    tags: ["Company Profile", "Modular Kitchen"],
+    src: assetUrl("/assets/8.png"),
+    expandSrc: assetUrl("/assets/Layer 8.jpg.jpeg"),
+    alt: "VV Modular — Company Profile",
+    href: "https://www.behance.net/gallery/257452403/VV-Modular-Company-Profile"
   }
 ];
 export const founder = {
